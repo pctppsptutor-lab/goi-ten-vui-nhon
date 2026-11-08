@@ -344,7 +344,7 @@ function guessGender(name) {
 }
 function parseLine(line) {
   let tag = null;
-  const name = line.normalize('NFC').replace(/\s*\((nam|nữ|nu|boy|girl|m|f)\)\s*$/i, (m, x) => { tag = /^(nam|boy|m)$/i.test(x) ? 'm' : 'f'; return ''; }).trim();
+  const name = line.normalize('NFC').replace(/\s*(?:,\s*(nam|nữ|nu|boy|girl|m|f)|\((nam|nữ|nu|boy|girl|m|f)\))\s*$/i, (m, a, b) => { tag = /^(nam|boy|m)$/i.test(a || b) ? 'm' : 'f'; return ''; }).trim();
   return { name, tag };
 }
 function roster(cls) {
@@ -535,13 +535,15 @@ const Music = {
 }, { once: true }));
 
 /* ================= Speech ================= */
+let speakId = 0, duckTimer = null;
 function speak(name) {
   const v = store.settings.voice; if (v === 'off' || !('speechSynthesis' in window)) return;
-  const lang = v === 'vi' ? 'vi-VN' : 'en-US';
-  let text = name;
-  text = v === 'en' ? name.replace(/^No\. (\d+)$/, 'Number $1') : name.replace(/^No\. (\d+)$/, 'Số $1');
+  const id = ++speakId, lang = v === 'vi' ? 'vi-VN' : 'en-US';
+  const text = v === 'en' ? name.replace(/^No\. (\d+)$/, 'Number $1') : name.replace(/^No\. (\d+)$/, 'Số $1');
   const u = new SpeechSynthesisUtterance(text); u.lang = lang; u.rate = .9;
-  u.onstart = () => AUD.duck(true); u.onend = u.onerror = () => AUD.duck(false);
+  const unduck = () => { if (id === speakId) { clearTimeout(duckTimer); AUD.duck(false); } };
+  u.onstart = () => { if (id === speakId) { clearTimeout(duckTimer); AUD.duck(true); duckTimer = setTimeout(unduck, 4000); } };
+  u.onend = u.onerror = unduck;
   const voice = speechSynthesis.getVoices().find(x => x.lang && x.lang.replace('_', '-').toLowerCase().startsWith(lang.slice(0, 2)));
   if (voice) u.voice = voice;
   speechSynthesis.cancel(); speechSynthesis.speak(u);
@@ -709,22 +711,23 @@ function drawBow(x, y, s) {
   ctx.restore();
 }
 // long names: keep the last two words, then shrink the font, then cut with an ellipsis
-const TAG_MAX = 170;
+const TAG_MAX = 170, tagCache = {};
 function fitTag(text) {
+  if (tagCache[text]) return tagCache[text];
   let t = text, size = 25;
   ctx.font = `700 ${size}px "Baloo 2","Segoe UI",sans-serif`;
   if (ctx.measureText(t).width > TAG_MAX) { const w = t.split(/\s+/); if (w.length > 2) t = w.slice(-2).join(' '); }
   while (ctx.measureText(t).width > TAG_MAX && size > 19) { size -= 1; ctx.font = `700 ${size}px "Baloo 2","Segoe UI",sans-serif`; }
   if (ctx.measureText(t).width > TAG_MAX) { while (t.length > 3 && ctx.measureText(t + '…').width > TAG_MAX) t = t.slice(0, -1); t = t.trimEnd() + '…'; }
-  return t;
+  return tagCache[text] = { t, font: `700 ${size}px "Baloo 2","Segoe UI",sans-serif`, w: ctx.measureText(t).width + 22 };
 }
 function drawTag(text, xRight, y, lead, centered = false) {
-  ctx.save(); text = fitTag(text);
-  const w = ctx.measureText(text).width + 22, h = 34, x = centered ? xRight - w / 2 : xRight - w;
+  ctx.save(); const { t, font, w } = fitTag(text), h = 34, x = centered ? xRight - w / 2 : xRight - w;
+  ctx.font = font;
   ctx.fillStyle = lead ? '#ffd54a' : 'rgba(255,255,255,.95)';
   ctx.strokeStyle = lead ? '#c98a00' : 'rgba(29,53,87,.25)'; ctx.lineWidth = 2;
   roundRect(ctx, x, y - h / 2, w, h, 17); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = '#1d3557'; ctx.textBaseline = 'middle'; ctx.fillText(text, x + 11, y + 2);
+  ctx.fillStyle = '#1d3557'; ctx.textBaseline = 'middle'; ctx.fillText(t, x + 11, y + 2);
   ctx.restore();
 }
 function drawSwimDuck(d, x, y, t, { rot = 0, w = DUCK_W, wake = true, alpha = 1 } = {}) {
@@ -988,7 +991,7 @@ function startRace(fromRandom) {
   ducks.forEach(d => { d.P = buildCurve(d.end, d.boosts, d.seed); });
   // slide order
   shuffle([...ducks]).forEach((d, k) => { d.slideAt = .35 + k * .17; });
-  race = { T, S, TW, ducks, winner, decoy, twist, twistName, rivals, rivalSlots, t0: performance.now(), phase: 'run', leader: null, leaderAt: 0, banner: 'The ducks whoosh down the water slide!', confetti: [], cues: {}, lastTick: -1 };
+  race = { T, S, TW, ducks, winner, decoy, twist, twistName, rivals, rivalSlots, t0: performance.now(), now: 0, phase: 'run', leader: null, leaderAt: 0, banner: 'The ducks whoosh down the water slide!', confetti: [], cues: {}, lastTick: -1 };
   document.body.classList.add('running');
   SFX.whistle(); SFX.cheer(); Music.play('race');
   updateUI();
@@ -1040,9 +1043,9 @@ function outcome(kind, duck, size = 230) {
 }
 function addFx(img, x, y, w, dur, opt = {}) { race.fx = race.fx || []; race.fx.push({ img, x, y, w, t0: race.now, dur, ...opt }); }
 
-function tickRace(now) {
-  const r = race; const t = (now - r.t0) / 1000; r.now = t;
-  const te = t - r.TW;
+function tickRace(dt) {
+  const r = race, scale = r.slowUntil && performance.now() < r.slowUntil ? r.slowF : 1;
+  const t = r.now += dt * scale, te = t - r.TW;
   if (r.game) { r.game.tick(r, t, te); countdown(r, t); return; }
   r.ducks.forEach(d => updateDuck(d, t));
   // leader tracking / banners
@@ -1102,12 +1105,13 @@ function frame(now) {
   if (bgCanvas) ctx.drawImage(bgCanvas, 0, 0); else { ctx.fillStyle = '#3db5e6'; ctx.fillRect(0, 0, W, H); }
   drawWater(t);
   if (race) {
-    if (race.phase === 'run') tickRace(now); else race.now = (now - race.t0) / 1000;
+    if (race.phase === 'run') tickRace(dt); else race.now += dt;
     renderRace(t, dt);
   } else renderIdle(t);
   requestAnimationFrame(frame);
 }
 
+let hasPool = true;
 function renderIdle(t) {
   drawBuoy(t, false);
   drawTurtle('turtle_idle', t);
@@ -1115,8 +1119,7 @@ function renderIdle(t) {
   idleOverlay('Duck Slide Race', t);
 }
 function idleOverlay(title, t, y = 420) {
-  const pool = eligible(activeClass()).length;
-  banner(pool ? 'Press ▶ Pick a name! or Space' : 'Everyone has been picked! Press ↺ Start over', t);
+  banner(hasPool ? 'Press ▶ Pick a name! or Space' : 'Everyone has been picked! Press ↺ Start over', t);
   const locTitle = trTitle(title);
   ctx.save(); ctx.font = '800 64px "Baloo 2","Segoe UI",sans-serif'; ctx.textAlign = 'center';
   ctx.lineWidth = 10; ctx.strokeStyle = '#1b3a5c'; ctx.fillStyle = '#fff';
@@ -1210,7 +1213,7 @@ function renderGeneric(g, now, t, dt) {
   if (sc) sc.back(t);
   if (race && race.phase === 'done' && race.winRays) FX.rays(race.winRays.x, race.winRays.y + 30, 340, t, g.rayColor);
   if (race) {
-    if (race.phase === 'run') tickRace(now); else race.now = (now - race.t0) / 1000;
+    if (race.phase === 'run') tickRace(dt); else race.now += dt;
     g.render(race, t, dt); drawFx(race); if (sc) sc.front(t); hud(race, t, dt);
   } else { g.idle(t); if (sc) sc.front(t); idleOverlay(g.title, t, g.titleY || 860); }
 }
@@ -1251,7 +1254,6 @@ function activateGame(id, keepRandom = false) {
   race = null; hideResult();
   const g = GAME_IMPL[id];
   IMG = IMGSETS[id] = IMGSETS[id] || {};
-  STINGS = loadStings('g1', 'assets/duck-race/');
   if (g && !g.loading) g.loading = loadImages(id, g.base, g.assets).then(() => { g.ready = true; updateUI(); });
   (g ? g.loading : assetsReady).then(preloadGames);
   updateUI();
@@ -1426,6 +1428,7 @@ function updateUI() {
   if (!resetBtn.classList.contains('confirm')) resetBtn.textContent = t.startOver;
 
   const cls = activeClass(), all = roster(cls), called = calledOf(cls), pool = eligible(cls);
+  hasPool = pool.length > 0;
   document.getElementById('classLabel').innerHTML = esc(cls.name) + ' <span class="pill">' + all.length + '</span>';
   [...durChips.children].forEach(b => b.classList.toggle('on', +b.dataset.s === store.settings.duration));
   document.querySelectorAll('#gameTabs .tab[data-game]').forEach((b, i) => {
@@ -1645,7 +1648,7 @@ document.addEventListener('keydown', e => {
 /* ================= Boot ================= */
 updateUI();
 const fontReady = document.fonts ? document.fonts.load('700 30px "Baloo 2"').catch(() => {}) : Promise.resolve();
-Promise.all([assetsReady, fontReady]).then(() => { buildBackground(); });
+Promise.all([assetsReady, fontReady]).then(() => { for (const k in tagCache) delete tagCache[k]; buildBackground(); });
 activateGame(GAME_IMPL[curGame()] ? curGame() : 'g1', true);
 if (store.settings.randomGame) preloadGames();
 requestAnimationFrame(frame);
