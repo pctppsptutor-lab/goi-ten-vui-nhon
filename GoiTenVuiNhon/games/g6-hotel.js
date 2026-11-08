@@ -1,4 +1,4 @@
-﻿// Game 06 â€” Thang mÃ¡y khÃ¡ch sáº¡n ma
+// Game 06 — Thang máy khách sạn ma
 // Ten lift doors open briefly to show ten room icons, then close; ghostly footprints lead to the chosen room.
 // Twist: the first door hides a ghost holding a fake icon; the skeleton janitor spins the signpost and the footprints turn to the real room.
 (() => {
@@ -7,7 +7,7 @@
   const DW = 80, DH = 112, SIGN = [178, 600], PED = [800, 735];
   const ICONS = ['p6', 'p7', 'p8', 'p9', 'p10', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16'];
 
-  // open doorway (k = 0 closed â€¦ 1 open) with something inside
+  // open doorway (k = 0 closed … 1 open) with something inside
   function doorway(d, k, inside) {
     if (k <= 0) return;
     const [x, y] = d, w = DW * k;
@@ -35,7 +35,7 @@
   GAME_IMPL.g6 = {
     id: 'g6', title: 'Haunted Hotel Lift', base: 'assets/g6/', titleY: 650,
     assets: gAssets(['observe', 'follow', 'win'], [...ICONS, 'p0', 'p2', 'p4', 'p17', 'p26', 'p27']),
-    startBanner: 'ðŸ›Žï¸ Remember each room\'s symbol!', mote: '#9ff7ff', rayColor: '#fff0b0',
+    startBanner: '🛎️ Remember each room\'s symbol!', mote: '#9ff7ff', rayColor: '#fff0b0',
 
     setup(r) {
       const slots = spread(r.players.length), icons = shuffle([...ICONS]);
@@ -48,20 +48,20 @@
     tick(r, t, te) {
       const [a, b] = mem(r), f = activeFake(r, t), D = r.decoy, Wn = r.winner;
       if (t > a) cue('open', () => { SFX.ding(); r.players.forEach(p => FX.glitter(p.door[0], p.door[1] - 60, 3)); });
-      if (t > b) cue('close', () => { SFX.tone(220, .3, { type: 'triangle', vol: .1 }); r.banner = 'ðŸ‘£ Follow the ghostly footprintsâ€¦'; });
-      if (f && te < 0) cue('fk' + f.at, () => { r.banner = 'ðŸ‘£ Do they lead to ' + f.p.name + "'s room?"; SFX.leader(); });
+      if (t > b) cue('close', () => { SFX.tone(220, .3, { type: 'triangle', vol: .1 }); r.banner = '👣 Follow the ghostly footprints…'; });
+      if (f && te < 0) cue('fk' + f.at, () => { r.banner = '👣 Do they lead to ' + f.p.name + "'s room?"; SFX.leader(); });
       if (!r.plain) {
-        if (te > 0) cue('a', () => { Music.play('tension'); r.banner = 'ðŸ‘£ The footprints stop at ' + D.name + "'s room!"; });
-        if (te > .6) cue('b', () => { FX.ring(D.door[0], D.door[1] - 60, '#b48cff', 140); FX.smoke(D.door[0], D.door[1] - 50, 10, '#bfefff'); outcome('almost_selected', D); SFX.tone(140, .7, { type: 'sine', vol: .2, vib: 12, vibRate: 5 }); r.banner = 'ðŸ‘» BOO! A ghost holding a fake symbol!'; CAM.shake(r, 9); });
+        if (te > 0) cue('a', () => { Music.play('tension'); r.banner = '👣 The footprints stop at ' + D.name + "'s room!"; });
+        if (te > .6) cue('b', () => { FX.ring(D.door[0], D.door[1] - 60, '#b48cff', 140); FX.smoke(D.door[0], D.door[1] - 50, 10, '#bfefff'); outcome('almost_selected', D); SFX.tone(140, .7, { type: 'sine', vol: .2, vib: 12, vibRate: 5 }); r.banner = '👻 BOO! A ghost holding a fake symbol!'; CAM.shake(r, 9); });
         if (te > 1) cue('c', () => { outcome('wrong_turn', D); SFX.sadTrombone(); });
-        if (te > 1.2) cue('d', () => { FX.sparkle(SIGN[0], SIGN[1] - 70, 18, ['#ffd84a', '#ffffff']); FX.smoke(SIGN[0] + 60, SIGN[1] + 120, 6, '#d8d0e8'); SFX.swoosh(); r.banner = 'ðŸ’€ The skeleton janitor spins the signpost!'; });
-        if (te > 1.6) cue('e', () => { outcome('selected', Wn); r.banner = 'ðŸ‘£ The footprints change directionâ€¦'; });
+        if (te > 1.2) cue('d', () => { FX.sparkle(SIGN[0], SIGN[1] - 70, 18, ['#ffd84a', '#ffffff']); FX.smoke(SIGN[0] + 60, SIGN[1] + 120, 6, '#d8d0e8'); SFX.swoosh(); r.banner = '💀 The skeleton janitor spins the signpost!'; });
+        if (te > 1.6) cue('e', () => { outcome('selected', Wn); r.banner = '👣 The footprints change direction…'; });
       } else {
-        if (te > 0) cue('a', () => { Music.play('tension'); outcome('almost_selected', D || Wn); r.banner = 'ðŸ‘£ Is it ' + (D || Wn).name + "'s room?"; });
-        if (te > .8) cue('b', () => { SFX.boing(); r.banner = 'ðŸ™… â€¦no! The footprints keep goingâ€¦'; });
+        if (te > 0) cue('a', () => { Music.play('tension'); outcome('almost_selected', D || Wn); r.banner = '👣 Is it ' + (D || Wn).name + "'s room?"; });
+        if (te > .8) cue('b', () => { SFX.boing(); r.banner = '🙅 …no! The footprints keep going…'; });
         if (te > 1.6) cue('e', () => { outcome('selected', Wn); });
       }
-      if (te > (r.plain ? 2 : 2.4)) cue('door', () => { FX.sparkle(Wn.door[0], Wn.door[1] - 60, 24); FX.ring(Wn.door[0], Wn.door[1] - 60, '#fff0b0', 130); SFX.ding(); SFX.sparkle(); r.banner = 'ðŸšª ' + Wn.name + "'s door swings open!"; });
+      if (te > (r.plain ? 2 : 2.4)) cue('door', () => { FX.sparkle(Wn.door[0], Wn.door[1] - 60, 24); FX.ring(Wn.door[0], Wn.door[1] - 60, '#fff0b0', 130); SFX.ding(); SFX.sparkle(); r.banner = '🚪 ' + Wn.name + "'s door swings open!"; });
     },
 
     render(r, t) {
@@ -110,7 +110,7 @@
       drawImg('p0', SIGN[0] + 120, SIGN[1] + 150, 170, { anchor: 'bottom' });
     },
     onFinish() { FX.smoke(PED[0], PED[1] - 20, 10, '#bfefff'); },
-    winBanner: r => 'ðŸ—ï¸ The secret room belongs to ' + r.winner.name + '!',
+    winBanner: r => '🗝️ The secret room belongs to ' + r.winner.name + '!',
     winPos: () => ({ x: PED[0], y: PED[1] - 120 })
   };
 })();
