@@ -94,12 +94,6 @@ const DECOR = (() => {
   // ---------- per-game decoration lists ----------
   const PARTY = ['#ff6f8f', '#ffd84a', '#7cd0ff', '#7cff9b', '#b48cff'];
   const GAME = {
-    g1: { floor: 250, fn() { bunting(240, 40, 1580, 60, 40, PARTY); flowerBed(30, 880, 1540, PARTY); [[580, 230], [1100, 232]].forEach(([x, y]) => pot(x, y, .7)); sign(1560, 250, '#ff6f8f', 'FINISH'); } },
-    g2: { floor: 300, fn() { pebbles(560, 560, 8); pebbles(1050, 600, 8); [[120, 600], [1480, 680], [700, 860], [940, 860]].forEach(([x, y]) => tuft(x, y, 1.6, '#3f8f3a')); flowerBed(460, 880, 240, ['#ff6fae', '#ffd34d']); flowerBed(980, 880, 240, ['#b48cff', '#ff9f43']); [[1150, 250, 40], [460, 250, 34]].forEach(([x, y, r]) => { ell(x, y, r, r * .5, '#5a3a2e'); ell(x, y - 4, r * .7, r * .3, '#ffd2a8'); }); } },
-    g3: { floor: 430, fn() { stringLights(0, 20, 1600, 30, 60, ['#ffd36b', '#c27cff', '#7cf7ff']); shelf(1000, 140, 220, [[30, '#ff6fae', 'jar'], [80, '#7cf7ff', 'ball'], [130, '#c27cff', 'jar'], [180, '#ffd84a', 'book']]); [[60, 450], [1540, 450]].forEach(([x, y]) => pot(x, y, .9, '#7d3cc4', '#4fae6a')); sparkles(40, [0, 0, 1600, 420], '#ffe6ff'); } },
-    g4: { floor: 470, fn() { coins(300, 470, 10); coins(1300, 470, 10); coins(800, 880, 14); [[90, 700], [1510, 700]].forEach(([x, y]) => lamp(x, y, '#ffb347', '#4a3a2c', 180)); cobweb(0, 0, 1.4, false); cobweb(1600, 0, 1.4, true); sparkles(30, [100, 380, 1400, 100], '#fff3a0'); } },
-    g5: { floor: 440, fn() { [[1300, 470], [1180, 470]].forEach(([x, y], i) => crate(x - 1000 + i * 80, y + 0, .7)); poster(1000, 130, 90, 120, '#7cd0ff', '#ffd84a'); poster(1110, 150, 90, 110, '#ff9f43', '#ffffff'); g.save(); g.fillStyle = '#f2c230'; for (let x = 0; x < W; x += 40) { g.fillRect(x, 880, 20, 20); } g.restore(); stringLights(0, 270, 1600, 270, 20, ['#ffffff', '#7cf7ff']); } },
-    g6: { floor: 560, fn() { stringLights(250, 40, 1350, 40, 50, ['#ffcf6b', '#b48cff']); cobweb(0, 0, 1.2, false); cobweb(1600, 0, 1.2, true); [[300, 700], [1300, 700]].forEach(([x, y]) => lamp(x, y, '#c9a0ff', '#2a1846', 120)); rug(800, 730, 260, 46, '#5a1f4a', '#c9a24a'); [[60, 900], [1540, 900]].forEach(([x, y]) => pot(x, y, .9, '#3a2a5a', '#5f8a6a')); } },
   };
 
   return {
