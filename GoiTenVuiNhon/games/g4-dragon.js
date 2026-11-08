@@ -1,4 +1,4 @@
-// Game 04 — Rồng giữ kho báu
+﻿// Game 04 â€” Rá»“ng giá»¯ kho bÃ¡u
 // Ten treasure chests stand for ten students; they hop and swap places, the dragon sniffs around and opens one.
 // Twist: the first chest only holds a rubber duck; the dragon sneezes and the real winning chest slides out of the gold.
 (() => {
@@ -29,8 +29,8 @@
     id: 'g4', title: 'Dragon Treasure Guard', base: 'assets/g4/', titleY: 330,
     assets: gAssets(['twist', 'win'], ['dragon_01', 'dragon_02', 'dragon_03', 'dragon_04', 'dragon_05', 'dragon_06', 'dragon_07',
       'chest_01', 'chest_02', 'chest_03', 'chest_04', 'chest_05', 'chest_06', 'chest_07', 'chest_08', 'chest_09', 'chest_10',
-      'rubber_duck', 'gold_coins', 'sneeze_smoke', 'winner_spotlight', 'giant_key']),
-    startBanner: '💰 The treasure chests hop and swap places!', mote: '#ffe08a', rayColor: '#ffe08a',
+      'rubber_duck', 'gold_coins', 'sneeze_smoke', 'winner_spotlight']),
+    startBanner: 'ðŸ’° The treasure chests hop and swap places!', mote: '#ffe08a', rayColor: '#ffe08a',
 
     setup(r) {
       const slots = spread(r.players.length);
@@ -66,17 +66,17 @@
 
     tick(r, t, te) {
       const f = activeFake(r, t), D = r.decoy, Wn = r.winner;
-      if (f && te < 0) cue('fk' + f.at, () => { r.banner = '🐉 The dragon sniffs ' + f.p.name + "'s chest…"; SFX.leader(); const o = layout(r, t).get(f.p); FX.smoke(o.x + 70, o.y - 60, 4, '#f2e8d8'); });
+      if (f && te < 0) cue('fk' + f.at, () => { r.banner = 'ðŸ‰ The dragon sniffs ' + f.p.name + "'s chestâ€¦"; SFX.leader(); const o = layout(r, t).get(f.p); FX.smoke(o.x + 70, o.y - 60, 4, '#f2e8d8'); });
       for (const s of r.swaps) if (t > s.at && te < 0) cue('sw' + s.at, () => SFX.tone(500, .12, { type: 'triangle', vol: .08, to: 900 }));
       if (!r.plain) {
-        if (te > 0) cue('a', () => { Music.play('tension'); outcome('almost_selected', D); r.banner = '🐉 The dragon opens ' + D.name + "'s chest!"; });
-        if (te > .6) cue('b', () => { const o = r.final.get(D); FX.glitter(o.x, o.y - 60, 10, ['#fff3a0']); outcome('wrong_turn', D); SFX.quack(0, 2.2); SFX.quack(.2, 2.5); SFX.sadTrombone(); r.banner = '🦆 Huh! Only a rubber duck inside!'; });
-        if (te > 1.1) cue('c', () => { SFX.noise(.25, { vol: .2, f: 400, to: 1800, q: 1 }); SFX.noise(.5, { vol: .35, f: 2500, to: 500, q: .7, delay: .3 }); r.banner = '🤧 Ah… ah… CHOO!'; CAM.shake(r, 18); const o = r.final.get(D); FX.smoke(o.x - 20, o.y - 90, 16, '#f6f0e6'); FX.coins(1440, 440, 22, 640); FX.coins(180, 430, 22, 640); FX.coins(o.x, o.y - 40, 14, o.y + 20); });
-        if (te > 1.5) cue('d', () => { outcome('selected', Wn); SFX.wheee(); r.banner = '✨ A chest slides out of the gold pile!'; });
+        if (te > 0) cue('a', () => { Music.play('tension'); outcome('almost_selected', D); r.banner = 'ðŸ‰ The dragon opens ' + D.name + "'s chest!"; });
+        if (te > .6) cue('b', () => { const o = r.final.get(D); FX.glitter(o.x, o.y - 60, 10, ['#fff3a0']); outcome('wrong_turn', D); SFX.quack(0, 2.2); SFX.quack(.2, 2.5); SFX.sadTrombone(); r.banner = 'ðŸ¦† Huh! Only a rubber duck inside!'; });
+        if (te > 1.1) cue('c', () => { SFX.noise(.25, { vol: .2, f: 400, to: 1800, q: 1 }); SFX.noise(.5, { vol: .35, f: 2500, to: 500, q: .7, delay: .3 }); r.banner = 'ðŸ¤§ Ahâ€¦ ahâ€¦ CHOO!'; CAM.shake(r, 18); const o = r.final.get(D); FX.smoke(o.x - 20, o.y - 90, 16, '#f6f0e6'); FX.coins(1440, 440, 22, 640); FX.coins(180, 430, 22, 640); FX.coins(o.x, o.y - 40, 14, o.y + 20); });
+        if (te > 1.5) cue('d', () => { outcome('selected', Wn); SFX.wheee(); r.banner = 'âœ¨ A chest slides out of the gold pile!'; });
       } else {
-        if (te > 0) cue('a', () => { Music.play('tension'); outcome('almost_selected', D || Wn); r.banner = '🐉 The dragon sniffs ' + (D || Wn).name + "'s chest…"; });
-        if (te > .8) cue('b', () => { SFX.boing(); r.banner = '🙅 …not this one!'; });
-        if (te > 1.1) cue('c', () => { outcome('selected', Wn); SFX.sparkle(); r.banner = '🐉 The dragon has chosen a chest!'; });
+        if (te > 0) cue('a', () => { Music.play('tension'); outcome('almost_selected', D || Wn); r.banner = 'ðŸ‰ The dragon sniffs ' + (D || Wn).name + "'s chestâ€¦"; });
+        if (te > .8) cue('b', () => { SFX.boing(); r.banner = 'ðŸ™… â€¦not this one!'; });
+        if (te > 1.1) cue('c', () => { outcome('selected', Wn); SFX.sparkle(); r.banner = 'ðŸ‰ The dragon has chosen a chest!'; });
       }
       if (te > 2.7) cue('open', () => { SFX.sparkle(); SFX.pop(); FX.coins(STAGE[0], STAGE[1] - 60, 16, STAGE[1] + 10); FX.sparkle(STAGE[0], STAGE[1] - 70, 30); });
     },
@@ -131,7 +131,7 @@
       drawImg('dragon_01', 800 + Math.sin(t * .6) * 520, 770, 230, { anchor: 'bottom', flip: Math.cos(t * .6) < 0 });
     },
     onFinish() { FX.coins(STAGE[0], STAGE[1] - 120, 36, STAGE[1] + 20); },
-    winBanner: r => '💎 The treasure belongs to ' + r.winner.name + '!',
+    winBanner: r => 'ðŸ’Ž The treasure belongs to ' + r.winner.name + '!',
     winPos: () => ({ x: STAGE[0], y: STAGE[1] - 130 })
   };
 })();

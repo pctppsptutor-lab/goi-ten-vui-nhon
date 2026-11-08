@@ -1,4 +1,4 @@
-// Game 03 — Nồi phép thuật nổi loạn
+﻿// Game 03 â€” Ná»“i phÃ©p thuáº­t ná»•i loáº¡n
 // Students become magic orbs circling the cauldron; one orb is blasted up onto the announcement podium.
 // Twist: the first (golden) orb turns into soap bubbles; the frog assistant grabs the wand and points at the real winner.
 (() => {
@@ -28,10 +28,9 @@
 
   GAME_IMPL.g3 = {
     id: 'g3', title: 'Rebellious Cauldron', base: 'assets/g3/', titleY: 400,
-    assets: gAssets(['idle', 'twist', 'win'],
-      [...ORBS, 'golden_sphere', 'golden_orb_to_bubbles', 'bubble_cluster', 'cauldron', 'stone_pedestal', 'smoke_green', 'smoke_purple', 'smoke_pink',
-        'frog_ready', 'frog_jump', 'frog_staff', 'frog_point_true', 'frog_shocked', 'frog_bow', 'vfx_burst_orb', 'vfx_burst_flower', 'vfx_gold_trail', 'star_cluster']),
-    startBanner: '🔮 The magic orbs start circling the cauldron!', mote: '#d6b8ff', rayColor: '#e6ccff',
+    assets: gAssets(['idle', 'twist', 'win'], [...ORBS, 'golden_sphere', 'golden_orb_to_bubbles', 'bubble_cluster', 'cauldron', 'stone_pedestal', 'smoke_green', 'smoke_purple', 'smoke_pink',
+        'frog_ready', 'frog_jump', 'frog_point_true', 'frog_shocked', 'frog_bow', 'vfx_burst_orb', 'vfx_burst_flower', 'vfx_gold_trail', 'star_cluster']),
+    startBanner: 'ðŸ”® The magic orbs start circling the cauldron!', mote: '#d6b8ff', rayColor: '#e6ccff',
 
     setup(r) {
       r.players.forEach((p, i) => { p.i = i; p.a0 = i / r.players.length * Math.PI * 2; });
@@ -44,17 +43,17 @@
 
     tick(r, t, te) {
       const f = activeFake(r, t), D = r.decoy, Wn = r.winner;
-      if (f && te < 0) cue('fk' + f.at, () => { r.banner = '🔮 ' + f.p.name + "'s orb shoots up!"; SFX.leader(); });
+      if (f && te < 0) cue('fk' + f.at, () => { r.banner = 'ðŸ”® ' + f.p.name + "'s orb shoots up!"; SFX.leader(); });
       if (te < 0 && Math.random() < .02) SFX.tone(300 + Math.random() * 300, .12, { vol: .05, to: 700 });   // bubbling
       if (!r.plain) {
-        if (te > 0) cue('a', () => { Music.play('tension'); outcome('almost_selected', D); SFX.swoosh(); r.banner = '✨ A golden orb blasts onto the podium!'; });
-        if (te > .9) cue('b', () => { outcome('wrong_turn', D); FX.bubbles(POD.x, TOP - 60, 26, '#d8f7ff'); SFX.bubbles(); SFX.sadTrombone(); r.banner = '🫧 Oh! The golden orb turns into soap bubbles!'; });
-        if (te > 1.3) cue('c', () => { CAM.shake(r, 5); SFX.boing(); r.banner = '🐸 The frog grabs the magic wand…'; });
-        if (te > 1.7) cue('d', () => { FX.line(520, FROG.y - 150, Wn.x, Wn.y - 40, 22); outcome('selected', Wn); SFX.sparkle(); r.banner = '🪄 …and points at the real orb!'; });
+        if (te > 0) cue('a', () => { Music.play('tension'); outcome('almost_selected', D); SFX.swoosh(); r.banner = 'âœ¨ A golden orb blasts onto the podium!'; });
+        if (te > .9) cue('b', () => { outcome('wrong_turn', D); FX.bubbles(POD.x, TOP - 60, 26, '#d8f7ff'); SFX.bubbles(); SFX.sadTrombone(); r.banner = 'ðŸ«§ Oh! The golden orb turns into soap bubbles!'; });
+        if (te > 1.3) cue('c', () => { CAM.shake(r, 5); SFX.boing(); r.banner = 'ðŸ¸ The frog grabs the magic wandâ€¦'; });
+        if (te > 1.7) cue('d', () => { FX.line(520, FROG.y - 150, Wn.x, Wn.y - 40, 22); outcome('selected', Wn); SFX.sparkle(); r.banner = 'ðŸª„ â€¦and points at the real orb!'; });
       } else {
-        if (te > 0) cue('a', () => { Music.play('tension'); outcome('almost_selected', D || Wn); r.banner = '🔮 ' + (D || Wn).name + "'s orb rises…"; });
-        if (te > .9) cue('b', () => { SFX.boing(); r.banner = '😮 …and drops back down!'; });
-        if (te > 1) cue('c', () => { FX.line(FROG.x + 60, FROG.y - 150, Wn.x, Wn.y - 40, 22); outcome('selected', Wn); SFX.sparkle(); r.banner = '🐸 The frog points the wand at this orb!'; });
+        if (te > 0) cue('a', () => { Music.play('tension'); outcome('almost_selected', D || Wn); r.banner = 'ðŸ”® ' + (D || Wn).name + "'s orb risesâ€¦"; });
+        if (te > .9) cue('b', () => { SFX.boing(); r.banner = 'ðŸ˜® â€¦and drops back down!'; });
+        if (te > 1) cue('c', () => { FX.line(FROG.x + 60, FROG.y - 150, Wn.x, Wn.y - 40, 22); outcome('selected', Wn); SFX.sparkle(); r.banner = 'ðŸ¸ The frog points the wand at this orb!'; });
       }
       const fly = r.plain ? 1.3 : 1.9, pop = r.plain ? 2.6 : 2.8;
       if (te > fly) cue('fly', () => { SFX.wheee(); });
@@ -136,7 +135,7 @@
       }
       drawImg('frog_ready', FROG.x, FROG.y, 190, { anchor: 'bottom' });
     },
-    winBanner: r => '🏆 ' + r.winner.name + ' takes the podium!',
+    winBanner: r => 'ðŸ† ' + r.winner.name + ' takes the podium!',
     winPos: () => ({ x: POD.x, y: TOP - 120 })
   };
 })();
