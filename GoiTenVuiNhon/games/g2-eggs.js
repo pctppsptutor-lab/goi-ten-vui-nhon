@@ -3,7 +3,7 @@
 // Twist: the first egg to hatch only holds a rubber chicken; the mother dinosaur rolls the real egg into the winner's nest.
 (() => {
   const NESTS = [[387, 327], [620, 300], [1013, 300], [1240, 327], [227, 407], [1387, 407], [180, 513], [1433, 520], [320, 620], [1287, 620]];
-  const WIN_NEST = [800, 748], EGG_H = 150;
+  const WIN_NEST = [800, 748], EGG_H = 116;
 
   // an egg sprite rotated around its own centre, sitting on (x, y)
   function egg(av, pose, x, y, h, rot = 0, alpha = 1) {
@@ -19,7 +19,7 @@
 
     setup(r) {
       const slots = spread(r.players.length);
-      r.players.forEach((p, i) => { [p.hx, p.hy] = NESTS[slots[i]]; p.hy += 22; p.x = p.hx; p.y = p.hy; });
+      r.players.forEach((p, i) => { [p.hx, p.hy] = NESTS[slots[i]]; p.hy += 38; p.x = p.hx; p.y = p.hy; });
       r.fakes = makeFakes(r, 1.2);
       // the dinosaur comes in from the side nearer the winner
       r.dinoFrom = r.winner.hx > 800 ? 1750 : -150;
@@ -108,7 +108,7 @@
 
     idle(t) {
       drawImg('winner_nest', WIN_NEST[0], WIN_NEST[1] + 20, 230, { anchor: 'bottom' });
-      NESTS.forEach(([x, y], i) => egg(i, 'egg', x, y + 22, EGG_H, Math.sin(t * 2 + i) * .05));
+      NESTS.forEach(([x, y], i) => egg(i, 'egg', x, y + 38, EGG_H, Math.sin(t * 2 + i) * .05));
       drawImg('dino_idle', 95, 900, 220, { anchor: 'bottom' });
     },
     onFinish() { FX.shards(WIN_NEST[0], WIN_NEST[1] - 90, 34); FX.smoke(WIN_NEST[0], WIN_NEST[1], 8, '#fff6dc'); },

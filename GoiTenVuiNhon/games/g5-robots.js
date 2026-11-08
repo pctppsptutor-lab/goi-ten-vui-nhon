@@ -2,7 +2,7 @@
 // Student robots ride the conveyor under a scanner; the scanner stamps the chosen one.
 // Twist: the stamp lands on the wrong robot and throws an error; the belt reverses and carries the last robot to the charging platform.
 (() => {
-  const X0 = 240, STEP = 130.6, BELT_Y = 650, KID_H = 150, SCAN_X = 763;
+  const X0 = 240, STEP = 130.6, BELT_Y = 658, KID_H = 150, SCAN_X = 763;
   const PAD = [1457, 432];
   const pose = (av, p) => p;   // every pose is usable since the source sprites were repaired
 

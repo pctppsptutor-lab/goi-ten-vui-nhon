@@ -13,10 +13,10 @@
     drawImg(golden ? 'golden_sphere' : ORBS[p.i % 10], x, y, size);
     const im = IMG['c' + p.av + '_idle'];
     if (im) {
-      const h = size * 2.3, w = im.width * h / im.height;
+      const h = size * 1.65, w = im.width * h / im.height;
       ctx.beginPath(); ctx.arc(x, y + 2, size * .36, 0, 7); ctx.clip();
       ctx.fillStyle = 'rgba(255,255,255,.6)'; ctx.fill();          // glassy window so the face reads clearly
-      ctx.globalAlpha = alpha; ctx.drawImage(im, x - w / 2, y - size * .32, w, h);
+      ctx.globalAlpha = alpha; ctx.drawImage(im, x - w / 2, y - size * .30, w, h);
     }
     ctx.restore();
   }
