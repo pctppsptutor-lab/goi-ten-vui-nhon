@@ -86,10 +86,11 @@
         if (D && te > -.4 && te < 1.2) trail(D.door, clamp((te + .4) / .4), 1 - clamp((te - .8) / .4));
         if (te > 1) trail(Wn.door, clamp((te - 1) / .8));
       }
-      // skeleton janitor at the signpost
+      // skeleton janitor patrols along the hotel corridor
       const spin = !r.plain && te > 1.2 && te < 2.2;
+      const jx = spin || done ? SIGN[0] + 120 : SIGN[0] + 180 + Math.sin(rt * 1.4) * 120, jy = SIGN[1] + 150 - Math.abs(Math.sin(rt * 5.6)) * 10;
       if (spin) drawImg('p27', SIGN[0], SIGN[1] - 70, 120, { rot: rt * 8, alpha: .9 });
-      drawImg(done ? 'p4' : spin ? 'p2' : 'p0', SIGN[0] + 120, SIGN[1] + 150, 170, { anchor: 'bottom' });
+      drawImg(done ? 'p4' : spin ? 'p2' : 'p0', jx, jy, 170, { anchor: 'bottom', flip: !spin && !done && Math.cos(rt * 1.4) < 0 });
       // winner walks out to the pedestal
       if (te > openW + .3 && !done) {
         const k = ease(clamp((te - openW - .3) / (3.2 - openW - .3))), d = Wn.door, x = lerp(d[0], PED[0], k), y = lerp(d[1], PED[1], k);
@@ -107,7 +108,7 @@
 
     idle(t) {
       DOORS.forEach((d, i) => { const k = clamp(Math.sin(t * .8 + i * .7) * 2 - 1); if (k > 0) { drawImg(ICONS[i], d[0], d[2], 56, { alpha: k }); doorway(d, k, (x, y) => charImg(i, 'observe', x, y + 6, 100)); } });
-      drawImg('p0', SIGN[0] + 120, SIGN[1] + 150, 170, { anchor: 'bottom' });
+      drawImg('p0', SIGN[0] + 180 + Math.sin(t * 1.3) * 120, SIGN[1] + 150 - Math.abs(Math.sin(t * 5.2)) * 10, 170, { anchor: 'bottom', flip: Math.cos(t * 1.3) < 0 });
     },
     onFinish() { FX.smoke(PED[0], PED[1] - 20, 10, '#bfefff'); },
     winBanner: r => '🗝️ The secret room belongs to ' + r.winner.name + '!',

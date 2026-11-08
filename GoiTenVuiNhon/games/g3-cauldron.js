@@ -103,14 +103,16 @@
         charImg(D.av, 'twist', POD.x - 200, POD.y - 20, 190, { alpha: clamp((te - 1) / .3) });
         tagC(D.name, POD.x - 200, POD.y + 4, false);
       }
-      // frog assistant
-      let fx = FROG.x, fy = FROG.y, fp = 'frog_ready';
+      // frog assistant actively hops around the cauldron chasing orbs
+      const hopPhase = Math.sin(rt * 6.5), inAir = Math.abs(hopPhase) > .45;
+      let fx = 340 + Math.sin(rt * 1.45) * 190, fy = FROG.y + Math.cos(rt * 1.45) * 28 - Math.abs(hopPhase) * 38;
+      let fp = inAir ? 'frog_jump' : (f ? 'frog_point_true' : 'frog_ready'), fFlip = Math.cos(rt * 1.45) < 0;
       const jump = r.plain ? null : [1.3, 1.7];
-      if (jump && te > jump[0]) { const k = ease(clamp((te - jump[0]) / (jump[1] - jump[0]))); fx = lerp(FROG.x, 520, k); fy = FROG.y - 40 * k - Math.sin(k * Math.PI) * 120; fp = k < 1 ? 'frog_jump' : 'frog_point_true'; }
-      if (r.plain && te > 1) { fp = 'frog_point_true'; }
-      if (!r.plain && te > .9 && te < 1.3) fp = 'frog_shocked';
-      if (done) fp = 'frog_bow';
-      drawImg(fp, fx, fy, 190, { anchor: 'bottom', flip: fp === 'frog_point_true' && Wn.x < fx });
+      if (jump && te > jump[0]) { const k = ease(clamp((te - jump[0]) / (jump[1] - jump[0]))); fx = lerp(FROG.x, 520, k); fy = FROG.y - 40 * k - Math.sin(k * Math.PI) * 120; fp = k < 1 ? 'frog_jump' : 'frog_point_true'; fFlip = Wn.x < fx; }
+      if (r.plain && te > 1) { fp = 'frog_point_true'; fFlip = Wn.x < fx; }
+      if (!r.plain && te > .9 && te < 1.3) { fp = 'frog_shocked'; fy = FROG.y - Math.abs(Math.sin(rt * 12)) * 20; }
+      if (done) { fp = 'frog_bow'; fx = 520; fy = FROG.y - Math.abs(Math.sin(rt * 5)) * 10; fFlip = false; }
+      drawImg(fp, fx, fy, 190, { anchor: 'bottom', flip: fFlip });
       if (done || te > pop) {
         const k = clamp((rt - r.TW - pop) / .4);
         drawImg('star_cluster', POD.x, TOP - 160, 260, { alpha: .8 });
@@ -133,7 +135,8 @@
         fake.i = i; fake.av = i;
         if (Math.sin(a) >= 0) orb(fake, C.x + Math.cos(a) * RX, C.y + Math.sin(a) * RY, ORB, false);
       }
-      drawImg('frog_ready', FROG.x, FROG.y, 190, { anchor: 'bottom' });
+      const hop = Math.abs(Math.sin(t * 5.5)) * 34, fx = 340 + Math.sin(t * 1.3) * 180;
+      drawImg(hop > 16 ? 'frog_jump' : 'frog_ready', fx, FROG.y - hop, 190, { anchor: 'bottom', flip: Math.cos(t * 1.3) < 0 });
     },
     winBanner: r => '🏆 ' + r.winner.name + ' takes the podium!',
     winPos: () => ({ x: POD.x, y: TOP - 120 })

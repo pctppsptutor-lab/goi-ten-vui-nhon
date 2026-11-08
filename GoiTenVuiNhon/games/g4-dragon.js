@@ -47,8 +47,8 @@
 
     // where the dragon stands, and in which pose
     dragon(r, rt, te, f) {
-      const done = r.phase === 'done';
-      if (done) return { x: STAGE[0] + 250, y: STAGE[1] + 10, pose: 'dragon_07' };
+      const done = r.phase === 'done', hop = Math.abs(Math.sin(rt * 6.5)) * 28;
+      if (done) return { x: STAGE[0] + 250, y: STAGE[1] + 10 - Math.abs(Math.sin(rt * 5)) * 14, pose: 'dragon_07' };
       const at = p => { const o = r.final.get(p); return { x: o.x + 120, y: o.y + 70 }; };
       if (te >= 0) {
         const D = r.decoy, Wn = r.winner;
@@ -60,8 +60,10 @@
         if (te < 1.6) return { ...at(D), pose: 'dragon_05' };
         return { ...at(D), pose: 'dragon_06' };
       }
-      if (f) { const o = layout(r, rt).get(f.p); return { x: o.x + 120, y: o.y + 70, pose: 'dragon_02' }; }
-      return { x: 800 + Math.sin(rt * .6) * 520, y: 770, pose: 'dragon_01', flip: Math.cos(rt * .6) < 0 };
+      if (f) { const o = layout(r, rt).get(f.p); return { x: o.x + 115, y: o.y + 65 - hop * .6, pose: Math.floor(rt * 6) % 2 ? 'dragon_02' : 'dragon_03', flip: o.x > 800 }; }
+      const px = 800 + Math.sin(rt * 1.35) * 540, py = 745 + Math.cos(rt * 2.1) * 55 - hop;
+      const poses = ['dragon_01', 'dragon_02', 'dragon_04', 'dragon_02'];
+      return { x: px, y: py, pose: poses[Math.floor(rt * 3.8) % 4], flip: Math.cos(rt * 1.35) < 0 };
     },
 
     tick(r, t, te) {
@@ -128,7 +130,8 @@
 
     idle(t) {
       SLABS.forEach(([x, y], i) => drawImg('chest_' + String(i + 1).padStart(2, '0'), x, y + 14 - Math.abs(Math.sin(t * 2 + i)) * 6, CHEST_W, { anchor: 'bottom' }));
-      drawImg('dragon_01', 800 + Math.sin(t * .6) * 520, 770, 230, { anchor: 'bottom', flip: Math.cos(t * .6) < 0 });
+      const hop = Math.abs(Math.sin(t * 6)) * 24, poses = ['dragon_01', 'dragon_02', 'dragon_04', 'dragon_02'];
+      drawImg(poses[Math.floor(t * 3.5) % 4], 800 + Math.sin(t * 1.25) * 520, 755 + Math.cos(t * 1.9) * 45 - hop, 230, { anchor: 'bottom', flip: Math.cos(t * 1.25) < 0 });
     },
     onFinish() { FX.coins(STAGE[0], STAGE[1] - 120, 36, STAGE[1] + 20); },
     winBanner: r => '💎 The treasure belongs to ' + r.winner.name + '!',

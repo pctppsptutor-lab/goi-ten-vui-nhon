@@ -56,9 +56,10 @@
       // charging pad + scanner
       drawImg('p31', PAD[0], PAD[1] + 10, 190, { anchor: 'bottom', alpha: .6 + .4 * Math.sin(rt * 4) });
       const err = !r.plain && te > .9 && !done;
-      if (te < .9 && !done) FX.beam(SCAN_X, BELT_Y - 330, BELT_Y + 4, 70, rt, err ? '#ff5d5d' : '#5dff9a');
-      drawImg(err ? 'p0' : te > 0 && !done ? 'p2' : done ? 'p3' : 'p1', SCAN_X + 150, BELT_Y - 150, 170, { anchor: 'bottom', flip: true });
-      if (err) { const on = Math.sin(rt * 14) > 0; drawImg('p23', SCAN_X + 150, BELT_Y - 330, 80, { anchor: 'bottom', alpha: on ? 1 : .35 }); }
+      const sx = te < 0 ? SCAN_X + Math.sin(rt * 2.2) * 110 : SCAN_X;
+      if (te < .9 && !done) FX.beam(sx, BELT_Y - 330, BELT_Y + 4, 70, rt, err ? '#ff5d5d' : '#5dff9a');
+      drawImg(err ? 'p0' : te > 0 && !done ? 'p2' : done ? 'p3' : 'p1', sx + 150, BELT_Y - 150 + Math.sin(rt * 5) * 8, 170, { anchor: 'bottom', flip: Math.cos(rt * 2.2) >= 0 || te >= 0 });
+      if (err) { const on = Math.sin(rt * 14) > 0; drawImg('p23', sx + 150, BELT_Y - 330, 80, { anchor: 'bottom', alpha: on ? 1 : .35 }); }
       // robots on the belt
       const order = [...r.players].sort((a, b) => this.idx(r, a, rt) - this.idx(r, b, rt));
       for (const p of order) {
@@ -101,7 +102,7 @@
 
     idle(t) {
       drawImg('p31', PAD[0], PAD[1] + 10, 190, { anchor: 'bottom', alpha: .7 });
-      drawImg('p1', SCAN_X + 150, BELT_Y - 150, 170, { anchor: 'bottom', flip: true });
+      drawImg('p1', SCAN_X + 150 + Math.sin(t * 2) * 100, BELT_Y - 150 + Math.sin(t * 5) * 8, 170, { anchor: 'bottom', flip: Math.cos(t * 2) >= 0 });
       for (let k = 0; k < 10; k++) {
         const x = X0 + (((k - t * .6) % 10 + 10) % 10) * STEP;
         charImg(k, 'idle', x, BELT_Y - Math.abs(Math.sin(t * 6 + k)) * 4, KID_H, { alpha: x < 200 ? clamp((x - 150) / 50) : 1 });

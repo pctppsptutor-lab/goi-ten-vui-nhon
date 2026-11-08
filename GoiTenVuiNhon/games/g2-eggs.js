@@ -58,24 +58,25 @@
     render(r, t) {
       const rt = r.now, te = rt - r.TW, done = r.phase === 'done', f = activeFake(r, rt), D = r.decoy, Wn = r.winner;
       drawImg('winner_nest', WIN_NEST[0], WIN_NEST[1] + 20, 230, { anchor: 'bottom' });
-      // mother dinosaur
-      let dx = 95, dy = 900, dpose = rt < 1 ? 'dino_pointing' : f ? 'dino_thinking' : 'dino_idle', flip = false;
+      // mother dinosaur patrols and inspects nests actively
+      const walk = Math.sin(rt * 1.25) * 210, hopD = Math.abs(Math.sin(rt * 5)) * 14;
+      let dx = 310 + walk, dy = 895 - hopD, dpose = ['dino_idle', 'dino_pointing', 'dino_thinking', 'dino_idle'][Math.floor(rt * 2) % 4], flip = Math.cos(rt * 1.25) < 0;
+      if (f && te < 0) { dx = lerp(dx, clamp(f.p.hx, 220, 1380), .45); dpose = 'dino_thinking'; flip = f.p.hx < dx; }
       if (!r.plain && te > 1.1 && !done) {
         const [ex, ey] = this.winnerEgg(r, te), side = r.dinoFrom > 800 ? 1 : -1;
         dx = lerp(r.dinoFrom, ex + side * 130, ease(clamp((te - 1.1) / .5))); dy = ey + 40;
         dpose = te < 2.6 ? 'dino_tail_roll_egg' : 'dino_pointing'; flip = side < 0;
       } else if (r.plain && te > 1 && !done) dpose = 'dino_pointing';
-      if (done) { dx = WIN_NEST[0] + 230; dy = WIN_NEST[1] + 30; dpose = 'dino_celebrate'; }
+      if (done) { dx = WIN_NEST[0] + 230; dy = WIN_NEST[1] + 30 - Math.abs(Math.sin(rt * 6)) * 12; dpose = 'dino_celebrate'; flip = false; }
       if (te > .7 && te < 1.1 && !r.plain) dpose = 'dino_shocked';
       const order = [...r.players].sort((a, b) => a.hy - b.hy);
       for (const p of order) {
         const isW = p === Wn, isD = p === D;
         if (isW && (done || te > (r.plain ? 1.2 : 1.6))) continue;          // drawn separately while moving
         if (isD && !r.plain && te > .7) {                                      // hatched: rubber chicken
-          drawImg('cracked_eggshells', p.hx, p.hy + 4, 130, { anchor: 'bottom' });
           const b = clamp((te - .7) / .35), bounce = Math.abs(Math.sin(rt * 7)) * 18;
-          drawImg('rubber_chicken', p.hx - 30, p.hy - 20 - b * 60 - bounce, 70, { anchor: 'bottom', rot: Math.sin(rt * 9) * .3 });
-          charImg(p.av, 'twist', p.hx + 34, p.hy + 4, 120, { fallback: 'egg' });
+          charImg(p.av, 'twist', p.hx, p.hy + 6, 124, { fallback: 'egg' });
+          drawImg('rubber_chicken', p.hx - 48, p.hy - 30 - b * 55 - bounce, 68, { anchor: 'bottom', rot: Math.sin(rt * 9) * .3 });
           tagC(p.name, p.hx, p.hy + 34, false);
           continue;
         }
@@ -109,7 +110,8 @@
     idle(t) {
       drawImg('winner_nest', WIN_NEST[0], WIN_NEST[1] + 20, 230, { anchor: 'bottom' });
       NESTS.forEach(([x, y], i) => egg(i, 'egg', x, y + 38, EGG_H, Math.sin(t * 2 + i) * .05));
-      drawImg('dino_idle', 95, 900, 220, { anchor: 'bottom' });
+      const walk = Math.sin(t * 1.1) * 200, hopD = Math.abs(Math.sin(t * 4.4)) * 12;
+      drawImg(Math.floor(t * 1.5) % 2 ? 'dino_pointing' : 'dino_idle', 310 + walk, 895 - hopD, 220, { anchor: 'bottom', flip: Math.cos(t * 1.1) < 0 });
     },
     onFinish() { FX.shards(WIN_NEST[0], WIN_NEST[1] - 90, 34); FX.smoke(WIN_NEST[0], WIN_NEST[1], 8, '#fff6dc'); },
     winBanner: r => '🐣 ' + r.winner.name + ' has hatched!',
