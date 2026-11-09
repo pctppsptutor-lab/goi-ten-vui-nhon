@@ -7,7 +7,7 @@
 
   // an egg sprite rotated around its own centre, sitting on (x, y)
   function egg(av, pose, x, y, h, rot = 0, alpha = 1) {
-    const im = IMG['c' + av + '_' + pose]; if (!im) return;
+    const im = IMG['c' + av + '_' + pose] || IMG['c' + av + '_egg']; if (!im) return;
     const w = im.width * h / im.height;
     ctx.save(); ctx.globalAlpha = alpha; ctx.translate(x, y - h / 2); ctx.rotate(rot); ctx.drawImage(im, -w / 2, -h / 2, w, h); ctx.restore();
   }
