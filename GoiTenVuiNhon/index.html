@@ -786,7 +786,7 @@ const DUCK_W = 104;
 const cv = document.getElementById('stage'), ctx = cv.getContext('2d');
 const SCALE = cv.width / W;
 const bezier = (p, t) => { const u = 1 - t; return [0, 1].map(k => u * u * u * p[0][k] + 3 * u * u * t * p[1][k] + 3 * u * t * t * p[2][k] + t * t * t * p[3][k]); };
-const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+function clamp(v, a = 0, b = 1) { return Math.max(a, Math.min(b, v)); }
 const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 const lerp = (a, b, t) => a + (b - a) * t;
 
