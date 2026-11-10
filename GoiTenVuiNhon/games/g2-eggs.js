@@ -57,7 +57,7 @@
 
     render(r, t) {
       const rt = r.now, te = rt - r.TW, done = r.phase === 'done', f = activeFake(r, rt), D = r.decoy, Wn = r.winner;
-      drawImg('winner_nest', WIN_NEST[0], WIN_NEST[1] + 20, 230, { anchor: 'bottom' });
+      if (!done) drawImg('winner_nest', WIN_NEST[0], WIN_NEST[1] + 20, 230, { anchor: 'bottom' });
       // mother dinosaur patrols and inspects nests actively
       const walk = Math.sin(rt * 1.25) * 210, hopD = Math.abs(Math.sin(rt * 5)) * 14;
       let dx = 310 + walk, dy = 895 - hopD, dpose = ['dino_idle', 'dino_pointing', 'dino_thinking', 'dino_idle'][Math.floor(rt * 2) % 4], flip = Math.cos(rt * 1.25) < 0;
@@ -65,7 +65,7 @@
       if (!r.plain && te > 1.1 && !done) {
         const [ex, ey] = this.winnerEgg(r, te), side = r.dinoFrom > 800 ? 1 : -1;
         dx = lerp(r.dinoFrom, ex + side * 130, ease(clamp((te - 1.1) / .5))); dy = ey + 40;
-        dpose = te < 2.6 ? 'dino_tail_roll_egg' : 'dino_pointing'; flip = side < 0;
+        dpose = te < 2.6 ? 'dino_tail_roll_egg' : 'dino_pointing'; flip = side > 0;
       } else if (r.plain && te > 1 && !done) dpose = 'dino_pointing';
       if (done) { dx = WIN_NEST[0] + 230; dy = WIN_NEST[1] + 30 - Math.abs(Math.sin(rt * 6)) * 12; dpose = 'dino_celebrate'; flip = false; }
       if (te > .7 && te < 1.1 && !r.plain) dpose = 'dino_shocked';
@@ -104,7 +104,7 @@
         charImg(Wn.av, 'win', WIN_NEST[0], WIN_NEST[1] + 10, 250 * (.6 + .4 * ease(k)));
         tagC(Wn.name, WIN_NEST[0], WIN_NEST[1] + 40, true);
       }
-      drawImg(dpose, dx, dy, dpose === 'dino_tail_roll_egg' ? 330 : 220, { anchor: 'bottom', flip });
+      drawImg(dpose, dx, dy, dpose === 'dino_tail_roll_egg' ? 235 : 220, { anchor: 'bottom', flip });
     },
 
     idle(t) {

@@ -53,17 +53,17 @@
       if (te >= 0) {
         const D = r.decoy, Wn = r.winner;
         if (r.plain) {
-          if (te < 1) return { ...at(D || Wn), pose: te < .8 ? 'dragon_02' : 'dragon_01' };
-          const o = at(Wn); return { ...o, pose: te < 1.3 ? 'dragon_04' : 'dragon_01' };
+          if (te < 1) return { ...at(D || Wn), pose: te < .8 ? 'dragon_02' : 'dragon_01', flip: te >= .8 };
+          const o = at(Wn); return { ...o, pose: te < 1.3 ? 'dragon_04' : 'dragon_01', flip: te >= 1.3 };
         }
-        if (te < 1.1) return { ...at(D), pose: te < .6 ? 'dragon_03' : 'dragon_01' };
-        if (te < 1.6) return { ...at(D), pose: 'dragon_05' };
+        if (te < 1.1) return { ...at(D), pose: te < .6 ? 'dragon_03' : 'dragon_01', flip: te >= .6 };
+        if (te < 1.6) return { ...at(D), pose: 'dragon_05', flip: true };
         return { ...at(D), pose: 'dragon_06' };
       }
-      if (f) { const o = layout(r, rt).get(f.p); return { x: o.x + 115, y: o.y + 65 - hop * .6, pose: Math.floor(rt * 6) % 2 ? 'dragon_02' : 'dragon_03', flip: o.x > 800 }; }
+      if (f) { const o = layout(r, rt).get(f.p); return { x: o.x + 115, y: o.y + 65 - hop * .6, pose: Math.floor(rt * 6) % 2 ? 'dragon_02' : 'dragon_03' }; }
       const px = 800 + Math.sin(rt * 1.35) * 540, py = 745 + Math.cos(rt * 2.1) * 55 - hop;
-      const poses = ['dragon_01', 'dragon_02', 'dragon_04', 'dragon_02'];
-      return { x: px, y: py, pose: poses[Math.floor(rt * 3.8) % 4], flip: Math.cos(rt * 1.35) < 0 };
+      const left = Math.cos(rt * 1.35) < 0;
+      return { x: px, y: py, pose: left ? 'dragon_02' : 'dragon_01' };
     },
 
     tick(r, t, te) {
@@ -77,7 +77,7 @@
         if (te > 1.5) cue('d', () => { outcome('selected', Wn); SFX.wheee(); r.banner = '✨ A chest slides out of the gold pile!'; });
       } else {
         if (te > 0) cue('a', () => { Music.play('tension'); outcome('almost_selected', D || Wn); r.banner = '🐉 The dragon sniffs ' + (D || Wn).name + "'s chest…"; });
-        if (te > .8) cue('b', () => { SFX.boing(); r.banner = '🙅 …not this one!'; });
+        if (D && te > .8) cue('b', () => { SFX.boing(); r.banner = '🙅 …not this one!'; });
         if (te > 1.1) cue('c', () => { outcome('selected', Wn); SFX.sparkle(); r.banner = '🐉 The dragon has chosen a chest!'; });
       }
       if (te > 2.7) cue('open', () => { SFX.sparkle(); SFX.pop(); FX.coins(STAGE[0], STAGE[1] - 60, 16, STAGE[1] + 10); FX.sparkle(STAGE[0], STAGE[1] - 70, 30); });
@@ -130,8 +130,8 @@
 
     idle(t) {
       SLABS.forEach(([x, y], i) => drawImg('chest_' + String(i + 1).padStart(2, '0'), x, y + 14 - Math.abs(Math.sin(t * 2 + i)) * 6, CHEST_W, { anchor: 'bottom' }));
-      const hop = Math.abs(Math.sin(t * 6)) * 24, poses = ['dragon_01', 'dragon_02', 'dragon_04', 'dragon_02'];
-      drawImg(poses[Math.floor(t * 3.5) % 4], 800 + Math.sin(t * 1.25) * 520, 755 + Math.cos(t * 1.9) * 45 - hop, 230, { anchor: 'bottom', flip: Math.cos(t * 1.25) < 0 });
+      const hop = Math.abs(Math.sin(t * 6)) * 24, left = Math.cos(t * 1.25) < 0;
+      drawImg(left ? 'dragon_02' : 'dragon_01', 800 + Math.sin(t * 1.25) * 520, 755 + Math.cos(t * 1.9) * 45 - hop, 230, { anchor: 'bottom' });
     },
     onFinish() { FX.coins(STAGE[0], STAGE[1] - 120, 36, STAGE[1] + 20); },
     winBanner: r => '💎 The treasure belongs to ' + r.winner.name + '!',
