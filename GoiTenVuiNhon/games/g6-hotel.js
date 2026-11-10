@@ -33,7 +33,7 @@
   const openK = (t, a, b) => clamp((t - a) / .35) * (1 - clamp((t - b + .35) / .35));
 
   GAME_IMPL.g6 = {
-    id: 'g6', title: 'Haunted Hotel Lift', base: 'assets/g6/', titleY: 650,
+    id: 'g6', title: 'Ghost in the Lift', base: 'assets/g6/', titleY: 650,
     assets: gAssets(['observe', 'follow', 'win'], [...ICONS, 'p0', 'p2', 'p4', 'p17', 'p26', 'p27']),
     startBanner: '🛎️ Remember each room\'s symbol!', mote: '#9ff7ff', rayColor: '#fff0b0',
 

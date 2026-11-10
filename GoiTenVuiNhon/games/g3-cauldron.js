@@ -27,7 +27,7 @@
   const arc = (a, b, k, lift) => [lerp(a[0], b[0], k), lerp(a[1], b[1], k) - Math.sin(k * Math.PI) * lift];
 
   GAME_IMPL.g3 = {
-    id: 'g3', title: 'Rebellious Cauldron', base: 'assets/g3/', titleY: 400,
+    id: 'g3', title: 'Magic Pot Goes Pop', base: 'assets/g3/', titleY: 400,
     assets: gAssets(['idle', 'twist', 'win'], [...ORBS, 'golden_sphere', 'golden_orb_to_bubbles', 'bubble_cluster', 'cauldron', 'stone_pedestal', 'smoke_green', 'smoke_purple', 'smoke_pink',
         'frog_ready', 'frog_jump', 'frog_point_true', 'frog_shocked', 'frog_bow', 'vfx_burst_orb', 'vfx_burst_flower', 'vfx_gold_trail', 'star_cluster']),
     startBanner: '🔮 The magic orbs start circling the cauldron!', mote: '#d6b8ff', rayColor: '#e6ccff',

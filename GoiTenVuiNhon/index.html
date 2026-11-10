@@ -38,6 +38,7 @@ button:disabled{cursor:not-allowed;opacity:.5}
 .logo{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:24px;line-height:1.35;background:linear-gradient(135deg,#ffd84a,#ff9f43);box-shadow:0 4px 0 #c46a00}
 .brand small{display:block;font-family:var(--font);font-size:13px;line-height:1.3;font-weight:600;color:#cbd5e1;text-shadow:none;margin-top:-2px}
 .classBtn{--c:var(--sun);--cd:var(--sun-d);color:#3d2600;padding:8px 16px;font-size:16px;display:flex;align-items:center;gap:8px;min-height:42px}
+.settingsPanel .classBtn{width:100%;margin-bottom:10px;text-align:left}
 .classBtn .pill{background:#ffffff99;border-radius:999px;padding:0 9px;font-size:14px;line-height:1.35}
 .vols{display:flex;align-items:center;gap:6px;padding:2px}
 .vol{text-decoration:none;color:#e2e8f0;font-size:14px;font-weight:800;padding:5px 10px;border-radius:10px;line-height:1.35;background:#ffffff14;border:1px solid #ffffff24}
@@ -247,7 +248,6 @@ textarea{font-family:inherit;font-size:17px;width:100%;min-height:260px;border:2
 <body>
 <header class="top">
   <div class="brand" id="brandBtn" title="Open 30-Game Catalog (G)"><span class="logo">🎲</span><span>Name Picker Party<small id="brandSub">Fun mini-games for calling on students</small></span></div>
-  <button id="classBtn" class="candy classBtn lockable">👩‍🏫 <span id="classLabel">Sample class · 10</span></button>
   <button id="drawerBtn" class="toolBtn" title="30-Game Catalog (G)"><span class="ico">🎮</span> <span id="drawerBtnTxt">30 Games</span></button>
   <nav class="vols lockable" aria-label="Game volumes">
     <a class="vol on" href="https://pctppsptutor-lab.github.io/goi-ten-vui-nhon/" aria-current="page">Vol 1</a>
@@ -291,6 +291,7 @@ textarea{font-family:inherit;font-size:17px;width:100%;min-height:260px;border:2
 
     <details class="panel settingsPanel lockable" id="settingsDetails" aria-label="Settings">
       <summary><span id="settingsHdr">⚙️ Settings</span><span class="badge" id="settingsSumBadge">15s</span></summary>
+      <button id="classBtn" class="candy classBtn lockable">👩‍🏫 <span id="classLabel">Sample class · 10</span></button>
       <div class="lab" id="roundLenLab">Round length</div>
       <div id="durChips" role="group" aria-label="Round length"></div>
       <label class="check"><input type="checkbox" id="restChk"><span id="restTxt">Skip students already picked</span></label>
@@ -639,12 +640,12 @@ const theme = (bpm, key, mode, instrument, melody, drums, cueFrom, cueTo, cueLen
   melody: melody.split(' ').map(note => note === '-' ? null : Number(note))
 });
 const GAME_AUDIO = {
-  g1: theme(112, 60, 'major', 'mallet', '0 4 - 7 9 7 - 4', 'k-h-sh-h', 760, 290, 0.16), // Duck Slide Race
-  g2: theme(104, 62, 'major', 'pluck', '0 - 7 4 - 2 9 -', 'k--h-s-h', 1850, 680, 0.09), // Mischievous Dino Eggs
-  g3: theme(88, 57, 'minor', 'bell', '0 7 - 10 14 - 12 3', 'k--h--s-', 520, 2200, 0.28), // Rebellious Cauldron
-  g4: theme(96, 55, 'minor', 'brass', '0 - 3 7 - 12 10 7', 'k-s-k-h-', 210, 950, 0.24), // Dragon Treasure Guard
-  g5: theme(123, 58, 'major', 'chip', '0 12 7 - 2 9 4 -', 'khshkhsh', 1560, 350, 0.12), // Faulty Robot Factory
-  g6: theme(83, 56, 'minor', 'glass', '0 - 7 - 15 14 - 3', 'k--h--h-', 440, 190, 0.32), // Haunted Hotel Lift
+  g1: theme(112, 60, 'major', 'mallet', '0 4 - 7 9 7 - 4', 'k-h-sh-h', 760, 290, 0.16), // Duck Splash
+  g2: theme(104, 62, 'major', 'pluck', '0 - 7 4 - 2 9 -', 'k--h-s-h', 1850, 680, 0.09), // Dino Egg Pop
+  g3: theme(88, 57, 'minor', 'bell', '0 7 - 10 14 - 12 3', 'k--h--s-', 520, 2200, 0.28), // Magic Pot Goes Pop
+  g4: theme(96, 55, 'minor', 'brass', '0 - 3 7 - 12 10 7', 'k-s-k-h-', 210, 950, 0.24), // Dragon Wants Gold
+  g5: theme(123, 58, 'major', 'chip', '0 12 7 - 2 9 4 -', 'khshkhsh', 1560, 350, 0.12), // Oops, Robot!
+  g6: theme(83, 56, 'minor', 'glass', '0 - 7 - 15 14 - 3', 'k--h--h-', 440, 190, 0.32), // Ghost in the Lift
 };
 const audioTheme = () => GAME_AUDIO[curGame()] || Object.values(GAME_AUDIO)[0];
 
@@ -1312,9 +1313,20 @@ function outcome(kind, duck, size = 230) {
 }
 function addFx(img, x, y, w, dur, opt = {}) { race.fx = race.fx || []; race.fx.push({ img, x, y, w, t0: race.now, dur, ...opt }); }
 
+const TWIST_END = 1.35;
+function roundRemaining(r) {
+  const te = r.now - r.TW;
+  if (te < 0) return r.T * (.65 - .35 * te / r.TW);
+  if (te < TWIST_END) return r.T * (.65 - .5 * te / TWIST_END);
+  return r.T * .15 * clamp((r.T - r.now) / (r.T - r.TW - TWIST_END));
+}
 function tickRace(dt) {
   const r = race, scale = r.slowUntil && performance.now() < r.slowUntil ? r.slowF : 1;
-  const t = r.now += dt * scale, te = t - r.TW;
+  const fraction = clamp((roundRemaining(r) - dt * scale) / r.T);
+  const t = r.now = fraction > .65 ? r.TW * (1 - fraction) / .35
+    : fraction > .15 ? r.TW + TWIST_END * (.65 - fraction) / .5
+    : fraction > 0 ? r.T - (r.T - r.TW - TWIST_END) * fraction / .15 : r.T;
+  const te = t - r.TW;
   if (r.game) { r.game.tick(r, t, te); countdown(r, t); return; }
   r.ducks.forEach(d => updateDuck(d, t));
   // leader tracking / banners
@@ -1330,7 +1342,7 @@ function tickRace(dt) {
   countdown(r, t);
 }
 function countdown(r, t) {   // heartbeat in the last 3 seconds, then finish
-  const left = Math.ceil(r.T - t);
+  const left = Math.ceil(roundRemaining(r));
   if (left <= 3 && left > 0 && (r.lastTick < 0 || left < r.lastTick)) { r.lastTick = left; SFX.heartbeat(); }
   if (t >= r.T && r.phase === 'run') finishRace();
 }
@@ -1409,7 +1421,7 @@ function renderIdle(t) {
   drawTurtle('turtle_idle', t);
   idleDucks.forEach((d, i) => drawSwimDuck(d, d.x + Math.sin(t * .6 + i) * 20, d.y + Math.cos(t * .5 + i) * 6, t, { wake: false }));
   FX.ambientFront(t, '#ffd84a');
-  idleOverlay('Duck Slide Race', t);
+  idleOverlay('Duck Splash', t);
 }
 function idleOverlay(title, t, y = 420) {
   banner(hasPool ? 'Press ▶ Pick a name! or Space' : 'Everyone has been picked! Press ↺ Start over', t);
@@ -1484,7 +1496,7 @@ function drawFx(r) {
 }
 function phaseHud(r) {
   const phs = L().phases; if (!phs) return;
-  const te = r.now - r.TW, step = r.phase === 'done' || te >= 1.35 ? 2 : te >= 0 ? 1 : 0;
+  const te = r.now - r.TW, step = r.phase === 'done' || te >= TWIST_END ? 2 : te >= 0 ? 1 : 0;
   const cols = ['#38bdf8', '#fbbf24', '#34d399'];
   ctx.save(); ctx.font = '700 18px "Baloo 2","Segoe UI",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   const ws = phs.map(s => ctx.measureText(s).width + 28), gap = 10, total = ws.reduce((a, b) => a + b, 0) + gap * 2;
@@ -1515,8 +1527,8 @@ function hud(r, t, dt) {
   CAM.end();
   banner(r.banner, t);
   phaseHud(r);
-  if (r.phase !== 'done') timerChip(Math.max(0, Math.ceil(r.T - r.now)));
-  const left = r.T - r.now;
+  if (r.phase !== 'done') timerChip(Math.max(0, Math.ceil(roundRemaining(r))));
+  const left = roundRemaining(r);
   if (r.phase === 'run' && left <= 3 && left > 0) {
     const pulse = .24 + .12 * Math.sin(r.now * 8);
     drawVignette(pulse);
@@ -1686,7 +1698,7 @@ function banner(text, t) {
   ctx.fillText(text, x + icon / 2 + w / 2 - 12, y + h / 2 + 3, w - icon - 40); ctx.restore();
 }
 function timerChip(n) {
-  const r = race, frac = r ? clamp(1 - r.now / r.T) : 0, x = 1505, y = 72, R = 46, hot = n <= 3;
+  const r = race, frac = r ? clamp(roundRemaining(r) / r.T) : 0, x = 1505, y = 72, R = 46, hot = n <= 3;
   const pulse = hot ? 1 + .08 * Math.max(0, Math.sin((r ? r.now : 0) * Math.PI * 2)) : 1;
   ctx.save(); ctx.translate(x, y); ctx.scale(pulse, pulse);
   ctx.fillStyle = 'rgba(12,20,60,.28)'; ctx.beginPath(); ctx.arc(0, 6, R + 8, 0, Math.PI * 2); ctx.fill();
@@ -1762,12 +1774,12 @@ cv.onclick = () => {
 
 /* ================= Main UI ================= */
 const GAMES = [
-  { id: 'g1', n: '01', name: 'Duck Slide Race', icon: '🦆' },
-  { id: 'g2', n: '02', name: 'Mischievous Dino Eggs', icon: '🥚' },
-  { id: 'g3', n: '03', name: 'Rebellious Cauldron', icon: '🔮' },
-  { id: 'g4', n: '04', name: 'Dragon Treasure Guard', icon: '🐉' },
-  { id: 'g5', n: '05', name: 'Faulty Robot Factory', icon: '🤖' },
-  { id: 'g6', n: '06', name: 'Haunted Hotel Lift', icon: '👻' }
+  { id: 'g1', n: '01', name: 'Duck Splash', icon: '🦆' },
+  { id: 'g2', n: '02', name: 'Dino Egg Pop', icon: '🥚' },
+  { id: 'g3', n: '03', name: 'Magic Pot Goes Pop', icon: '🔮' },
+  { id: 'g4', n: '04', name: 'Dragon Wants Gold', icon: '🐉' },
+  { id: 'g5', n: '05', name: 'Oops, Robot!', icon: '🤖' },
+  { id: 'g6', n: '06', name: 'Ghost in the Lift', icon: '👻' }
 ];
 document.getElementById('gameTabs').innerHTML = GAMES.map(g =>
   `<button class="tab" data-game="${g.id}"><span class="ico">${g.icon}</span><span><b>GAME ${g.n}</b><span class="nm">${g.name}</span></span></button>`).join('') +
@@ -1873,7 +1885,7 @@ function updateUI() {
 
   const cls = activeClass(), all = roster(cls), called = calledOf(cls), pool = eligible(cls);
   hasPool = pool.length > 0;
-  document.getElementById('classLabel').innerHTML = esc(cls.name) + ' <span class="pill">' + all.length + '</span>';
+  document.getElementById('classLabel').innerHTML = esc((curLang() === 'vi' ? 'Chỉnh lớp · ' : 'Edit class · ') + cls.name) + ' <span class="pill">' + all.length + '</span>';
   [...durChips.children].forEach(b => b.classList.toggle('on', +b.dataset.s === store.settings.duration));
   document.querySelectorAll('#gameTabs .tab[data-game]').forEach((b, i) => {
     b.classList.toggle('active', b.dataset.game === curGame());
@@ -1934,6 +1946,7 @@ function closeClasses() {
   draft = null; page.classList.add('hidden');
   if (race && race.phase === 'done') continueGame();
   updateUI();
+  document.getElementById('settingsDetails').open = true;
   document.getElementById('classBtn').focus();
 }
 document.getElementById('classBtn').onclick = openClasses;

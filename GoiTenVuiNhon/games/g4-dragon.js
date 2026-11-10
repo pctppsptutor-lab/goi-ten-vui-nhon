@@ -26,7 +26,7 @@
   }
 
   GAME_IMPL.g4 = {
-    id: 'g4', title: 'Dragon Treasure Guard', base: 'assets/g4/', titleY: 330,
+    id: 'g4', title: 'Dragon Wants Gold', base: 'assets/g4/', titleY: 330,
     assets: gAssets(['twist', 'win'], ['dragon_01', 'dragon_02', 'dragon_03', 'dragon_04', 'dragon_05', 'dragon_06', 'dragon_07',
       'chest_01', 'chest_02', 'chest_03', 'chest_04', 'chest_05', 'chest_06', 'chest_07', 'chest_08', 'chest_09', 'chest_10',
       'rubber_duck', 'gold_coins', 'sneeze_smoke', 'winner_spotlight']),

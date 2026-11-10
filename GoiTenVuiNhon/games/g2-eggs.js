@@ -13,7 +13,7 @@
   }
 
   GAME_IMPL.g2 = {
-    id: 'g2', title: 'Mischievous Dino Eggs', base: 'assets/g2/', titleY: 470,
+    id: 'g2', title: 'Dino Egg Pop', base: 'assets/g2/', titleY: 470,
     assets: gAssets(['egg', 'egg_ready', 'egg_crack', 'egg_almost', 'twist', 'win'], ['dino_idle', 'dino_thinking', 'dino_pointing', 'dino_shocked', 'dino_celebrate', 'dino_tail_roll_egg', 'winner_nest', 'cracked_eggshells', 'rubber_chicken', 'dust_puffs', 'hatch_sparkles']),
     startBanner: '🥚 The eggs start to wobble!', mote: '#fff1b8', rayColor: '#fff2a8',
 

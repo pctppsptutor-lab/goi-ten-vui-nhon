@@ -7,7 +7,7 @@
   const pose = (av, p) => p;   // every pose is usable since the source sprites were repaired
 
   GAME_IMPL.g5 = {
-    id: 'g5', title: 'Faulty Robot Factory', base: 'assets/g5/', titleY: 470,
+    id: 'g5', title: 'Oops, Robot!', base: 'assets/g5/', titleY: 470,
     assets: gAssets(['idle', 'action', 'almost', 'fake', 'twist', 'win'], ['p0', 'p2', 'p3', 'p23', 'p28', 'p30', 'p31']),
     startBanner: '🤖 The conveyor belt starts up!', mote: '#9ff3ff', rayColor: '#a8fff0',
 
