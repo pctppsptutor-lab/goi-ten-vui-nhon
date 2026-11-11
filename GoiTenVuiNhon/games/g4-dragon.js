@@ -73,7 +73,7 @@
       if (!r.plain) {
         if (te > 0) cue('a', () => { Music.play('tension'); outcome('almost_selected', D); r.banner = '🐉 The dragon opens ' + D.name + "'s chest!"; });
         if (te > .6) cue('b', () => { const o = r.final.get(D); FX.glitter(o.x, o.y - 60, 10, ['#fff3a0']); outcome('wrong_turn', D); SFX.quack(0, 2.2); SFX.quack(.2, 2.5); SFX.sadTrombone(); r.banner = '🦆 Huh! Only a rubber duck inside!'; });
-        if (te > 1.1) cue('c', () => { SFX.noise(.25, { vol: .2, f: 400, to: 1800, q: 1 }); SFX.noise(.5, { vol: .35, f: 2500, to: 500, q: .7, delay: .3 }); r.banner = '🤧 Ah… ah… CHOO!'; CAM.shake(r, 18); const o = r.final.get(D); FX.smoke(o.x - 20, o.y - 90, 16, '#f6f0e6'); FX.coins(1440, 440, 22, 640); FX.coins(180, 430, 22, 640); FX.coins(o.x, o.y - 40, 14, o.y + 20); });
+        if (te > 1.1) cue('c', () => { r.banner = '🤧 Ah… ah… CHOO!'; CAM.shake(r, 18); const o = r.final.get(D); FX.smoke(o.x - 20, o.y - 90, 16, '#f6f0e6'); FX.coins(1440, 440, 22, 640); FX.coins(180, 430, 22, 640); FX.coins(o.x, o.y - 40, 14, o.y + 20); });
         if (te > 1.5) cue('d', () => { outcome('selected', Wn); SFX.wheee(); r.banner = '✨ A chest slides out of the gold pile!'; });
       } else {
         if (te > 0) cue('a', () => { Music.play('tension'); outcome('almost_selected', D || Wn); r.banner = '🐉 The dragon sniffs ' + (D || Wn).name + "'s chest…"; });

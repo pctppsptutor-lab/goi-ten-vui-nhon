@@ -28,7 +28,7 @@
     tick(r, t, te) {
       const f = activeFake(r, t);
       if (f && te < 0) cue('fk' + f.at, () => { r.banner = '🥚 ' + f.p.name + "'s egg is shaking hard!"; SFX.leader(); addFx('dust_puffs', f.p.hx, f.p.hy + 6, 170, .8); FX.smoke(f.p.hx, f.p.hy, 6, '#e8d3a8'); });
-      if (te < -.2 && Math.random() < .03) SFX.tone(160 + Math.random() * 80, .08, { type: 'triangle', vol: .05 });   // little knocks
+
       const D = r.decoy, Wn = r.winner;
       if (!r.plain) {
         if (te > 0) cue('d0', () => { Music.play('tension'); outcome('almost_selected', D); r.banner = '🥚 ' + D.name + "'s egg is about to hatch!"; });

@@ -23,3 +23,10 @@ Class lists stay in the browser; use **Export backup** on the class page to keep
 
 - `GoiTenVuiNhon/` – the game: `index.html` (shell and game 01), `games/` (games 02–06, effects, scenes), `assets/` (sprites, bursts, sounds).
 - `vIOTJ/` – original sprite sheets.
+
+
+## Sound effects
+
+Game-specific MP3 effects load only for the selected game and use the existing Sound toggle and SFX volume. Credits and edit details are in `assets/sfx/credits.html` and `assets/sfx/sources.json`.
+
+Run the dependency-free audio lifecycle checks with `node GoiTenVuiNhon/tests/sfx.test.cjs`.

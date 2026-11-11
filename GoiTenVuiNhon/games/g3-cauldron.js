@@ -44,7 +44,7 @@
     tick(r, t, te) {
       const f = activeFake(r, t), D = r.decoy, Wn = r.winner;
       if (f && te < 0) cue('fk' + f.at, () => { r.banner = '🔮 ' + f.p.name + "'s orb shoots up!"; SFX.leader(); });
-      if (te < 0 && Math.random() < .02) SFX.tone(300 + Math.random() * 300, .12, { vol: .05, to: 700 });   // bubbling
+
       if (!r.plain) {
         if (te > 0) cue('a', () => { Music.play('tension'); outcome('almost_selected', D); SFX.swoosh(); r.banner = '✨ A golden orb blasts onto the podium!'; });
         if (te > .9) cue('b', () => { outcome('wrong_turn', D); FX.bubbles(POD.x, TOP - 60, 26, '#d8f7ff'); SFX.bubbles(); SFX.sadTrombone(); r.banner = '🫧 Oh! The golden orb turns into soap bubbles!'; });

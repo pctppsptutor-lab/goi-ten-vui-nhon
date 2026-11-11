@@ -35,7 +35,7 @@
           r.banner = near ? '🔍 Scanning: ' + near.name : this.startBanner;
           if (near) SFX.tone(1200, .15, { type: 'square', vol: .04, to: 1600 });
         }
-        if (Math.random() < .03) SFX.tone(90, .08, { type: 'square', vol: .04 });    // belt clank
+
       }
       const D = r.decoy, Wn = r.winner, S = r.plain ? Wn : D;
       if (te > 0) cue('a', () => { Music.play('tension'); r.banner = '🔍 The scanner stops at ' + S.name + '…'; });
