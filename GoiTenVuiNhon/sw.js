@@ -1,5 +1,5 @@
-const CACHE_NAME = 'name-picker-vol1-shell-e794e1689bdbdc9c65a5';
-const ASSET_CACHE_NAME = 'name-picker-vol1-assets-e16b482e8799348d3a93';
+const CACHE_NAME = 'name-picker-vol1-shell-735f08e49bcf53c314e5';
+const ASSET_CACHE_NAME = 'name-picker-vol1-assets-2ba5d757b0f8f65e9819';
 const PRECACHE = [
   "./",
   "./index.html",
