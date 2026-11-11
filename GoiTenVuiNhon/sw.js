@@ -1,9 +1,10 @@
-const CACHE_NAME = 'name-picker-vol1-v36';
+const CACHE_NAME = 'name-picker-vol1-v37';
 const PRECACHE = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
   "./icon.svg",
+  "./games/bgm.js",
   "./games/sfx.js",
   "./games/i18n.js",
   "./games/fx.js",
