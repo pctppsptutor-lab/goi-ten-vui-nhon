@@ -15,7 +15,7 @@ Open `GoiTenVuiNhon/index.html` in Chrome or Edge, or use the GitHub Pages link.
 | 05 Faulty Robot Factory | Robots ride a conveyor under a scanner. | The stamp hits the wrong robot; the belt reverses and carries the last robot to the charger. |
 | 06 Haunted Hotel Lift | Lift doors flash room symbols, then ghostly footprints lead the way. | A ghost holds a fake symbol; the skeleton janitor spins the signpost. |
 
-About one round in four has no twist: the winner is revealed after a near-miss. The winner is always chosen the moment you press Pick.
+Rounds last 7 or 10 seconds. Plot Twist is off by default; when enabled, the twist takes 35% of the round. The winner is always chosen the moment you press Pick.
 
 Class lists stay in the browser; use **Export backup** on the class page to keep a copy.
 
@@ -32,3 +32,5 @@ Game-specific MP3 effects load only for the selected game and use the existing S
 Run the dependency-free audio lifecycle checks with `node GoiTenVuiNhon/tests/sfx.test.cjs`.
 
 Each game streams its own Kevin MacLeod BGM from `assets/bgm/` after a user gesture. Music credits and CC BY 4.0 sources are in `assets/bgm/credits.html`. Short action/result jingles retain VCSL samples; foreground effects briefly lower the music.
+
+Regression checks: `node GoiTenVuiNhon/tests/core.test.cjs` and `node GoiTenVuiNhon/tests/sw.test.cjs`. A BGM becomes available offline after that game’s track has loaded once.
