@@ -1,9 +1,10 @@
-const CACHE_NAME = 'name-picker-vol1-v38';
+const CACHE_NAME = 'name-picker-vol1-v39';
 const PRECACHE = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
   "./icon.svg",
+  "./assets/brand/edupia-tutor.png",
   "./assets/bgm/credits.html",
   "./assets/sfx/credits.html",
   "./games/bgm.js",
