@@ -30,3 +30,5 @@ Class lists stay in the browser; use **Export backup** on the class page to keep
 Game-specific MP3 effects load only for the selected game and use the existing Sound toggle and SFX volume. Credits and edit details are in `assets/sfx/credits.html` and `assets/sfx/sources.json`.
 
 Run the dependency-free audio lifecycle checks with `node GoiTenVuiNhon/tests/sfx.test.cjs`.
+
+Music uses original four-phrase pentatonic hooks, recorded VCSL lead instruments and percussion, with synthesized accompaniment as a loading fallback. Foreground effects briefly lower the music and take priority over ambient effects.
