@@ -14,9 +14,9 @@ const audio = {
     nodes.push(n); return n;
   }
 };
-const scoreRows = [...fs.readFileSync(path.join(app, 'index.html'), 'utf8').matchAll(/g(\d+): theme\(\d+, '(major|minor)', '([^']+)'/g)];
-const gameAudio = Object.fromEntries(scoreRows.map(m => ['g'+m[1], { instrument: m[3] }]));
-assert.equal(scoreRows.length,6,'six action-jingle themes');
+const index = fs.readFileSync(path.join(app, 'index.html'), 'utf8');
+const gameAudio = JSON.parse(index.slice(index.indexOf('const GAME_AUDIO = ') + 'const GAME_AUDIO = '.length, index.indexOf('const audioTheme = ')).trim().replace(/;$/, ''));
+assert.equal(Object.keys(gameAudio).length,30,'all action-jingle themes');
 const sandbox = {
   GAME_AUDIO: gameAudio,
   fetch: async url => { requests++; return { ok: !fail, status: fail ? 404 : 200, arrayBuffer: async () => new ArrayBuffer(8) }; },

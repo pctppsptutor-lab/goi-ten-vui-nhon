@@ -1,6 +1,6 @@
 {
-  "name": "Name Picker Party — Classroom Student Caller",
-  "short_name": "Picker Vol 1",
+  "name": "Name Picker Party \u2014 30 classroom games",
+  "short_name": "Name Picker",
   "description": "Fun classroom mini-games for calling on students randomly, online or offline.",
   "start_url": "./index.html",
   "display": "standalone",
@@ -14,5 +14,7 @@
       "type": "image/svg+xml",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "id": "./index.html",
+  "scope": "./"
 }

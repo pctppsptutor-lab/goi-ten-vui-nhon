@@ -1,4 +1,4 @@
-// Theme-specific recorded instruments and effects; only the selected game is fetched.
+// Recorded instruments and effects for all 30 games; fetch only the selected game.
 const MUSIC_SAMPLES = {
   "mallet": {
     "file": "music-marimba",
@@ -29,6 +29,16 @@ const MUSIC_SAMPLES = {
     "file": "music-sax",
     "note": 74,
     "length": 0.23
+  },
+  "reed": {
+    "file": "music-recorder",
+    "note": 72,
+    "length": 0.23
+  },
+  "piano": {
+    "file": "music-piano",
+    "note": 72,
+    "length": 0.32
   }
 };
 const GAME_SOUNDS = {
@@ -110,6 +120,328 @@ const GAME_SOUNDS = {
       "close": "creak",
       "b": "breath",
       "door": "door"
+    }
+  },
+  "g7": {
+    "textures": [
+      [
+        "bee",
+        0.6,
+        2.1,
+        0.22
+      ]
+    ],
+    "events": {
+      "b": "sneeze"
+    }
+  },
+  "g8": {
+    "textures": [
+      [
+        "glass pot",
+        1,
+        1.8,
+        0.2
+      ]
+    ],
+    "events": {
+      "drop*": "pop1 pop2",
+      "c": "meow",
+      "cupin": "glass"
+    }
+  },
+  "g9": {
+    "textures": [
+      [
+        "motor3",
+        0.8,
+        1.8,
+        0.17
+      ],
+      [
+        "squeak1 squeak2",
+        1.6,
+        2.8,
+        0.23
+      ]
+    ],
+    "events": {
+      "c": "coin",
+      "ring": "bell"
+    }
+  },
+  "g10": {
+    "textures": [],
+    "events": {
+      "open": "paper1",
+      "close": "paper2",
+      "a": "paper2",
+      "b": "paper3",
+      "d": "paper1"
+    }
+  },
+  "g11": {
+    "textures": [
+      [
+        "paddle paddle2",
+        0.8,
+        1.35,
+        0.2
+      ]
+    ],
+    "events": {
+      "c": "water",
+      "in": "splash1 splash2 splash3"
+    },
+    "water": true
+  },
+  "g12": {
+    "textures": [],
+    "events": {
+      "c": "motor1",
+      "a": "pop1 pop2",
+      "stop": "motor3"
+    }
+  },
+  "g13": {
+    "textures": [
+      [
+        "penguin penguin2",
+        1.1,
+        2.6,
+        0.3
+      ]
+    ],
+    "events": {
+      "b": "knock1",
+      "flag": "penguin penguin2"
+    }
+  },
+  "g14": {
+    "textures": [
+      [
+        "knock1 knock2",
+        0.8,
+        1.7,
+        0.16
+      ]
+    ],
+    "events": {
+      "c": "bubble1",
+      "d": "bubble2"
+    },
+    "water": true
+  },
+  "g15": {
+    "textures": [
+      [
+        "alien1 alien2",
+        1,
+        2.2,
+        0.26
+      ]
+    ],
+    "events": {
+      "b": "alien2"
+    }
+  },
+  "g16": {
+    "textures": [],
+    "events": {
+      "wake": "bell",
+      "b": "snore",
+      "c": "paper3"
+    }
+  },
+  "g17": {
+    "textures": [
+      [
+        "meow",
+        1.1,
+        3,
+        0.26
+      ]
+    ],
+    "events": {
+      "c": "meow",
+      "d": "pot",
+      "del": "glass"
+    }
+  },
+  "g18": {
+    "textures": [
+      [
+        "motor1 motor2",
+        0.7,
+        1.65,
+        0.2
+      ]
+    ],
+    "events": {
+      "c": "coin",
+      "sort": "clank1"
+    }
+  },
+  "g19": {
+    "textures": [
+      [
+        "motor2",
+        0.8,
+        1.55,
+        0.22
+      ],
+      [
+        "water",
+        1.3,
+        3,
+        0.1
+      ]
+    ],
+    "events": {
+      "load": "door",
+      "c": "clank2",
+      "d": "spring",
+      "match": "glass"
+    }
+  },
+  "g20": {
+    "textures": [
+      [
+        "meow",
+        0.8,
+        2.6,
+        0.3
+      ]
+    ],
+    "events": {
+      "bell": "bell",
+      "a": "box",
+      "d": "meow"
+    }
+  },
+  "g21": {
+    "textures": [
+      [
+        "paper1 paper2 paper3",
+        1,
+        1.5,
+        0.23
+      ]
+    ],
+    "events": {
+      "lv*": "paper3",
+      "d": "paper2"
+    }
+  },
+  "g22": {
+    "textures": [
+      [
+        "chicken",
+        0.9,
+        2.7,
+        0.28
+      ]
+    ],
+    "events": {
+      "stop": "chicken"
+    }
+  },
+  "g23": {
+    "textures": [
+      [
+        "frog1 frog2",
+        0.8,
+        2.1,
+        0.26
+      ]
+    ],
+    "events": {
+      "land": "splash1 splash2 splash3"
+    },
+    "water": true
+  },
+  "g24": {
+    "textures": [],
+    "events": {
+      "f*": "cannon",
+      "gold": "cannon",
+      "c": "creak",
+      "open": "box"
+    }
+  },
+  "g25": {
+    "textures": [],
+    "events": {
+      "wrain": "rain",
+      "b": "sneeze"
+    }
+  },
+  "g26": {
+    "textures": [],
+    "events": {
+      "open": "motor1",
+      "close": "clank1",
+      "sw*": "motor3",
+      "c": "motor2"
+    }
+  },
+  "g27": {
+    "textures": [
+      [
+        "paddle paddle2",
+        0.7,
+        1.05,
+        0.2
+      ],
+      [
+        "dog1 dog3 dog2 dog4",
+        1,
+        2,
+        0.4
+      ]
+    ],
+    "events": {
+      "c": "creak",
+      "d": "splash1 splash2 splash3",
+      "in": "dog2"
+    },
+    "water": true
+  },
+  "g28": {
+    "textures": [],
+    "events": {
+      "van": "bell",
+      "rev": "bell"
+    }
+  },
+  "g29": {
+    "textures": [
+      [
+        "motor3",
+        1,
+        2,
+        0.17
+      ]
+    ],
+    "events": {
+      "c*": "coin",
+      "in*": "clank1",
+      "gold": "clank2",
+      "drop": "pot"
+    }
+  },
+  "g30": {
+    "textures": [
+      [
+        "knock1 knock2",
+        0.8,
+        1.5,
+        0.13
+      ]
+    ],
+    "events": {
+      "c": "pop1",
+      "bk": "crunch"
     }
   }
 };

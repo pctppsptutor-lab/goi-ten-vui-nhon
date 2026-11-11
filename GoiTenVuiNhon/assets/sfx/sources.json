@@ -1,235 +1,1194 @@
 {
-  "box": {
-    "source": "foley/wooded_box_open.ogg",
-    "start": 0,
-    "maxDuration": 1.6,
-    "duration": 0.343,
-    "bytes": 3178
+  "vol1": {
+    "box": {
+      "source": "foley/wooded_box_open.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.343,
+      "bytes": 3178
+    },
+    "breath": {
+      "source": "creature/breath.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.479,
+      "bytes": 4223
+    },
+    "bubble1": {
+      "source": "water/bubble_01.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.554,
+      "bytes": 4850
+    },
+    "bubble2": {
+      "source": "water/bubble_02.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.262,
+      "bytes": 2551
+    },
+    "clank1": {
+      "source": "foley/metal_02.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.222,
+      "bytes": 2133
+    },
+    "clank2": {
+      "source": "foley/metal_04.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.457,
+      "bytes": 4014
+    },
+    "creak": {
+      "source": "foley/door_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 1.6,
+      "bytes": 13209
+    },
+    "door": {
+      "source": "foley/door_open.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.342,
+      "bytes": 3178
+    },
+    "frog1": {
+      "source": "frog1.mp3",
+      "start": 0,
+      "maxDuration": 1.4,
+      "duration": 1.167,
+      "bytes": 9657
+    },
+    "knock1": {
+      "source": "foley/wooden_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.357,
+      "bytes": 3178
+    },
+    "knock2": {
+      "source": "foley/wooden_02.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.322,
+      "bytes": 2969
+    },
+    "motor1": {
+      "source": "foley/machine_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.554,
+      "bytes": 4850
+    },
+    "motor2": {
+      "source": "foley/machine_02.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.526,
+      "bytes": 4641
+    },
+    "motor3": {
+      "source": "foley/machine_03.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.462,
+      "bytes": 4014
+    },
+    "paddle": {
+      "source": "water/splash_09.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.213,
+      "bytes": 2133
+    },
+    "pop1": {
+      "source": "foley/plop_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.107,
+      "bytes": 1297
+    },
+    "roar": {
+      "source": "creature/roar_01.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.348,
+      "bytes": 3178
+    },
+    "sneeze": {
+      "source": "sneeze.mp3",
+      "url": "https://bigsoundbank.com/UPLOAD/mp3/0609.mp3",
+      "duration": 0.52,
+      "bytes": 4432,
+      "start": 0.17,
+      "maxDuration": 0.52
+    },
+    "splash1": {
+      "source": "water/splash_02.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.579,
+      "bytes": 5059
+    },
+    "splash2": {
+      "source": "water/splash_05.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.929,
+      "bytes": 7776
+    },
+    "spring": {
+      "source": "foley/spring_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.91,
+      "bytes": 7567
+    },
+    "music-harp": {
+      "source": "Chordophones/Composite Chordophones/Folk Harp/EWHarp_Normal_C4_v2_RR1.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Chordophones/Composite%20Chordophones/Folk%20Harp/EWHarp_Normal_C4_v2_RR1.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 72.016
+    },
+    "music-xylo": {
+      "source": "Idiophones/Struck Idiophones/Xylophone/Medium Mallets/Xylo_Medium_C4_pp_01_far.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Xylophone/Medium%20Mallets/Xylo_Medium_C4_pp_01_far.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0,
+      "duration": 0.8,
+      "bytes": 10075,
+      "measuredMidi": 72.129
+    },
+    "bubble3": {
+      "source": "water/bubble_03.ogg",
+      "start": 0,
+      "duration": 0.6,
+      "bytes": 4641
+    },
+    "splash3": {
+      "source": "water/splash_07.ogg",
+      "start": 0,
+      "duration": 1.2,
+      "bytes": 9866
+    },
+    "music-glock": {
+      "source": "Idiophones/Struck Idiophones/Glockenspiel/glock_medium_G4_01.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Glockenspiel/glock_medium_G4_01.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 79,
+      "trimStart": 0.0,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 79.08,
+      "pitchVerification": "FFT fundamental 787.6Hz; inharmonic overtones cause YIN to report a subharmonic."
+    },
+    "music-marimba": {
+      "source": "Idiophones/Struck Idiophones/Marimba/Marimba_hit_Outrigger_C4_med_01.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Marimba/Marimba_hit_Outrigger_C4_med_01.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0034467120181405895,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 72.062
+    },
+    "music-vibes": {
+      "source": "Idiophones/Struck Idiophones/Vibraphone/Soft Mallets/Vibes_soft_C3_v1_rr2_Main.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Vibraphone/Soft%20Mallets/Vibes_soft_C3_v1_rr2_Main.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 60,
+      "trimStart": 0.00024943310657596373,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 60.037
+    },
+    "paddle2": {
+      "source": "water/splash_11.ogg",
+      "start": 0,
+      "duration": 0.5,
+      "bytes": 4432
+    },
+    "music-sax": {
+      "source": "Aerophones/Reed Aerophones/Saxello/Staccato/BrettSaxello_Stcts_MainSpirit_D4_vl1_rr3.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Aerophones/Reed%20Aerophones/Saxello/Staccato/BrettSaxello_Stcts_MainSpirit_D4_vl1_rr3.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 74,
+      "trimStart": 0.0,
+      "duration": 0.37240362811791383,
+      "bytes": 5060,
+      "measuredMidi": 73.976
+    }
   },
-  "breath": {
-    "source": "creature/breath.ogg",
-    "start": 0,
-    "maxDuration": 1.5,
-    "duration": 0.479,
-    "bytes": 4223
+  "vol2": {
+    "bee": {
+      "source": "bee/bee.wav",
+      "start": 0.15,
+      "maxDuration": 1.4,
+      "duration": 1.4,
+      "bytes": 11537
+    },
+    "bell": {
+      "source": "foley/bell_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 1.091,
+      "bytes": 9030
+    },
+    "bubble1": {
+      "source": "water/bubble_01.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.554,
+      "bytes": 4850
+    },
+    "bubble2": {
+      "source": "water/bubble_02.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.262,
+      "bytes": 2551
+    },
+    "coin": {
+      "source": "foley/metal_09.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.565,
+      "bytes": 4850
+    },
+    "glass": {
+      "source": "foley/glass_03.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.359,
+      "bytes": 3178
+    },
+    "meow": {
+      "source": "kitten.ogg",
+      "start": 0,
+      "maxDuration": 1.3,
+      "duration": 0.898,
+      "bytes": 7567
+    },
+    "motor1": {
+      "source": "foley/machine_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.554,
+      "bytes": 4850
+    },
+    "motor3": {
+      "source": "foley/machine_03.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.462,
+      "bytes": 4014
+    },
+    "paddle": {
+      "source": "water/splash_09.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.213,
+      "bytes": 2133
+    },
+    "paper1": {
+      "source": "foley/paper_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.421,
+      "bytes": 3805
+    },
+    "paper2": {
+      "source": "foley/paper_02.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.548,
+      "bytes": 4641
+    },
+    "paper3": {
+      "source": "foley/paper_03.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.532,
+      "bytes": 4641
+    },
+    "pop1": {
+      "source": "foley/plop_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.107,
+      "bytes": 1297
+    },
+    "pop2": {
+      "source": "foley/plop_02.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.185,
+      "bytes": 1924
+    },
+    "pot": {
+      "source": "foley/pot_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.251,
+      "bytes": 2342
+    },
+    "sneeze": {
+      "source": "sneeze.mp3",
+      "url": "https://bigsoundbank.com/UPLOAD/mp3/0609.mp3",
+      "duration": 0.52,
+      "bytes": 4432,
+      "start": 0.17,
+      "maxDuration": 0.52
+    },
+    "splash1": {
+      "source": "water/splash_02.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.579,
+      "bytes": 5059
+    },
+    "splash2": {
+      "source": "water/splash_05.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.929,
+      "bytes": 7776
+    },
+    "squeak1": {
+      "source": "creature/cute_01.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.39,
+      "bytes": 3387
+    },
+    "squeak2": {
+      "source": "creature/cute_03.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.596,
+      "bytes": 5059
+    },
+    "water": {
+      "source": "water/loop_water_01.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 1.498,
+      "bytes": 12373
+    },
+    "music-piano": {
+      "source": "Chordophones/Zithers/Grand Piano, Kawai/Sustains/GPiano_sus_C4_v2_rr1_Player.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Chordophones/Zithers/Grand%20Piano%2C%20Kawai/Sustains/GPiano_sus_C4_v2_rr1_Player.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 71.971
+    },
+    "music-harp": {
+      "source": "Chordophones/Composite Chordophones/Folk Harp/EWHarp_Normal_C4_v2_RR1.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Chordophones/Composite%20Chordophones/Folk%20Harp/EWHarp_Normal_C4_v2_RR1.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 72.016
+    },
+    "music-xylo": {
+      "source": "Idiophones/Struck Idiophones/Xylophone/Medium Mallets/Xylo_Medium_C4_pp_01_far.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Xylophone/Medium%20Mallets/Xylo_Medium_C4_pp_01_far.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0,
+      "duration": 0.8,
+      "bytes": 10075,
+      "measuredMidi": 72.129
+    },
+    "music-recorder": {
+      "source": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_C4_rr1_Main.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Aerophones/Edge-blown%20Aerophones/Baroque%20Soprano%20Recorder/Staccato/SopRecorder_Stac_C4_rr1_Main.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0,
+      "duration": 0.5118140589569161,
+      "bytes": 6627,
+      "measuredMidi": 72.013
+    },
+    "bubble3": {
+      "source": "water/bubble_03.ogg",
+      "start": 0,
+      "duration": 0.6,
+      "bytes": 4641
+    },
+    "splash3": {
+      "source": "water/splash_07.ogg",
+      "start": 0,
+      "duration": 1.2,
+      "bytes": 9866
+    },
+    "music-marimba": {
+      "source": "Idiophones/Struck Idiophones/Marimba/Marimba_hit_Outrigger_C4_med_01.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Marimba/Marimba_hit_Outrigger_C4_med_01.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0034467120181405895,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 72.062
+    },
+    "music-vibes": {
+      "source": "Idiophones/Struck Idiophones/Vibraphone/Soft Mallets/Vibes_soft_C3_v1_rr2_Main.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Vibraphone/Soft%20Mallets/Vibes_soft_C3_v1_rr2_Main.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 60,
+      "trimStart": 0.00024943310657596373,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 60.037
+    },
+    "paddle2": {
+      "source": "water/splash_11.ogg",
+      "start": 0,
+      "duration": 0.5,
+      "bytes": 4432
+    }
   },
-  "bubble1": {
-    "source": "water/bubble_01.ogg",
-    "start": 0,
-    "maxDuration": 1.5,
-    "duration": 0.554,
-    "bytes": 4850
+  "vol3": {
+    "alien1": {
+      "source": "creature/alien_01.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.508,
+      "bytes": 4432
+    },
+    "alien2": {
+      "source": "creature/alien_02.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.547,
+      "bytes": 4641
+    },
+    "bell": {
+      "source": "foley/bell_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 1.091,
+      "bytes": 9030
+    },
+    "bubble1": {
+      "source": "water/bubble_01.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.554,
+      "bytes": 4850
+    },
+    "bubble2": {
+      "source": "water/bubble_02.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.262,
+      "bytes": 2551
+    },
+    "clank1": {
+      "source": "foley/metal_02.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.222,
+      "bytes": 2133
+    },
+    "coin": {
+      "source": "foley/metal_09.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.565,
+      "bytes": 4850
+    },
+    "glass": {
+      "source": "foley/glass_03.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.359,
+      "bytes": 3178
+    },
+    "knock1": {
+      "source": "foley/wooden_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.357,
+      "bytes": 3178
+    },
+    "knock2": {
+      "source": "foley/wooden_02.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.322,
+      "bytes": 2969
+    },
+    "meow": {
+      "source": "kitten.ogg",
+      "start": 0,
+      "maxDuration": 1.3,
+      "duration": 0.898,
+      "bytes": 7567
+    },
+    "motor1": {
+      "source": "foley/machine_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.554,
+      "bytes": 4850
+    },
+    "motor2": {
+      "source": "foley/machine_02.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.526,
+      "bytes": 4641
+    },
+    "paddle": {
+      "source": "water/splash_09.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.213,
+      "bytes": 2133
+    },
+    "paper3": {
+      "source": "foley/paper_03.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.532,
+      "bytes": 4641
+    },
+    "penguin": {
+      "source": "penguin/ogg/penguin_01.ogg",
+      "start": 0,
+      "maxDuration": 1,
+      "duration": 0.467,
+      "bytes": 4014
+    },
+    "pot": {
+      "source": "foley/pot_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.251,
+      "bytes": 2342
+    },
+    "snore": {
+      "source": "creature/snore.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.416,
+      "bytes": 3596
+    },
+    "splash1": {
+      "source": "water/splash_02.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.579,
+      "bytes": 5059
+    },
+    "splash2": {
+      "source": "water/splash_05.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.929,
+      "bytes": 7776
+    },
+    "music-piano": {
+      "source": "Chordophones/Zithers/Grand Piano, Kawai/Sustains/GPiano_sus_C4_v2_rr1_Player.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Chordophones/Zithers/Grand%20Piano%2C%20Kawai/Sustains/GPiano_sus_C4_v2_rr1_Player.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 71.971
+    },
+    "music-harp": {
+      "source": "Chordophones/Composite Chordophones/Folk Harp/EWHarp_Normal_C4_v2_RR1.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Chordophones/Composite%20Chordophones/Folk%20Harp/EWHarp_Normal_C4_v2_RR1.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 72.016
+    },
+    "music-xylo": {
+      "source": "Idiophones/Struck Idiophones/Xylophone/Medium Mallets/Xylo_Medium_C4_pp_01_far.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Xylophone/Medium%20Mallets/Xylo_Medium_C4_pp_01_far.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0,
+      "duration": 0.8,
+      "bytes": 10075,
+      "measuredMidi": 72.129
+    },
+    "bubble3": {
+      "source": "water/bubble_03.ogg",
+      "start": 0,
+      "duration": 0.6,
+      "bytes": 4641
+    },
+    "splash3": {
+      "source": "water/splash_07.ogg",
+      "start": 0,
+      "duration": 1.2,
+      "bytes": 9866
+    },
+    "music-glock": {
+      "source": "Idiophones/Struck Idiophones/Glockenspiel/glock_medium_G4_01.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Glockenspiel/glock_medium_G4_01.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 79,
+      "trimStart": 0.0,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 79.08,
+      "pitchVerification": "FFT fundamental 787.6Hz; inharmonic overtones cause YIN to report a subharmonic."
+    },
+    "music-marimba": {
+      "source": "Idiophones/Struck Idiophones/Marimba/Marimba_hit_Outrigger_C4_med_01.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Marimba/Marimba_hit_Outrigger_C4_med_01.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0034467120181405895,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 72.062
+    },
+    "penguin2": {
+      "source": "penguin/ogg/penguin_02.ogg",
+      "start": 0,
+      "duration": 0.7,
+      "bytes": 4223
+    },
+    "paddle2": {
+      "source": "water/splash_11.ogg",
+      "start": 0,
+      "duration": 0.5,
+      "bytes": 4432
+    },
+    "music-sax": {
+      "source": "Aerophones/Reed Aerophones/Saxello/Staccato/BrettSaxello_Stcts_MainSpirit_D4_vl1_rr3.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Aerophones/Reed%20Aerophones/Saxello/Staccato/BrettSaxello_Stcts_MainSpirit_D4_vl1_rr3.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 74,
+      "trimStart": 0.0,
+      "duration": 0.37240362811791383,
+      "bytes": 5060,
+      "measuredMidi": 73.976
+    }
   },
-  "bubble2": {
-    "source": "water/bubble_02.ogg",
-    "start": 0,
-    "maxDuration": 1.5,
-    "duration": 0.262,
-    "bytes": 2551
+  "vol4": {
+    "bell": {
+      "source": "foley/bell_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 1.091,
+      "bytes": 9030
+    },
+    "box": {
+      "source": "foley/wooded_box_open.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.343,
+      "bytes": 3178
+    },
+    "bubble1": {
+      "source": "water/bubble_01.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.554,
+      "bytes": 4850
+    },
+    "bubble2": {
+      "source": "water/bubble_02.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.262,
+      "bytes": 2551
+    },
+    "cannon": {
+      "source": "foley/explosion.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.287,
+      "bytes": 2551
+    },
+    "chicken": {
+      "source": "chicken/Chicken Sound Effect.ogg",
+      "start": 0.1,
+      "maxDuration": 1.5,
+      "duration": 1.5,
+      "bytes": 12373
+    },
+    "clank2": {
+      "source": "foley/metal_04.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.457,
+      "bytes": 4014
+    },
+    "creak": {
+      "source": "foley/door_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 1.6,
+      "bytes": 13209
+    },
+    "door": {
+      "source": "foley/door_open.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.342,
+      "bytes": 3178
+    },
+    "frog1": {
+      "source": "frog1.mp3",
+      "start": 0,
+      "maxDuration": 1.4,
+      "duration": 1.167,
+      "bytes": 9657
+    },
+    "frog2": {
+      "source": "frog2.mp3",
+      "start": 0,
+      "maxDuration": 1,
+      "duration": 0.718,
+      "bytes": 6104
+    },
+    "glass": {
+      "source": "foley/glass_03.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.359,
+      "bytes": 3178
+    },
+    "meow": {
+      "source": "kitten.ogg",
+      "start": 0,
+      "maxDuration": 1.3,
+      "duration": 0.898,
+      "bytes": 7567
+    },
+    "motor2": {
+      "source": "foley/machine_02.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.526,
+      "bytes": 4641
+    },
+    "paddle": {
+      "source": "water/splash_09.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.213,
+      "bytes": 2133
+    },
+    "paper1": {
+      "source": "foley/paper_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.421,
+      "bytes": 3805
+    },
+    "paper2": {
+      "source": "foley/paper_02.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.548,
+      "bytes": 4641
+    },
+    "paper3": {
+      "source": "foley/paper_03.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.532,
+      "bytes": 4641
+    },
+    "splash1": {
+      "source": "water/splash_02.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.579,
+      "bytes": 5059
+    },
+    "splash2": {
+      "source": "water/splash_05.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.929,
+      "bytes": 7776
+    },
+    "spring": {
+      "source": "foley/spring_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.91,
+      "bytes": 7567
+    },
+    "water": {
+      "source": "water/loop_water_01.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 1.498,
+      "bytes": 12373
+    },
+    "music-piano": {
+      "source": "Chordophones/Zithers/Grand Piano, Kawai/Sustains/GPiano_sus_C4_v2_rr1_Player.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Chordophones/Zithers/Grand%20Piano%2C%20Kawai/Sustains/GPiano_sus_C4_v2_rr1_Player.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 71.971
+    },
+    "music-harp": {
+      "source": "Chordophones/Composite Chordophones/Folk Harp/EWHarp_Normal_C4_v2_RR1.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Chordophones/Composite%20Chordophones/Folk%20Harp/EWHarp_Normal_C4_v2_RR1.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 72.016
+    },
+    "music-recorder": {
+      "source": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_C4_rr1_Main.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Aerophones/Edge-blown%20Aerophones/Baroque%20Soprano%20Recorder/Staccato/SopRecorder_Stac_C4_rr1_Main.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0,
+      "duration": 0.5118140589569161,
+      "bytes": 6627,
+      "measuredMidi": 72.013
+    },
+    "bubble3": {
+      "source": "water/bubble_03.ogg",
+      "start": 0,
+      "duration": 0.6,
+      "bytes": 4641
+    },
+    "splash3": {
+      "source": "water/splash_07.ogg",
+      "start": 0,
+      "duration": 1.2,
+      "bytes": 9866
+    },
+    "music-marimba": {
+      "source": "Idiophones/Struck Idiophones/Marimba/Marimba_hit_Outrigger_C4_med_01.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Marimba/Marimba_hit_Outrigger_C4_med_01.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0034467120181405895,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 72.062
+    },
+    "paddle2": {
+      "source": "water/splash_11.ogg",
+      "start": 0,
+      "duration": 0.5,
+      "bytes": 4432
+    },
+    "music-sax": {
+      "source": "Aerophones/Reed Aerophones/Saxello/Staccato/BrettSaxello_Stcts_MainSpirit_D4_vl1_rr3.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Aerophones/Reed%20Aerophones/Saxello/Staccato/BrettSaxello_Stcts_MainSpirit_D4_vl1_rr3.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 74,
+      "trimStart": 0.0,
+      "duration": 0.37240362811791383,
+      "bytes": 5060,
+      "measuredMidi": 73.976
+    }
   },
-  "clank1": {
-    "source": "foley/metal_02.ogg",
-    "start": 0,
-    "maxDuration": 1.6,
-    "duration": 0.222,
-    "bytes": 2133
-  },
-  "clank2": {
-    "source": "foley/metal_04.ogg",
-    "start": 0,
-    "maxDuration": 1.6,
-    "duration": 0.457,
-    "bytes": 4014
-  },
-  "creak": {
-    "source": "foley/door_01.ogg",
-    "start": 0,
-    "maxDuration": 1.6,
-    "duration": 1.6,
-    "bytes": 13209
-  },
-  "door": {
-    "source": "foley/door_open.ogg",
-    "start": 0,
-    "maxDuration": 1.6,
-    "duration": 0.342,
-    "bytes": 3178
-  },
-  "frog1": {
-    "source": "frog1.mp3",
-    "start": 0,
-    "maxDuration": 1.4,
-    "duration": 1.167,
-    "bytes": 9657
-  },
-  "knock1": {
-    "source": "foley/wooden_01.ogg",
-    "start": 0,
-    "maxDuration": 1.6,
-    "duration": 0.357,
-    "bytes": 3178
-  },
-  "knock2": {
-    "source": "foley/wooden_02.ogg",
-    "start": 0,
-    "maxDuration": 1.6,
-    "duration": 0.322,
-    "bytes": 2969
-  },
-  "motor1": {
-    "source": "foley/machine_01.ogg",
-    "start": 0,
-    "maxDuration": 1.6,
-    "duration": 0.554,
-    "bytes": 4850
-  },
-  "motor2": {
-    "source": "foley/machine_02.ogg",
-    "start": 0,
-    "maxDuration": 1.6,
-    "duration": 0.526,
-    "bytes": 4641
-  },
-  "motor3": {
-    "source": "foley/machine_03.ogg",
-    "start": 0,
-    "maxDuration": 1.6,
-    "duration": 0.462,
-    "bytes": 4014
-  },
-  "paddle": {
-    "source": "water/splash_09.ogg",
-    "start": 0,
-    "maxDuration": 1.5,
-    "duration": 0.213,
-    "bytes": 2133
-  },
-  "pop1": {
-    "source": "foley/plop_01.ogg",
-    "start": 0,
-    "maxDuration": 1.6,
-    "duration": 0.107,
-    "bytes": 1297
-  },
-  "roar": {
-    "source": "creature/roar_01.ogg",
-    "start": 0,
-    "maxDuration": 1.5,
-    "duration": 0.348,
-    "bytes": 3178
-  },
-  "sneeze": {
-    "source": "sneeze.mp3",
-    "url": "https://bigsoundbank.com/UPLOAD/mp3/0609.mp3",
-    "duration": 0.52,
-    "bytes": 4432,
-    "start": 0.17,
-    "maxDuration": 0.52
-  },
-  "splash1": {
-    "source": "water/splash_02.ogg",
-    "start": 0,
-    "maxDuration": 1.5,
-    "duration": 0.579,
-    "bytes": 5059
-  },
-  "splash2": {
-    "source": "water/splash_05.ogg",
-    "start": 0,
-    "maxDuration": 1.5,
-    "duration": 0.929,
-    "bytes": 7776
-  },
-  "spring": {
-    "source": "foley/spring_01.ogg",
-    "start": 0,
-    "maxDuration": 1.6,
-    "duration": 0.91,
-    "bytes": 7567
-  },
-  "music-harp": {
-    "source": "Chordophones/Composite Chordophones/Folk Harp/EWHarp_Normal_C4_v2_RR1.wav",
-    "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Chordophones/Composite%20Chordophones/Folk%20Harp/EWHarp_Normal_C4_v2_RR1.wav",
-    "license": "CC0-1.0",
-    "author": "Versilian Studios LLC / VCSL contributors",
-    "baseMidi": 72,
-    "trimStart": 0.0,
-    "duration": 1.25,
-    "bytes": 15404,
-    "measuredMidi": 72.016
-  },
-  "music-xylo": {
-    "source": "Idiophones/Struck Idiophones/Xylophone/Medium Mallets/Xylo_Medium_C4_pp_01_far.wav",
-    "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Xylophone/Medium%20Mallets/Xylo_Medium_C4_pp_01_far.wav",
-    "license": "CC0-1.0",
-    "author": "Versilian Studios LLC / VCSL contributors",
-    "baseMidi": 72,
-    "trimStart": 0.0,
-    "duration": 0.8,
-    "bytes": 10075,
-    "measuredMidi": 72.129
-  },
-  "bubble3": {
-    "source": "water/bubble_03.ogg",
-    "start": 0,
-    "duration": 0.6,
-    "bytes": 4641
-  },
-  "splash3": {
-    "source": "water/splash_07.ogg",
-    "start": 0,
-    "duration": 1.2,
-    "bytes": 9866
-  },
-  "music-glock": {
-    "source": "Idiophones/Struck Idiophones/Glockenspiel/glock_medium_G4_01.wav",
-    "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Glockenspiel/glock_medium_G4_01.wav",
-    "license": "CC0-1.0",
-    "author": "Versilian Studios LLC / VCSL contributors",
-    "baseMidi": 79,
-    "trimStart": 0.0,
-    "duration": 1.25,
-    "bytes": 15404,
-    "measuredMidi": 79.08,
-    "pitchVerification": "FFT fundamental 787.6Hz; inharmonic overtones cause YIN to report a subharmonic."
-  },
-  "music-marimba": {
-    "source": "Idiophones/Struck Idiophones/Marimba/Marimba_hit_Outrigger_C4_med_01.wav",
-    "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Marimba/Marimba_hit_Outrigger_C4_med_01.wav",
-    "license": "CC0-1.0",
-    "author": "Versilian Studios LLC / VCSL contributors",
-    "baseMidi": 72,
-    "trimStart": 0.0034467120181405895,
-    "duration": 1.25,
-    "bytes": 15404,
-    "measuredMidi": 72.062
-  },
-  "music-vibes": {
-    "source": "Idiophones/Struck Idiophones/Vibraphone/Soft Mallets/Vibes_soft_C3_v1_rr2_Main.wav",
-    "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Vibraphone/Soft%20Mallets/Vibes_soft_C3_v1_rr2_Main.wav",
-    "license": "CC0-1.0",
-    "author": "Versilian Studios LLC / VCSL contributors",
-    "baseMidi": 60,
-    "trimStart": 0.00024943310657596373,
-    "duration": 1.25,
-    "bytes": 15404,
-    "measuredMidi": 60.037
-  },
-  "paddle2": {
-    "source": "water/splash_11.ogg",
-    "start": 0,
-    "duration": 0.5,
-    "bytes": 4432
-  },
-  "music-sax": {
-    "source": "Aerophones/Reed Aerophones/Saxello/Staccato/BrettSaxello_Stcts_MainSpirit_D4_vl1_rr3.wav",
-    "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Aerophones/Reed%20Aerophones/Saxello/Staccato/BrettSaxello_Stcts_MainSpirit_D4_vl1_rr3.wav",
-    "license": "CC0-1.0",
-    "author": "Versilian Studios LLC / VCSL contributors",
-    "baseMidi": 74,
-    "trimStart": 0.0,
-    "duration": 0.37240362811791383,
-    "bytes": 5060,
-    "measuredMidi": 73.976
+  "vol5": {
+    "bell": {
+      "source": "foley/bell_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 1.091,
+      "bytes": 9030
+    },
+    "bubble1": {
+      "source": "water/bubble_01.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.554,
+      "bytes": 4850
+    },
+    "bubble2": {
+      "source": "water/bubble_02.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.262,
+      "bytes": 2551
+    },
+    "clank1": {
+      "source": "foley/metal_02.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.222,
+      "bytes": 2133
+    },
+    "clank2": {
+      "source": "foley/metal_04.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.457,
+      "bytes": 4014
+    },
+    "coin": {
+      "source": "foley/metal_09.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.565,
+      "bytes": 4850
+    },
+    "creak": {
+      "source": "foley/door_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 1.6,
+      "bytes": 13209
+    },
+    "crunch": {
+      "source": "rabbit.wav",
+      "start": 1.3,
+      "maxDuration": 1.3,
+      "duration": 1.3,
+      "bytes": 10701
+    },
+    "dog1": {
+      "source": "dog.wav",
+      "start": 0,
+      "maxDuration": 0.58,
+      "duration": 0.58,
+      "bytes": 5059
+    },
+    "dog2": {
+      "source": "dog.wav",
+      "start": 0.92,
+      "maxDuration": 0.58,
+      "duration": 0.304,
+      "bytes": 2760
+    },
+    "knock1": {
+      "source": "foley/wooden_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.357,
+      "bytes": 3178
+    },
+    "knock2": {
+      "source": "foley/wooden_02.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.322,
+      "bytes": 2969
+    },
+    "motor1": {
+      "source": "foley/machine_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.554,
+      "bytes": 4850
+    },
+    "motor2": {
+      "source": "foley/machine_02.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.526,
+      "bytes": 4641
+    },
+    "motor3": {
+      "source": "foley/machine_03.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.462,
+      "bytes": 4014
+    },
+    "paddle": {
+      "source": "water/splash_09.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.213,
+      "bytes": 2133
+    },
+    "pop1": {
+      "source": "foley/plop_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.107,
+      "bytes": 1297
+    },
+    "pot": {
+      "source": "foley/pot_01.ogg",
+      "start": 0,
+      "maxDuration": 1.6,
+      "duration": 0.251,
+      "bytes": 2342
+    },
+    "rain": {
+      "source": "water/loop_rain.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 1.5,
+      "bytes": 12373
+    },
+    "sneeze": {
+      "source": "sneeze.mp3",
+      "url": "https://bigsoundbank.com/UPLOAD/mp3/0609.mp3",
+      "duration": 0.52,
+      "bytes": 4432,
+      "start": 0.17,
+      "maxDuration": 0.52
+    },
+    "splash1": {
+      "source": "water/splash_02.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.579,
+      "bytes": 5059
+    },
+    "splash2": {
+      "source": "water/splash_05.ogg",
+      "start": 0,
+      "maxDuration": 1.5,
+      "duration": 0.929,
+      "bytes": 7776
+    },
+    "music-piano": {
+      "source": "Chordophones/Zithers/Grand Piano, Kawai/Sustains/GPiano_sus_C4_v2_rr1_Player.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Chordophones/Zithers/Grand%20Piano%2C%20Kawai/Sustains/GPiano_sus_C4_v2_rr1_Player.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 71.971
+    },
+    "music-harp": {
+      "source": "Chordophones/Composite Chordophones/Folk Harp/EWHarp_Normal_C4_v2_RR1.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Chordophones/Composite%20Chordophones/Folk%20Harp/EWHarp_Normal_C4_v2_RR1.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 72.016
+    },
+    "music-xylo": {
+      "source": "Idiophones/Struck Idiophones/Xylophone/Medium Mallets/Xylo_Medium_C4_pp_01_far.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Xylophone/Medium%20Mallets/Xylo_Medium_C4_pp_01_far.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0,
+      "duration": 0.8,
+      "bytes": 10075,
+      "measuredMidi": 72.129
+    },
+    "bubble3": {
+      "source": "water/bubble_03.ogg",
+      "start": 0,
+      "duration": 0.6,
+      "bytes": 4641
+    },
+    "dog4": {
+      "source": "dog.wav",
+      "start": 1.67,
+      "duration": 0.35,
+      "bytes": 3178
+    },
+    "dog3": {
+      "source": "dog.wav",
+      "start": 0.5,
+      "duration": 0.3,
+      "bytes": 2760
+    },
+    "splash3": {
+      "source": "water/splash_07.ogg",
+      "start": 0,
+      "duration": 1.2,
+      "bytes": 9866
+    },
+    "music-glock": {
+      "source": "Idiophones/Struck Idiophones/Glockenspiel/glock_medium_G4_01.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Glockenspiel/glock_medium_G4_01.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 79,
+      "trimStart": 0.0,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 79.08,
+      "pitchVerification": "FFT fundamental 787.6Hz; inharmonic overtones cause YIN to report a subharmonic."
+    },
+    "music-marimba": {
+      "source": "Idiophones/Struck Idiophones/Marimba/Marimba_hit_Outrigger_C4_med_01.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Marimba/Marimba_hit_Outrigger_C4_med_01.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 72,
+      "trimStart": 0.0034467120181405895,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 72.062
+    },
+    "music-vibes": {
+      "source": "Idiophones/Struck Idiophones/Vibraphone/Soft Mallets/Vibes_soft_C3_v1_rr2_Main.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Vibraphone/Soft%20Mallets/Vibes_soft_C3_v1_rr2_Main.wav",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC / VCSL contributors",
+      "baseMidi": 60,
+      "trimStart": 0.00024943310657596373,
+      "duration": 1.25,
+      "bytes": 15404,
+      "measuredMidi": 60.037
+    },
+    "paddle2": {
+      "source": "water/splash_11.ogg",
+      "start": 0,
+      "duration": 0.5,
+      "bytes": 4432
+    }
   }
 }

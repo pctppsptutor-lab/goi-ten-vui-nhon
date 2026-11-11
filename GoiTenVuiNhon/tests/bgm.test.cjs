@@ -14,7 +14,7 @@ const sandbox={URL,Audio:AudioStub,store:{settings:{music:false,musicVol:70}},do
 vm.createContext(sandbox);
 vm.runInContext(fs.readFileSync(path.join(app,'games/bgm.js'),'utf8')+'\nglobalThis.tracks=BGM_TRACKS;',sandbox);
 const keys=Object.keys(sandbox.tracks);id=keys[0];
-assert.equal(keys.length,6);assert.equal(new Set(Object.values(sandbox.tracks).map(t=>t.isrc)).size,6);
+assert.equal(keys.length,30);assert.equal(new Set(Object.values(sandbox.tracks).map(t=>t.isrc)).size,30);
 for(const t of Object.values(sandbox.tracks)){
  assert.ok(fs.existsSync(path.join(app,t.src)),t.src);
  assert.equal(t.license,'CC BY 4.0');assert.ok(t.source.startsWith('https://incompetech.com/'));

@@ -422,6 +422,7 @@ textarea{font-family:inherit;font-size:17px;width:100%;min-height:260px;border:2
 <script>
 // Shared helpers for games 2-6 (each game registers itself in GAME_IMPL)
 window.GAME_IMPL = {};
+window.VOL_PACKS = {};
 const COMMON_ASSETS = ['name_plate', 'vfx_almost_selected', 'vfx_selected', 'vfx_wrong_turn', 'vfx_win'];
 const gAssets = (poses, extra) => [...COMMON_ASSETS, ...extra, ...[...Array(10).keys()].flatMap(i => poses.map(p => 'c' + i + '_' + p))];
 const spread = (n, total = 10) => [...Array(n)].map((_, k) => Math.floor(k * total / n));        // n slots spread over total
@@ -435,7 +436,7 @@ const activeFake = (r, t) => (r.fakes || []).find(f => t >= f.at && t < f.at + f
 <script src="games/dist/runtime.js"></script>
 <script>
 'use strict';
-const CURRENT_VOL = 1;
+let currentVol = 1;
 
 /* ================= Storage & Realtime Sync ================= */
 const LS_KEY = 'goiTenVuiNhon.v1';
@@ -651,12 +652,246 @@ const theme = (key, mode, instrument, cueFrom, cueTo, cueLength) => ({
   key, minor: mode === 'minor', instrument, cueFrom, cueTo, cueLength
 });
 const GAME_AUDIO = {
-  g1: theme(60, 'major', 'mallet', 760, 290, 0.16), // Duck Splash
-  g2: theme(62, 'major', 'pluck', 1850, 680, 0.09), // Dino Egg Pop
-  g3: theme(57, 'minor', 'glass', 520, 2200, 0.28), // Magic Pot Goes Pop
-  g4: theme(55, 'major', 'brass', 210, 950, 0.24), // Dragon Wants Gold
-  g5: theme(58, 'major', 'chip', 1560, 350, 0.12), // Oops, Robot!
-  g6: theme(56, 'minor', 'bell', 440, 190, 0.32), // Ghost in the Lift
+  "g1": {
+    "key": 60,
+    "minor": false,
+    "instrument": "mallet",
+    "cueFrom": 760,
+    "cueTo": 290,
+    "cueLength": 0.16
+  },
+  "g2": {
+    "key": 62,
+    "minor": false,
+    "instrument": "pluck",
+    "cueFrom": 1850,
+    "cueTo": 680,
+    "cueLength": 0.09
+  },
+  "g3": {
+    "key": 57,
+    "minor": true,
+    "instrument": "glass",
+    "cueFrom": 520,
+    "cueTo": 2200,
+    "cueLength": 0.28
+  },
+  "g4": {
+    "key": 55,
+    "minor": false,
+    "instrument": "brass",
+    "cueFrom": 210,
+    "cueTo": 950,
+    "cueLength": 0.24
+  },
+  "g5": {
+    "key": 58,
+    "minor": false,
+    "instrument": "chip",
+    "cueFrom": 1560,
+    "cueTo": 350,
+    "cueLength": 0.12
+  },
+  "g6": {
+    "key": 56,
+    "minor": true,
+    "instrument": "bell",
+    "cueFrom": 440,
+    "cueTo": 190,
+    "cueLength": 0.32
+  },
+  "g7": {
+    "key": 64,
+    "minor": false,
+    "instrument": "reed",
+    "cueFrom": 920,
+    "cueTo": 430,
+    "cueLength": 0.15
+  },
+  "g8": {
+    "key": 61,
+    "minor": false,
+    "instrument": "pluck",
+    "cueFrom": 680,
+    "cueTo": 2300,
+    "cueLength": 0.14
+  },
+  "g9": {
+    "key": 59,
+    "minor": false,
+    "instrument": "chip",
+    "cueFrom": 420,
+    "cueTo": 1840,
+    "cueLength": 0.18
+  },
+  "g10": {
+    "key": 62,
+    "minor": false,
+    "instrument": "glass",
+    "cueFrom": 1450,
+    "cueTo": 470,
+    "cueLength": 0.22
+  },
+  "g11": {
+    "key": 65,
+    "minor": false,
+    "instrument": "mallet",
+    "cueFrom": 310,
+    "cueTo": 780,
+    "cueLength": 0.12
+  },
+  "g12": {
+    "key": 60,
+    "minor": false,
+    "instrument": "piano",
+    "cueFrom": 2350,
+    "cueTo": 850,
+    "cueLength": 0.075
+  },
+  "g13": {
+    "key": 62,
+    "minor": false,
+    "instrument": "mallet",
+    "cueFrom": 1950,
+    "cueTo": 680,
+    "cueLength": 0.22
+  },
+  "g14": {
+    "key": 61,
+    "minor": false,
+    "instrument": "pluck",
+    "cueFrom": 660,
+    "cueTo": 310,
+    "cueLength": 0.2
+  },
+  "g15": {
+    "key": 63,
+    "minor": true,
+    "instrument": "chip",
+    "cueFrom": 910,
+    "cueTo": 2450,
+    "cueLength": 0.2
+  },
+  "g16": {
+    "key": 58,
+    "minor": false,
+    "instrument": "bell",
+    "cueFrom": 260,
+    "cueTo": 115,
+    "cueLength": 0.25
+  },
+  "g17": {
+    "key": 65,
+    "minor": false,
+    "instrument": "piano",
+    "cueFrom": 570,
+    "cueTo": 1030,
+    "cueLength": 0.13
+  },
+  "g18": {
+    "key": 57,
+    "minor": false,
+    "instrument": "brass",
+    "cueFrom": 320,
+    "cueTo": 160,
+    "cueLength": 0.16
+  },
+  "g19": {
+    "key": 60,
+    "minor": false,
+    "instrument": "piano",
+    "cueFrom": 360,
+    "cueTo": 1100,
+    "cueLength": 0.21
+  },
+  "g20": {
+    "key": 60,
+    "minor": false,
+    "instrument": "pluck",
+    "cueFrom": 640,
+    "cueTo": 1350,
+    "cueLength": 0.15
+  },
+  "g21": {
+    "key": 59,
+    "minor": true,
+    "instrument": "reed",
+    "cueFrom": 1800,
+    "cueTo": 520,
+    "cueLength": 0.19
+  },
+  "g22": {
+    "key": 64,
+    "minor": false,
+    "instrument": "brass",
+    "cueFrom": 1100,
+    "cueTo": 380,
+    "cueLength": 0.12
+  },
+  "g23": {
+    "key": 58,
+    "minor": false,
+    "instrument": "mallet",
+    "cueFrom": 205,
+    "cueTo": 720,
+    "cueLength": 0.18
+  },
+  "g24": {
+    "key": 57,
+    "minor": false,
+    "instrument": "brass",
+    "cueFrom": 480,
+    "cueTo": 155,
+    "cueLength": 0.23
+  },
+  "g25": {
+    "key": 62,
+    "minor": false,
+    "instrument": "glass",
+    "cueFrom": 480,
+    "cueTo": 2900,
+    "cueLength": 0.3
+  },
+  "g26": {
+    "key": 61,
+    "minor": true,
+    "instrument": "chip",
+    "cueFrom": 1920,
+    "cueTo": 330,
+    "cueLength": 0.23
+  },
+  "g27": {
+    "key": 65,
+    "minor": false,
+    "instrument": "mallet",
+    "cueFrom": 730,
+    "cueTo": 320,
+    "cueLength": 0.23
+  },
+  "g28": {
+    "key": 60,
+    "minor": false,
+    "instrument": "bell",
+    "cueFrom": 820,
+    "cueTo": 2100,
+    "cueLength": 0.31
+  },
+  "g29": {
+    "key": 59,
+    "minor": false,
+    "instrument": "piano",
+    "cueFrom": 2350,
+    "cueTo": 480,
+    "cueLength": 0.11
+  },
+  "g30": {
+    "key": 63,
+    "minor": false,
+    "instrument": "pluck",
+    "cueFrom": 330,
+    "cueTo": 1200,
+    "cueLength": 0.14
+  }
 };
 const audioTheme = () => GAME_AUDIO[curGame()] || Object.values(GAME_AUDIO)[0];
 
@@ -844,7 +1079,7 @@ function buildBackground() {
   for (let y = RIVER_TOP + 14; y < RIVER_BOT - 6; y += 18) { g.fillStyle = ((y / 18) | 0) % 2 ? '#fff' : '#1d3557'; g.fillRect(START_X - 40, y, 9, 18); }
   g.restore();
   drawTower(g);
-  DECOR.paint(g, 'g1');
+  VOL_PACKS.g1.decor.paint(g, 'g1');
   bgCanvas = c;
 }
 function drawTower(g) {
@@ -1584,11 +1819,12 @@ function renderGeneric(g, now, t, dt) {
     ctx.fillStyle = '#1d3557'; ctx.fillRect(0, 0, W, H); ctx.fillStyle = '#fff'; ctx.font = '700 44px "Baloo 2","Segoe UI",sans-serif';
     ctx.textAlign = 'center'; ctx.fillText(L().loadingFmt(trTitle(g.title)), 800, 460); ctx.textAlign = 'left'; return;
   }
-  const base = BASES.get(g.id);
+  const pack = VOL_PACKS[g.vol];
+  const base = pack.backgrounds.get(g.id);
   if (base) ctx.drawImage(base, 0, 0, W, H);
   FX.ambientBack(t, g.mote);
   FX.motes(t, g.mote);
-  const sc = SCENES[g.id];
+  const sc = pack.scenes[g.id];
   if (sc) sc.back(t);
   if (race && race.phase === 'done' && race.winRays) FX.rays(race.winRays.x, race.winRays.y + 30, 340, store.settings.calm ? 0 : t, g.rayColor);
   if (race) {
@@ -1620,24 +1856,54 @@ function charImg(av, pose, x, y, h, opt = {}) {
   if (a > .5 && !store.settings.calm) { ctx.shadowColor = 'rgba(20,20,60,.35)'; ctx.shadowBlur = 10; ctx.shadowOffsetY = 4; }   // lifts the figure off the background
   ctx.drawImage(im, -w / 2, -h, w, h); ctx.restore(); return w;
 }
-const curGame = () => store.settings.game || 'g1';
+let activeGameId = store.settings.currentGame || store.settings.game || 'g1';
+const curGame = () => activeGameId;
 const curImpl = () => GAME_IMPL[curGame()] || null;
 const gameAssets = id => id === 'g1' ? duckAssets : GAME_IMPL[id];
-const GAME_SCRIPTS = {"g2": "games/dist/g2.js", "g3": "games/dist/g3.js", "g4": "games/dist/g4.js", "g5": "games/dist/g5.js", "g6": "games/dist/g6.js"};
-const gameScriptLoads = new Map();
-function loadGameScript(id) {
-  if (gameAssets(id)?.assets) return Promise.resolve();
-  if (gameScriptLoads.has(id)) return gameScriptLoads.get(id);
+const GAME_SCRIPTS = {"g10": "games/dist/g10.js", "g11": "games/dist/g11.js", "g12": "games/dist/g12.js", "g13": "games/dist/g13.js", "g14": "games/dist/g14.js", "g15": "games/dist/g15.js", "g16": "games/dist/g16.js", "g17": "games/dist/g17.js", "g18": "games/dist/g18.js", "g19": "games/dist/g19.js", "g2": "games/dist/g2.js", "g20": "games/dist/g20.js", "g21": "games/dist/g21.js", "g22": "games/dist/g22.js", "g23": "games/dist/g23.js", "g24": "games/dist/g24.js", "g25": "games/dist/g25.js", "g26": "games/dist/g26.js", "g27": "games/dist/g27.js", "g28": "games/dist/g28.js", "g29": "games/dist/g29.js", "g3": "games/dist/g3.js", "g30": "games/dist/g30.js", "g4": "games/dist/g4.js", "g5": "games/dist/g5.js", "g6": "games/dist/g6.js", "g7": "games/dist/g7.js", "g8": "games/dist/g8.js", "g9": "games/dist/g9.js"};
+const scriptLoads = new Map(), gameScriptLoads = new Map();
+function loadScript(src) {
+  if (scriptLoads.has(src)) return scriptLoads.get(src);
   const script = document.createElement('script');
   const pending = new Promise((resolve, reject) => {
-    script.src = GAME_SCRIPTS[id]; script.async = true;
-    script.onload = () => { script.remove(); gameAssets(id)?.assets ? resolve() : reject(new Error('Invalid game module')); };
-    script.onerror = () => { script.remove(); reject(new Error('Game download failed')); };
+    script.src = src; script.async = true;
+    script.onload = () => { script.remove(); resolve(); };
+    script.onerror = () => { script.remove(); scriptLoads.delete(src); reject(new Error('Game download failed')); };
     document.head.appendChild(script);
+  });
+  scriptLoads.set(src, pending); return pending;
+}
+function loadGameScript(id) {
+  if (gameAssets(id)?.assets && VOL_PACKS[id === 'g1' ? 'g1' : ALL_GAMES_30.find(g => g.id === id)?.vol]) return Promise.resolve();
+  if (gameScriptLoads.has(id)) return gameScriptLoads.get(id);
+  const info = ALL_GAMES_30.find(g => g.id === id);
+  if (!info || (id !== 'g1' && !GAME_SCRIPTS[id])) return Promise.reject(new Error('Unknown game'));
+  const packKey = id === 'g1' ? 'g1' : info.vol;
+  const packSrc = 'games/dist/' + (id === 'g1' ? 'duck-decor' : 'vol' + info.vol) + '.js';
+  const pending = loadScript(packSrc).then(() => {
+    if (!VOL_PACKS[packKey]) { scriptLoads.delete(packSrc); throw new Error('Invalid scene pack'); }
+    if (id !== 'g1') return loadScript(GAME_SCRIPTS[id]);
+  }).then(() => {
+    if (!gameAssets(id)?.assets) { scriptLoads.delete(GAME_SCRIPTS[id]); throw new Error('Invalid game module'); }
+    gameAssets(id).vol = info.vol;
   });
   gameScriptLoads.set(id, pending);
   pending.then(() => gameScriptLoads.delete(id), () => gameScriptLoads.delete(id));
   return pending;
+}
+let recentGames = [];
+function retainGame(id) {
+  recentGames = recentGames.filter(x => x !== id); recentGames.push(id);
+  for (const stale of recentGames.slice(0, -3)) {
+    const g = gameAssets(stale); if (!g) continue;
+    Promise.allSettled([g.loading, g.detailsLoading]).then(() => {
+      if (curGame() === stale || recentGames.slice(-3).includes(stale)) return;
+      delete IMGSETS[stale]; g.loading = null; g.detailsLoading = null; g.ready = false;
+      if (stale === 'g1') bgCanvas = null;
+      else VOL_PACKS[g.vol]?.backgrounds.release(stale);
+      recentGames = recentGames.filter(x => x !== stale);
+    });
+  }
 }
 function prepareGame(g) {
   if (!g.loading) {
@@ -1672,19 +1938,25 @@ function loadGameDetails(g, starting = false) {
   });
   return g.detailsLoading;
 }
-function activateGame(id) {
+function activateGame(id, navigate = true) {
   if (race && race.phase === 'run') return;
-  store.settings.game = id; save();
+  const selected = ALL_GAMES_30.find(g => g.id === id); if (!selected) return;
+  activeGameId = id; currentVol = selected.vol;
+  store.settings.currentGame = id;
+  store.settings['game' + (currentVol === 1 ? '' : currentVol)] = id; save();
+  renderGameTabs();
+  if (navigate && location.href !== getGameUrl(selected)) history.pushState(null, '', getGameUrl(selected));
   GameSound.stop(); GameSound.prepare(id);
   race = null; hideResult();
   IMG = IMGSETS[id] = IMGSETS[id] || {};
-  if (!gameAssets(id)?.assets) {
+  if (!gameAssets(id)?.assets || !VOL_PACKS[id === 'g1' ? 'g1' : selected.vol]) {
     updateUI();
-    return loadGameScript(id).then(() => { if (curGame() === id) return activateGame(id); }).catch(() => {
+    return loadGameScript(id).then(() => { if (curGame() === id) return activateGame(id, false); }).catch(() => {
       if (curGame() === id) toast(curLang() === 'vi' ? 'Chưa tải được game. Bấm chọn lại để thử.' : 'Game could not load. Select it again to retry.');
     });
   }
   prepareGame(gameAssets(id));
+  retainGame(id);
   if (AUD.ctx) Music.play('idle');
   updateUI();
   return gameAssets(id).loading;
@@ -1796,25 +2068,30 @@ cv.onclick = () => {
 };
 
 /* ================= Main UI ================= */
-const GAMES = [
-  { id: 'g1', n: '01', name: 'Duck Splash', icon: '🦆' },
-  { id: 'g2', n: '02', name: 'Dino Egg Pop', icon: '🥚' },
-  { id: 'g3', n: '03', name: 'Magic Pot Goes Pop', icon: '🔮' },
-  { id: 'g4', n: '04', name: 'Dragon Wants Gold', icon: '🐉' },
-  { id: 'g5', n: '05', name: 'Oops, Robot!', icon: '🤖' },
-  { id: 'g6', n: '06', name: 'Ghost in the Lift', icon: '👻' }
-];
+const GAMES = ALL_GAMES_30;
 for (const g of GAMES) if (GAME_SCRIPTS[g.id]) GAME_IMPL[g.id] = { id: g.id, title: g.name };
-document.getElementById('gameTabs').innerHTML = GAMES.map(g =>
-  `<button class="tab" data-game="${g.id}"><span class="ico">${g.icon}</span><span><b>GAME ${g.n}</b><span class="nm">${g.name}</span></span></button>`).join('') +
-  `<button class="tab randTab" id="randTab"><span class="ico">🎲</span><span><b id="randTabHdr">RANDOM</b><span class="nm" id="randTabNm">Surprise Game</span></span></button>`;
-document.querySelectorAll('#gameTabs .tab[data-game]').forEach(b => b.onclick = () => activateGame(b.dataset.game));
-document.getElementById('randTab').onclick = () => {
-  if (race && race.phase === 'run') return;
-  const game = pickRandomGame();
-  if (game.vol === CURRENT_VOL) activateGame(game.id);
-  else { save(); location.href = getGameUrl(game); }
-};
+const visibleGames = () => GAMES.filter(g => g.vol === currentVol);
+let renderedVol = 0;
+function renderGameTabs() {
+  if (renderedVol === currentVol) return;
+  renderedVol = currentVol;
+  document.getElementById('gameTabs').innerHTML = visibleGames().map(g =>
+    `<button class="tab" data-game="${g.id}"><span class="ico">${g.icon}</span><span><b>GAME ${g.n}</b><span class="nm">${g.name}</span></span></button>`).join('') +
+    `<button class="tab randTab" id="randTab"><span class="ico">🎲</span><span><b id="randTabHdr">RANDOM</b><span class="nm" id="randTabNm">Surprise Game</span></span></button>`;
+  document.querySelectorAll('#gameTabs .tab[data-game]').forEach(b => b.onclick = () => activateGame(b.dataset.game));
+  document.getElementById('randTab').onclick = () => { if (race?.phase !== 'run') activateGame(pickRandomGame().id); };
+}
+document.querySelectorAll('.vols .vol').forEach((a, i) => {
+  a.dataset.vol = i + 1;
+  const first = GAMES.find(g => g.vol === i + 1);
+  a.href = getGameUrl(first);
+  a.onclick = e => {
+    if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+    e.preventDefault(); if (race?.phase === 'run') return;
+    const key = 'game' + (i ? i + 1 : ''), remembered = store.settings[key];
+    activateGame(GAMES.find(g => g.id === remembered && g.vol === i + 1)?.id || first.id);
+  };
+});
 
 const durChips = document.getElementById('durChips');
 [7, 10].forEach(s => { const b = document.createElement('button'); b.className = 'chip'; b.textContent = s + 's'; b.dataset.s = s; b.onclick = () => { store.settings.duration = s; save(); updateUI(); }; durChips.appendChild(b); });
@@ -1880,7 +2157,14 @@ resetBtn.onclick = () => {
 function updateUI() {
   const t = L();
   document.documentElement.lang = curLang();
-  document.getElementById('brandSub').textContent = t.subVol1;
+  document.getElementById('brandSub').textContent = curLang() === 'vi' ? '30 trò chơi gọi tên học sinh vui nhộn' : '30 fun mini-games for calling on students';
+  document.querySelectorAll('.vols .vol').forEach(a => {
+    const active = +a.dataset.vol === currentVol; a.classList.toggle('on', active);
+    if (active) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    const vol = +a.dataset.vol, key = 'game' + (vol === 1 ? '' : vol);
+    const next = GAMES.find(g => g.id === store.settings[key] && g.vol === vol) || GAMES.find(g => g.vol === vol);
+    a.href = getGameUrl(next);
+  });
   document.getElementById('drawerTitle').textContent = t.drawerTitle;
   document.getElementById('drawerSub').textContent = t.drawerSub;
   document.getElementById('drawerBtnTxt').textContent = t.drawerBtn;
@@ -1912,7 +2196,7 @@ function updateUI() {
   [...durChips.children].forEach(b => b.classList.toggle('on', +b.dataset.s === store.settings.duration));
   document.querySelectorAll('#gameTabs .tab[data-game]').forEach((b, i) => {
     b.classList.toggle('active', b.dataset.game === curGame());
-    b.querySelector('.nm').textContent = trTitle(GAMES[i].name);
+    b.querySelector('.nm').textContent = trTitle(visibleGames()[i].name);
   });
   document.getElementById('randTabHdr').textContent = t.randomTabTitle;
   document.getElementById('randTabNm').textContent = t.randomTabName;
@@ -2212,12 +2496,9 @@ const drawerSearch = document.getElementById('drawerSearch');
 let drawerFilterVol = 0, drawerQuery = '';
 
 function getGameUrl(g) {
-  const q = `?cls=${encodeURIComponent(store.activeId)}&game=${encodeURIComponent(g.id)}`;
-  if (location.protocol === 'file:') {
-    if (g.vol === 1) return (CURRENT_VOL === 1) ? `index.html${q}` : `../goi-ten-vui-nhon/GoiTenVuiNhon/index.html${q}`;
-    return (CURRENT_VOL === 1) ? `../../${g.path}/index.html${q}` : `../${g.path}/index.html${q}`;
-  }
-  return `https://pctppsptutor-lab.github.io/${g.path}/${q}`;
+  const url = new URL(location.href);
+  url.searchParams.set('game', g.id); url.searchParams.set('cls', store.activeId);
+  url.searchParams.delete('vol'); return url.href;
 }
 
 function openDrawer() {
@@ -2255,7 +2536,7 @@ function renderDrawer() {
   });
 
   drawerGrid.innerHTML = filtered.map(g => {
-    const isCur = g.vol === CURRENT_VOL && g.id === cur;
+    const isCur = g.id === cur;
     return `<div class="drawerCard ${isCur ? 'active' : ''}" data-vol="${g.vol}" data-id="${g.id}">
       <span class="ico">${g.icon}</span>
       <div class="info">
@@ -2269,16 +2550,11 @@ function renderDrawer() {
   drawerGrid.querySelectorAll('.drawerCard').forEach(card => {
     card.onclick = () => {
       SFX.drawerPop();
-      const gid = card.dataset.id, gvol = +card.dataset.vol;
+      const gid = card.dataset.id;
       const g = catalog.find(x => x.id === gid);
       if (!g) return;
-      if (gvol === CURRENT_VOL) {
-        activateGame(gid);
-        closeDrawer();
-      } else {
-        toast(t.jumpToast(trTitle(g.name), gvol));
-        setTimeout(() => { location.href = getGameUrl(g); }, 350);
-      }
+      activateGame(gid);
+      closeDrawer();
     };
   });
 }
@@ -2336,7 +2612,7 @@ document.addEventListener('keydown', e => {
   }
   if (e.code.startsWith('Digit') && !e.ctrlKey && !e.metaKey && !e.altKey) {
     const idx = parseInt(e.code.slice(5)) - 1;
-    if (idx >= 0 && idx < GAMES.length) { e.preventDefault(); activateGame(GAMES[idx].id); return; }
+    if (idx >= 0 && idx < visibleGames().length) { e.preventDefault(); activateGame(visibleGames()[idx].id); return; }
   }
   if (e.code === 'Space' || e.code === 'PageDown' || (e.code === 'Enter' && tag !== 'button' && tag !== 'a')) {
     e.preventDefault();
@@ -2346,24 +2622,19 @@ document.addEventListener('keydown', e => {
 });
 
 /* ================= Boot & URL Query Reading ================= */
-try {
-  const urlParams = new URLSearchParams(location.search);
-  const qCls = urlParams.get('cls');
-  if (qCls && store.classes.some(c => c.id === qCls)) {
-    store.activeId = qCls;
-    save(true);
-  }
-  const qGame = urlParams.get('game');
-  if (qGame && GAMES.some(g => g.id === qGame)) {
-    store.settings.game = qGame;
-    save(true);
-  }
-} catch (e) {}
-
-updateUI();
+function restoreRoute() {
+  const params = new URLSearchParams(location.search), cls = params.get('cls');
+  if (cls && store.classes.some(c => c.id === cls)) store.activeId = cls;
+  const requested = params.get('game');
+  const selected = GAMES.find(g => g.id === requested) || GAMES.find(g => g.id === activeGameId) || GAMES[0];
+  if (race?.phase === 'run') { race = null; GameSound.stop(); document.body.classList.remove('running'); }
+  activateGame(selected.id, false);
+}
+window.addEventListener('popstate', restoreRoute);
+restoreRoute();
+history.replaceState(null, '', getGameUrl(GAMES.find(g => g.id === curGame())));
 const fontReady = document.fonts ? document.fonts.load('700 30px "Baloo 2"').catch(() => {}) : Promise.resolve();
 fontReady.then(() => { for (const k in tagCache) delete tagCache[k]; });
-activateGame(GAME_IMPL[curGame()] ? curGame() : 'g1');
 requestAnimationFrame(frame);
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
   navigator.serviceWorker.register('./sw.js').catch(() => {});

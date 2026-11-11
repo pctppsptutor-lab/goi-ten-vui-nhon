@@ -1,0 +1,105 @@
+// Game 20 — Cat in a Box
+// Ten cats dash between ten cardboard boxes; when the bell rings they dive in, and the last box to pop open picks the player.
+// Twist: the first box only holds a sock puppet; a laser dot zips to another box and the real winning cat leaps out.
+(() => {
+  const XS = [230, 460, 690, 920, 1150];
+  const BOXES = [...XS.map(x => [x, 470]), ...XS.map(x => [x, 770])];
+  const BOX_IMG = ['p1', 'p2', 'p4', 'p5', 'p9', 'p11', 'p12', 'p13', 'p16', 'p1'];
+  const BOSS = [1440, 620];
+
+  function boxReveal(x, y, correct) {
+    ctx.save(); ctx.translate(x, y - 27);
+    ctx.strokeStyle = correct ? '#ffe27a' : '#ffc5d0';
+    ctx.fillStyle = correct ? '#8c5521' : '#914b49';
+    ctx.lineWidth = 4;
+    for (const side of [-1, 1]) {
+      ctx.save(); ctx.scale(side, 1); ctx.beginPath();
+      ctx.moveTo(8, -4); ctx.lineTo(57, -6); ctx.lineTo(88, -30); ctx.lineTo(43, -27);
+      ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore();
+    }
+    ctx.restore();
+  }
+
+  GAME_IMPL.g20 = {
+    id: 'g20', title: 'Cat in a Box', base: 'assets/g20/', titleY: 260, animals: true,
+    assets: gAssets(['idle', 'ready', 'jump', 'peek', 'puppet', 'win'], [...new Set(BOX_IMG), 'p0']),
+    startBanner: '🐱 The cats are zooming around!', mote: '#fff1d6', rayColor: '#fff2a8',
+
+    setup(r) {
+      const slots = spread(r.players.length);
+      r.players.forEach((p, i) => { p.box = slots[i]; [p.bx, p.by] = BOXES[slots[i]]; p.x = p.bx; p.y = p.by - 60; p.ph = Math.random() * 6; });
+      r.bell = Math.max(1.6, r.TW * .45);                                    // when the cats dive into boxes
+      r.fakes = makeFakes(r, r.bell + .9);
+    },
+    // where a cat is while it zooms around before the bell
+    roam(r, p, t) {
+      const a = t * (.7 + p.seed * .5) + p.ph;
+      return [800 + Math.cos(a) * 560 * (.6 + p.seed * .4), 620 + Math.sin(a * 1.7) * 200];
+    },
+
+    tick(r, t, te) {
+      const f = activeFake(r, t), D = r.decoy, Wn = r.winner;
+
+      if (t > r.bell) cue('bell', () => { [0, .15, .3].forEach(d => SFX.tone(1568, .4, { vol: .12, delay: d })); SFX.swoosh(); r.banner = '🔔 Ding! Everyone into a box!'; });
+      if (f && te < 0) cue('fk' + f.at, () => { SFX.boing(); r.banner = '📦 ' + f.p.name + "'s box is wobbling…"; });
+      if (!r.plain) {
+        if (te > 0) cue('a', () => { Music.play('tension'); outcome('almost_selected', D); SFX.pop(); r.banner = '📦 ' + D.name + "'s box pops open…"; });
+        if (te > .5) cue('b', () => { outcome('wrong_turn', D); SFX.sadTrombone(); r.banner = '🧦 Only a sock puppet inside!'; });
+        if (te > 1.1) cue('c', () => { SFX.tone(1800, .6, { type: 'sine', vol: .06, to: 2400 }); r.banner = '🔴 A laser dot zips across the floor…'; });
+        if (te > 1.8) cue('d', () => { outcome('selected', Wn); SFX.pop(); SFX.wheee(); r.banner = '🐈 …and ' + Wn.name + ' leaps out after it!'; });
+      } else {
+        if (te > 0) cue('a', () => { Music.play('tension'); outcome('almost_selected', D || Wn); r.banner = '📦 Which box will pop?'; });
+        if (te > 1.2) cue('d', () => { outcome('selected', Wn); SFX.pop(); r.banner = '🐈 POP! Out jumps ' + Wn.name + '!'; });
+      }
+    },
+
+    render(r, t) {
+      const rt = r.now, te = rt - r.TW, done = r.phase === 'done', f = activeFake(r, rt), D = r.decoy, Wn = r.winner;
+      const hide = rt > r.bell + .6;                                           // all cats inside their boxes
+      for (const p of r.players) {
+        const shake = (f && f.p === p && te < 0) || (te > 0 && p === (D || Wn) && te < (r.plain ? 1.2 : .5));
+        drawImg(BOX_IMG[p.box], p.bx, p.by, 140, { anchor: 'bottom', rot: shake ? Math.sin(rt * 30) * .08 : 0 });
+        const winningBox = p === Wn && te > (r.plain ? 1.2 : 1.8);
+        if (winningBox || (!r.plain && p === D && te > .5 && !done)) boxReveal(p.bx, p.by, winningBox);
+        tagC(p.name, p.bx, p.by + 22, shake || winningBox);
+      }
+      const order = [...r.players].sort((a, b) => a.by - b.by);
+      for (const p of order) {
+        if (done && p === Wn) continue;
+        let x, y, pose, h = 110;
+        if (rt < r.bell) { [x, y] = this.roam(r, p, rt); pose = rt < .6 ? 'ready' : 'idle'; }
+        else if (rt < r.bell + .6) { const k = ease((rt - r.bell) / .6), [rx, ry] = this.roam(r, p, r.bell); x = lerp(rx, p.bx, k); y = lerp(ry, p.by - 40, k) - Math.sin(k * Math.PI) * 80; pose = 'jump'; }
+        else { x = p.bx; y = p.by - 40; pose = 'peek'; h = 0; }
+        if (f && f.p === p && te < 0 && hide) { pose = 'peek'; h = 90; }
+        if (p === D && te > 0 && !r.plain) { pose = te < .5 ? 'peek' : 'puppet'; h = 120; }
+        if (p === Wn && te > (r.plain ? 1.2 : 1.8)) { const k = ease(clamp((te - (r.plain ? 1.2 : 1.8)) / .5)); pose = 'jump'; h = 130; y = p.by - 40 - Math.sin(k * Math.PI) * 100; }
+        if (pose === 'puppet' && !IMG['c' + p.av + '_puppet']) {
+          ctx.save(); ctx.font = '48px sans-serif'; ctx.textAlign = 'center';
+          ctx.fillText('🧦', x, y - 22); ctx.restore();
+        } else if (h) charImg(p.av, pose, x, y, h);
+        p.x = x; p.y = y;
+        if (rt < r.bell && Math.random() < .2) FX.every(r, 'dust' + p.box, .3, () => FX.smoke(x, y, 1, '#f2e2c4'));
+      }
+      // the laser dot
+      if (!r.plain && te > 1.1 && te < 2.2 && !done) {
+        const k = ease(clamp((te - 1.1) / .7)), x = lerp(D.bx, Wn.bx, k) + Math.sin(te * 40) * 6, y = lerp(D.by, Wn.by, k) - 20;
+        FX.halo(x, y, 18, '#ff3b3b', .95); FX.every(r, 'laz', .04, () => FX.glitter(x, y, 1, ['#ff6f6f']));
+      }
+      // boss cat patrols around the boxes
+      drawImg('p0', BOSS[0] - 40 + Math.sin(rt * 1.5) * 65, BOSS[1] + Math.cos(rt * 1.8) * 85 - Math.abs(Math.sin(rt * 6)) * 14, 170, { anchor: 'bottom', flip: Math.cos(rt * 1.5) > 0 });
+      if (done) {
+        const k = clamp((rt - r.doneAt) / .4);
+        charImg(Wn.av, 'win', Wn.bx, Wn.by - 20, 200 * (.6 + .4 * ease(k)));
+      }
+    },
+
+    idle(t) {
+      BOXES.forEach(([x, y], i) => drawImg(BOX_IMG[i], x, y, 140, { anchor: 'bottom' }));
+      for (let i = 0; i < 10; i++) { const a = t * (.7 + i * .05) + i; charImg(i, 'idle', 800 + Math.cos(a) * 520, 620 + Math.sin(a * 1.7) * 190, 110); }
+      drawImg('p0', BOSS[0] - 40 + Math.sin(t * 1.4) * 65, BOSS[1] + Math.cos(t * 1.7) * 80 - Math.abs(Math.sin(t * 5.5)) * 12, 170, { anchor: 'bottom', flip: Math.cos(t * 1.4) > 0 });
+    },
+    onFinish(r) { FX.sparkle(r.winner.bx, r.winner.by - 150, 34, ['#ff9fc4', '#ffd84a', '#ffffff']); },
+    winBanner: r => '🐈 ' + r.winner.name + ' pops out of the box!',
+    winPos: r => ({ x: r.winner.bx, y: r.winner.by - 140 })
+  };
+})();
