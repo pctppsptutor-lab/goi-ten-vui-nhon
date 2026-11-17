@@ -11,11 +11,19 @@ const clone=o=>JSON.parse(JSON.stringify(o));
  const roster=clone(c.roster(cls));assert.equal(new Set(roster.map(s=>s.name)).size,6);assert.equal(roster[2].name,'Emma (2)');
  c.store.called.a=[roster[1].name];assert.equal(c.eligible(cls).length,5);assert.equal(c.roster({...cls,mode:'numbers',count:50}).length,50);
  let time=1000;
- const clock=context({performance:{now:()=>time},clamp:(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),TWIST_END:1.35,GameSound:{tick(){}},countdown(r){if(r.now>=r.T)r.phase='done';}});
+ const clock=context({performance:{now:()=>time},clamp:(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),ROUND_INTRO_SECONDS:2.6,TWIST_END:1.35,GameSound:{tick(){}},countdown(r){if(r.now>=r.T)r.phase='done';}});
  run(clock,cut('function roundRemaining(','function countdown('));
- for(const T of [7,10])for(const plain of [true,false]){
-  const r=clock.race={T,TW:T-3.2,t0:1000,now:0,plain,phase:'run',game:{tick(){}},slowUntil:Infinity,slowF:.2};
-  for(let frame=0;frame<=T*10;frame++){time=1000+frame*100;clock.tickRace(.05);}
+ for(const roundLength of [7,10,15])for(const plain of [true,false]){
+  const T=roundLength+2.6;
+  const r=clock.race={T,roundLength,TW:T-3.2,t0:1000,now:0,plain,phase:'run',game:{tick(){}},slowUntil:Infinity,slowF:.2};
+  for(let frame=0;frame<Math.ceil(T*10);frame++){
+   time=1000+frame*100;clock.tickRace(.05);
+   if(frame===0||frame===13||frame===26)assert.equal(clock.roundRemaining(r),roundLength);
+   if(frame===26)assert.equal(r.now,2.6);
+   if(frame===36)assert.ok(Math.abs(clock.roundRemaining(r)-(roundLength-1))<1e-9);
+   if(!plain&&frame===Math.round((2.6+roundLength*.5)*10))assert.ok(Math.abs(r.now-r.TW)<1e-9);
+  }
+  time=1000+T*1000;clock.tickRace(.05);
   assert.equal(r.phase,'done');assert.equal(r.now,T);assert.equal(clock.roundRemaining(r),0);
  }
  const handlers={};let editor=true,drawer=false,closedEditor=0,closedDrawer=0;
@@ -41,5 +49,5 @@ const clone=o=>JSON.parse(JSON.stringify(o));
  const edit=context({draft:[{id:'a',name:'edited A'}],draftBase:JSON.stringify(original),store:{classes:clone(original),called:{},settings:{}},loadStore:()=>clone(newer),importedCalled:{},editId:'a',AUD:{applyVol(){}},updateUI(){},curLang:()=> 'en',document:{getElementById:()=>error,createElement:()=>({})},openClasses(){},SFX:{pop(){}},save(){saves++;return true;},page:{classList:{add(){}}},race:null});
  run(edit,cut('function closeClasses()',"document.getElementById('classBtn').onclick"));edit.closeClasses();assert.equal(saves,0);assert.equal(edit.draft[0].name,'edited A');assert.equal(edit.store.called.b[0],'Bob');assert.equal(error.children.length,1);
  newer.classes=clone(original);newer.called={a:['Alice']};error.focus=()=>{};edit.closeClasses();assert.equal(saves,1);assert.equal(edit.store.classes[0].name,'edited A');assert.deepEqual(clone(edit.store.called.a),['Alice']);assert.equal(edit.draft,null);
- console.log('PASS core: unique roster IDs, wall-clock 7/10s at 10 FPS, editable shortcuts/IME, image failure recovery, stale draft preservation and fresh history');
+ console.log('PASS core: unique roster IDs, wall-clock 7/10/15s after introduction at 10 FPS, editable shortcuts/IME, image failure recovery, stale draft preservation and fresh history');
 })().catch(e=>{console.error(e);process.exitCode=1;});
