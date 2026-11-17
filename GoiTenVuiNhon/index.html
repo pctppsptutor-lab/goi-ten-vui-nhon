@@ -1901,6 +1901,15 @@ function contactShadow(x, y, w, a = .3) {
   ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(x, y, w * .5, w * .13, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
 }
 const spriteInkCache = new WeakMap();
+// These 47 shipped poses have excess transparent height; other stage poses use their full image.
+const paddedStageSprites = new Set(`
+g2/c0_win g2/c1_win g2/c2_win g2/c3_win g2/c4_win g2/c5_win g2/c6_win g2/c7_win g2/c8_twist g2/c8_win g2/c9_win
+g6/c0_follow g6/c6_follow g7/c2_win g7/c7_win g8/c1_win
+g11/c0_delivery g11/c0_win g14/c5_idle g15/c9_win g16/c9_win g18/c3_win
+g19/c2_lost g19/c2_mismatch g19/c6_observe g20/c9_jump g21/c6_wrapped g21/c7_wrapped g22/c7_mop
+g24/c1_parrot g24/c2_parrot g24/c6_follow g25/c0_twist g26/c1_dino
+g29/c2_coil g29/c2_coin g29/c2_lever g29/c2_slide g29/c2_stuck g29/c4_coil g29/c4_coin g29/c4_lever g29/c4_slide g29/c4_stuck g29/c4_win g29/c5_lever g29/c9_coil
+`.trim().split(/\s+/));
 const spriteProbe = document.createElement('canvas');
 spriteProbe.width = spriteProbe.height = 96;
 const spriteProbeCtx = spriteProbe.getContext('2d', { willReadFrequently: true });
@@ -1930,9 +1939,9 @@ function spriteInkBounds(im) {
   spriteInkCache.set(im, box);
   return box;
 }
-function characterGeometry(im, requestedHeight) {
-  const ink = spriteInkBounds(im);
-  const source = ink.heightRatio < .9 ? ink : { x: 0, y: 0, w: im.naturalWidth || im.width, h: im.naturalHeight || im.height };
+function characterGeometry(im, requestedHeight, inspect = true) {
+  const ink = inspect ? spriteInkBounds(im) : null;
+  const source = ink && ink.heightRatio < .9 ? ink : { x: 0, y: 0, w: im.naturalWidth || im.width, h: im.naturalHeight || im.height };
   let h = source === ink ? Math.min(requestedHeight, requestedHeight * ink.heightRatio * 1.2) : requestedHeight;
   let w = source.w * h / source.h;
   const maxW = requestedHeight * 1.15;
@@ -1941,9 +1950,11 @@ function characterGeometry(im, requestedHeight) {
 }
 function charImg(av, pose, x, y, h, opt = {}) {
   const key = 'c' + av + '_';
-  const im = IMG[key + pose] || IMG[key + (opt.fallback || 'idle')] || IMG[key + curImpl()?.previewPose];
+  const wanted = key + pose, fallback = key + (opt.fallback || 'idle');
+  const name = IMG[wanted] ? wanted : IMG[fallback] ? fallback : key + curImpl()?.previewPose;
+  const im = IMG[name];
   if (!im) return 0;
-  const box = characterGeometry(im, h), w = box.drawW;
+  const box = characterGeometry(im, h, paddedStageSprites.has(curGame() + '/' + name)), w = box.drawW;
   h = box.drawH;
   const a = opt.alpha ?? 1;
   if (opt.shadow !== false && a > .3) contactShadow(x, y - 2, Math.min(w, h * .7) * 1.05, .32 * a);
