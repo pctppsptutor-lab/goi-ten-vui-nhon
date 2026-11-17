@@ -1,7 +1,17 @@
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
-let online=true,requests=0,cacheAvailable=true,quota=false;const entries=new Map(),data=Uint8Array.from({length:10},(_,i)=>i);
-const cache={async match(key){return entries.get(key)?.clone();},async put(key,value){if(quota)throw Error('quota');entries.set(key,value.clone());}};
-const sandbox={Headers,Request,Response,URL,caches:{async open(){if(!cacheAvailable)throw Error('private');return cache;}},self:{location:{origin:'https://example.test'},addEventListener(){}},async fetch(request){requests++;assert.equal(request.headers.get('range'),null,'upstream request must fetch a complete file');if(!online)throw Error('offline');return new Response(data,{headers:{'Content-Type':'audio/mpeg'}});}};
+let online=true,requests=0,cacheAvailable=true,quota=false;const entries=new Map(),events={},data=Uint8Array.from({length:10},(_,i)=>i);
+const cache={
+ async match(key,options){
+  const url=key.url||key;
+  if(options?.ignoreSearch){
+   const requested=new URL(url);
+   for(const [stored,response] of entries)if(new URL(stored).origin===requested.origin&&new URL(stored).pathname===requested.pathname)return response.clone();
+  }
+  return entries.get(url)?.clone();
+ },
+ async put(key,value){if(quota)throw Error('quota');entries.set(key.url||key,value.clone());}
+};
+const sandbox={Headers,Request,Response,URL,caches:{async open(){if(!cacheAvailable)throw Error('private');return cache;}},self:{location:{origin:'https://example.test'},addEventListener(name,fn){events[name]=fn;}},async fetch(request){requests++;assert.equal(request.headers.get('range'),null,'upstream request must fetch a complete file');if(!online)throw Error('offline');return new Response(data,{headers:{'Content-Type':'audio/mpeg'}});}};
 vm.createContext(sandbox);vm.runInContext(fs.readFileSync(path.join(__dirname,'../sw.js'),'utf8')+'\nglobalThis.respond=bgmResponse;',sandbox);
 const req=range=>new Request('https://example.test/assets/bgm/g1.mp3',{headers:range?{Range:range}:{}});
 (async()=>{
@@ -12,5 +22,11 @@ const req=range=>new Request('https://example.test/assets/bgm/g1.mp3',{headers:r
  r=await sandbox.respond(req());assert.equal(r.status,200);assert.equal((await r.arrayBuffer()).byteLength,10);
  online=true;entries.clear();quota=true;r=await sandbox.respond(req('bytes=0-3'));assert.equal(r.status,206,'cache quota must not break online audio');
  cacheAvailable=false;r=await sandbox.respond(req('bytes=0-3'));assert.equal(r.status,206,'unavailable Cache API must not break online audio');
- console.log('PASS SW: whole-track cache, offline ranges, suffix/open ranges, invalid ranges, quota and unavailable-cache fallback');
+ cacheAvailable=true;quota=false;online=false;entries.clear();
+ entries.set('https://example.test/GoiTenVuiNhon/',new Response('<main>cached shell</main>'));
+ const nav={url:'https://example.test/GoiTenVuiNhon/?game=g7&cls=sample',method:'GET',mode:'navigate',headers:new Headers()};
+ let response,settled;events.fetch({request:nav,respondWith(p){response=p;},waitUntil(p){settled=p;}});
+ assert.equal(await(await response).text(),'<main>cached shell</main>','offline route must use the cached document without its query');
+ await settled;
+ console.log('PASS SW: whole-track cache, offline ranges, suffix/open ranges, invalid ranges, quota fallback and offline game routes');
 })().catch(e=>{console.error(e);process.exitCode=1;});

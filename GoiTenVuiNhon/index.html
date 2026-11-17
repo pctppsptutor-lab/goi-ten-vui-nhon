@@ -58,7 +58,7 @@ button:disabled{cursor:not-allowed;opacity:.5}
 .toolBtn.off{color:#94a3b8;background:#00000033;text-decoration:line-through}
 
 /* game picker: 7 equal columns aligned with top bar and stage */
-.tabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;padding:4px 22px 12px}
+.tabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;padding:4px 22px 12px;min-height:72px}
 @media (max-width:1180px){.tabs{display:flex;overflow-x:auto;scrollbar-width:thin}.tab{flex:0 0 185px}}
 .tab{display:flex;align-items:center;gap:9px;min-width:0;border:0;border-radius:16px;padding:8px 10px 8px 8px;text-align:left;background:#fffffff2;color:var(--ink);box-shadow:var(--lift)}
 .tab:hover:not(:disabled){transform:translateY(-2px)}
@@ -73,6 +73,14 @@ button:disabled{cursor:not-allowed;opacity:.5}
 .layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px;padding:0 22px 16px;align-items:start}
 @media (max-width:1050px){.layout{grid-template-columns:1fr}}
 .stageWrap{position:relative;container-type:inline-size;aspect-ratio:16/9}
+.mobileStageInfo{display:none}
+@media (max-width:600px){
+  .mobileStageInfo{display:grid;gap:4px;margin-top:-6px;padding:10px 14px;border-radius:14px;background:#eaf5ff;color:var(--ink);box-shadow:var(--lift)}
+  .mobileStageInfo strong{font-family:var(--title);font-size:18px;line-height:1.2}
+  .mobileStageInfo span{font-size:14px;line-height:1.35}
+  .mobileStageInfo b{font-size:14px;line-height:1.3;color:#075985}
+  .mobileStageInfo b:empty{display:none}
+}
 #stage{display:block;width:100%;height:100%;border-radius:22px;background:#0f172a;cursor:pointer;
   box-shadow:0 0 0 4px #ffffff22,0 20px 44px rgba(0,0,0,.42)}
 body.running #stage{cursor:default}
@@ -291,6 +299,12 @@ textarea{font-family:inherit;font-size:17px;width:100%;min-height:260px;border:2
       </div>
     </div>
   </section>
+
+  <div class="mobileStageInfo" id="mobileStageInfo">
+    <strong id="mobileGameTitle"></strong>
+    <span id="mobileGameRule"></span>
+    <b id="mobileGameStatus" aria-live="polite"></b>
+  </div>
 
   <aside class="side">
     <div>
@@ -1694,6 +1708,7 @@ function frame(now) {
     }
   }
   drawStageLogo();
+  if (mobileStageMedia.matches) updateMobileStageInfo();
   requestAnimationFrame(frame);
 }
 const playfieldFocus = document.createElement('canvas');
@@ -2190,6 +2205,25 @@ cv.onclick = () => {
 
 /* ================= Main UI ================= */
 const GAMES = ALL_GAMES_30;
+const mobileStageMedia = matchMedia('(max-width:600px)');
+let mobileInfoGame = '', mobileInfoLang = '', mobileInfoBanner = '';
+function updateMobileStageInfo() {
+  if (!mobileStageMedia.matches) return;
+  const id = curGame(), lang = curLang(), changedLang = lang !== mobileInfoLang;
+  if (id !== mobileInfoGame || changedLang) {
+    const game = GAMES.find(g => g.id === id);
+    if (!game) return;
+    document.getElementById('mobileGameTitle').textContent = trTitle(game.name);
+    document.getElementById('mobileGameRule').textContent = trRule(game.name);
+    mobileInfoGame = id;
+  }
+  const message = race?.banner || '';
+  if (message !== mobileInfoBanner || changedLang) {
+    document.getElementById('mobileGameStatus').textContent = message ? trBanner(message) : '';
+    mobileInfoBanner = message;
+  }
+  mobileInfoLang = lang;
+}
 for (const g of GAMES) if (GAME_SCRIPTS[g.id]) GAME_IMPL[g.id] = { id: g.id, title: g.name };
 const visibleGames = () => GAMES.filter(g => g.vol === currentVol);
 let renderedVol = 0;
@@ -2290,6 +2324,7 @@ function updateUI() {
   document.getElementById('drawerSub').textContent = t.drawerSub;
   document.getElementById('drawerBtnTxt').textContent = t.drawerBtn;
   document.getElementById('drawerSearch').placeholder = t.searchPlaceholder;
+  document.getElementById('drawerSearch').setAttribute('aria-label', t.searchPlaceholder);
   const mv = store.settings.musicVol ?? 70, sv = store.settings.sfxVol ?? 90;
   musicVol.value = mv; document.getElementById('musicVolVal').textContent = mv + '%';
   sfxVol.value = sv; document.getElementById('sfxVolVal').textContent = sv + '%';
@@ -2344,6 +2379,7 @@ function updateUI() {
   const ol = document.getElementById('calledList');
   ol.innerHTML = called.length ? called.map((n, i) => `<li><i>${i + 1}.</i>${esc(n)}</li>`).join('') : `<li class="empty">${t.nobodyYet}</li>`;
   ol.scrollTop = ol.scrollHeight;
+  updateMobileStageInfo();
 }
 const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 function toast(msg) { const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 1800); }
@@ -2616,6 +2652,7 @@ const drawerGrid = document.getElementById('drawerGrid');
 const drawerVolTabs = document.getElementById('drawerVolTabs');
 const drawerSearch = document.getElementById('drawerSearch');
 let drawerFilterVol = 0, drawerQuery = '';
+let drawerReturnFocus = null;
 
 function getGameUrl(g) {
   const url = new URL(location.href);
@@ -2626,19 +2663,28 @@ function getGameUrl(g) {
 function openDrawer() {
   if (race && race.phase === 'run') return;
   SFX.whoosh();
+  drawerReturnFocus = document.activeElement;
   drawerModal.classList.remove('hidden');
   renderDrawerTabs();
   renderDrawer();
   setTimeout(() => drawerSearch.focus(), 40);
 }
-function closeDrawer() { SFX.pop(); drawerModal.classList.add('hidden'); }
+function closeDrawer() {
+  SFX.pop(); drawerModal.classList.add('hidden');
+  const target = drawerReturnFocus && drawerReturnFocus !== document.body && drawerReturnFocus.isConnected
+    ? drawerReturnFocus : document.getElementById('drawerBtn');
+  drawerReturnFocus = null; target.focus();
+}
 
 function renderDrawerTabs() {
   const t = L();
   const vols = [0, 1, 2, 3, 4, 5];
   drawerVolTabs.innerHTML = vols.map(v => `<button class="drawerTab ${drawerFilterVol === v ? 'on' : ''}" data-vol="${v}">${v === 0 ? t.tabAll : t.tabVol(v)}</button>`).join('');
   drawerVolTabs.querySelectorAll('[data-vol]').forEach(btn => {
-    btn.onclick = () => { drawerFilterVol = +btn.dataset.vol; renderDrawerTabs(); renderDrawer(); };
+    btn.onclick = () => {
+      drawerFilterVol = +btn.dataset.vol; renderDrawerTabs(); renderDrawer();
+      drawerVolTabs.querySelector(`[data-vol="${drawerFilterVol}"]`).focus();
+    };
   });
 }
 
@@ -2659,14 +2705,14 @@ function renderDrawer() {
 
   drawerGrid.innerHTML = filtered.map(g => {
     const isCur = g.id === cur;
-    return `<div class="drawerCard ${isCur ? 'active' : ''}" data-vol="${g.vol}" data-id="${g.id}">
+    return `<button type="button" class="drawerCard ${isCur ? 'active' : ''}" data-vol="${g.vol}" data-id="${g.id}"${isCur ? ' aria-current="true"' : ''}>
       <span class="ico">${g.icon}</span>
       <div class="info">
         <div class="meta">VOL ${g.vol} &bull; GAME ${g.n}${isCur ? ` <span class="badge">${t.activeBadge}</span>` : ''}</div>
         <div class="nm">${esc(trTitle(g.name))}</div>
         <div class="rule">${esc(trRule(g.name))}</div>
       </div>
-    </div>`;
+    </button>`;
   }).join('');
 
   drawerGrid.querySelectorAll('.drawerCard').forEach(card => {
@@ -2686,9 +2732,25 @@ document.getElementById('drawerBtn').onclick = openDrawer;
 document.getElementById('drawerCloseBtn').onclick = closeDrawer;
 drawerSearch.oninput = e => { drawerQuery = e.target.value; renderDrawer(); };
 
+function trapDialogTab(e, dialog) {
+  const focusable = [...dialog.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')]
+    .filter(el => el.getClientRects().length && !el.closest('.hidden'));
+  if (!focusable.length) return;
+  const first = focusable[0], last = focusable[focusable.length - 1], active = document.activeElement;
+  if (!dialog.contains(active) || (e.shiftKey && active === first) || (!e.shiftKey && active === last)) {
+    e.preventDefault(); (e.shiftKey ? last : first).focus();
+  }
+}
+
 /* ================= Keyboard & Remote Clicker Shortcuts ================= */
 document.addEventListener('keydown', e => {
   if (e.isComposing) return;
+  if (e.key === 'Tab' && !importDialog.open) {
+    const dialog = !page.classList.contains('hidden') ? page
+      : !drawerModal.classList.contains('hidden') ? drawerModal
+      : !resultEl.classList.contains('hidden') ? resultEl : null;
+    if (dialog) trapDialogTab(e, dialog);
+  }
   if (e.key === 'Escape' && stageView.classList.contains('stage-expanded')) {
     e.preventDefault(); stageExitBtn.click(); return;
   }
