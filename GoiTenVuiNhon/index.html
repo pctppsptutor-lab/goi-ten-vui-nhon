@@ -85,7 +85,7 @@ body.running #stage{cursor:default}
 .stageWrap:is(:fullscreen,.stage-expanded) .result{inset:auto}
 .stageWrap:is(:fullscreen,.stage-expanded) .card{padding:clamp(20px,4vh,46px) clamp(24px,5vw,68px) clamp(16px,3vh,36px);max-width:min(85vw,148vh)}
 .stageWrap:is(:fullscreen,.stage-expanded) .card .name{font-size:clamp(28px,min(7vw,13vh),110px)}
-.stageWrap:is(:fullscreen,.stage-expanded) .card img{width:min(38vw,58vh,100%);height:min(17vw,26vh)}
+.stageWrap:is(:fullscreen,.stage-expanded) .card .heroCanvas{width:min(38vw,58vh,100%);height:min(17vw,26vh)}
 .stageWrap:is(:fullscreen,.stage-expanded) .btns .candy{min-height:44px;padding:8px 18px;font-size:clamp(14px,2.8vh,24px)}
 .stageWrap:is(:fullscreen,.stage-expanded) .btns .btnGo{min-width:14ch}
 /* Fill the available viewport when element fullscreen is unavailable. */
@@ -160,7 +160,8 @@ body:has(.stage-expanded){overflow:hidden}
   background:linear-gradient(180deg,#9734cc,#67188e);color:#fff;font-family:var(--title);
   font-size:2.6cqw;line-height:1.2;font-weight:800;padding:.65cqw 2.8cqw;border-radius:999px;
   box-shadow:0 .35cqw 0 #48125f,0 0 0 .22cqw #ffd84a}
-.card img{width:min(35cqw,100%);height:15.5cqw;object-fit:contain;display:block;margin:0 auto;filter:drop-shadow(0 0 2.2cqw #ffc844a8) drop-shadow(0 .5cqw .5cqw #0003)}
+.card .heroCanvas{width:min(35cqw,100%);height:17cqw;display:block;margin:0 auto;filter:drop-shadow(0 0 2.2cqw #ffc844a8) drop-shadow(0 .5cqw .5cqw #0003)}
+.card .heroSource{display:none}
 .card .name{font-family:var(--title);font-size:6.6cqw;font-weight:800;line-height:1.15;margin:.6cqw 0 1.65cqw;overflow-wrap:anywhere;
   color:#31204e;text-shadow:0 .2cqw 0 #ffda76}
 @keyframes celebrate-rays{from{transform:scale(.72) rotate(-8deg);opacity:0}to{transform:scale(1);opacity:1}}
@@ -280,7 +281,8 @@ textarea{font-family:inherit;font-size:17px;width:100%;min-height:260px;border:2
     <div id="result" class="result hidden" role="dialog" aria-modal="true" aria-labelledby="resName">
       <div class="card">
         <span class="ribbon" id="ribbonTxt">🎉 Congratulations!</span>
-        <img id="resImg" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="Selected student character">
+        <canvas id="resHero" class="heroCanvas" width="700" height="310" role="img" aria-label="Selected student character"></canvas>
+        <img id="resImg" class="heroSource" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="" aria-hidden="true">
         <div class="name" id="resName"></div>
         <div class="btns">
           <button class="candy btnGo" id="contBtn">Next round ▶</button>
@@ -1000,7 +1002,7 @@ function loadImages(set, base, names, priority = 'auto') {
   })).then(results => results.filter(Boolean));
 }
 function winnerAsset(r, d) {
-  return r?.game ? 'c' + d.av + '_' + (r.game.resultPose || 'win') : 'duck' + d.sp + '_win';
+  return r?.game ? 'c' + d.av + '_' + (r.game.winPose?.(d.av) || r.game.resultPose || 'win') : 'duck' + d.sp + '_win';
 }
 function preloadWinner(r) {
   const g = r.game || gameAssets('g1');
@@ -1677,6 +1679,7 @@ function frame(now) {
     if (bgCanvas) ctx.drawImage(bgCanvas, 0, 0); else { ctx.fillStyle = '#3db5e6'; ctx.fillRect(0, 0, W, H); }
     FX.ambientBack(t, '#fff6c8');
     drawWater(t);
+    drawPlayfieldFocus();
     if (race) {
       if (race.phase === 'run') tickRace(dt); else race.now += dt;
       renderRace(t, dt);
@@ -1693,6 +1696,16 @@ function frame(now) {
   drawStageLogo();
   requestAnimationFrame(frame);
 }
+const playfieldFocus = document.createElement('canvas');
+playfieldFocus.width = W; playfieldFocus.height = H;
+{
+  const focusCtx = playfieldFocus.getContext('2d');
+  const shade = focusCtx.createRadialGradient(800, 500, 250, 800, 500, 900);
+  shade.addColorStop(0, 'rgba(10,20,40,0)');
+  shade.addColorStop(1, 'rgba(10,20,40,.13)');
+  focusCtx.fillStyle = shade; focusCtx.fillRect(0, 0, W, H);
+}
+function drawPlayfieldFocus() { if (race && race.phase === 'run') ctx.drawImage(playfieldFocus, 0, 0); }
 let stageFade = 0;
 function drawLoadingStage(title, t) {
   ctx.save();
@@ -1869,6 +1882,7 @@ function renderGeneric(g, now, t, dt) {
   FX.motes(t, g.mote);
   const sc = pack.scenes[g.id];
   if (sc) sc.back(t);
+  drawPlayfieldFocus();
   if (race && race.phase === 'done' && race.winRays) FX.rays(race.winRays.x, race.winRays.y + 30, 340, store.settings.calm ? 0 : t, g.rayColor);
   if (race) {
     if (race.phase === 'run') tickRace(dt); else race.now += dt;
@@ -1886,18 +1900,56 @@ function contactShadow(x, y, w, a = .3) {
   const g = ctx.createRadialGradient(x, y, 0, x, y, w * .5); g.addColorStop(0, 'rgba(20,20,50,.9)'); g.addColorStop(1, 'rgba(20,20,50,0)');
   ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(x, y, w * .5, w * .13, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
 }
+const spriteInkCache = new WeakMap();
+const spriteProbe = document.createElement('canvas');
+spriteProbe.width = spriteProbe.height = 96;
+const spriteProbeCtx = spriteProbe.getContext('2d', { willReadFrequently: true });
+function spriteInkBounds(im) {
+  if (spriteInkCache.has(im)) return spriteInkCache.get(im);
+  const imageWidth = im.naturalWidth || im.width, imageHeight = im.naturalHeight || im.height;
+  const full = { x: 0, y: 0, w: imageWidth, h: imageHeight, heightRatio: 1 };
+  let box = full;
+  if (spriteProbeCtx && imageWidth && imageHeight) try {
+    spriteProbeCtx.clearRect(0, 0, 96, 96);
+    spriteProbeCtx.drawImage(im, 0, 0, 96, 96);
+    const pixels = spriteProbeCtx.getImageData(0, 0, 96, 96).data;
+    let minX = 96, minY = 96, maxX = -1, maxY = -1;
+    for (let y = 0; y < 96; y++) for (let x = 0; x < 96; x++) {
+      if (pixels[(y * 96 + x) * 4 + 3] < 8) continue;
+      minX = Math.min(minX, x); minY = Math.min(minY, y);
+      maxX = Math.max(maxX, x); maxY = Math.max(maxY, y);
+    }
+    if (maxX >= 0) {
+      const x0 = Math.max(0, minX - 2), y0 = Math.max(0, minY - 2);
+      const x1 = Math.min(96, maxX + 3), y1 = Math.min(96, maxY + 3);
+      box = { x: x0 * imageWidth / 96, y: y0 * imageHeight / 96,
+        w: (x1 - x0) * imageWidth / 96, h: (y1 - y0) * imageHeight / 96,
+        heightRatio: (y1 - y0) / 96 };
+    }
+  } catch (_) { /* A full-image fallback keeps cross-origin sprites visible. */ }
+  spriteInkCache.set(im, box);
+  return box;
+}
+function characterGeometry(im, requestedHeight) {
+  const ink = spriteInkBounds(im);
+  const source = ink.heightRatio < .9 ? ink : { x: 0, y: 0, w: im.naturalWidth || im.width, h: im.naturalHeight || im.height };
+  let h = source === ink ? Math.min(requestedHeight, requestedHeight * ink.heightRatio * 1.2) : requestedHeight;
+  let w = source.w * h / source.h;
+  const maxW = requestedHeight * 1.15;
+  if (w > maxW) { h *= maxW / w; w = maxW; }
+  return { ...source, drawW: w, drawH: h };
+}
 function charImg(av, pose, x, y, h, opt = {}) {
   const key = 'c' + av + '_';
   const im = IMG[key + pose] || IMG[key + (opt.fallback || 'idle')] || IMG[key + curImpl()?.previewPose];
   if (!im) return 0;
-  let w = im.width * h / im.height;
-  const maxW = h * 1.15;
-  if (w > maxW) { h = h * (maxW / w); w = maxW; }
+  const box = characterGeometry(im, h), w = box.drawW;
+  h = box.drawH;
   const a = opt.alpha ?? 1;
   if (opt.shadow !== false && a > .3) contactShadow(x, y - 2, Math.min(w, h * .7) * 1.05, .32 * a);
   ctx.save(); ctx.globalAlpha *= a; ctx.translate(x, y); if (opt.rot) ctx.rotate(opt.rot); if (opt.flip) ctx.scale(-1, 1);
   if (a > .5 && !store.settings.calm) { ctx.shadowColor = 'rgba(20,20,60,.35)'; ctx.shadowBlur = 10; ctx.shadowOffsetY = 4; }   // lifts the figure off the background
-  ctx.drawImage(im, -w / 2, -h, w, h); ctx.restore(); return w;
+  ctx.drawImage(im, box.x, box.y, box.w, box.h, -w / 2, -h, w, h); ctx.restore(); return w;
 }
 let activeGameId = store.settings.currentGame || store.settings.game || 'g1';
 const curGame = () => activeGameId;
@@ -2068,13 +2120,27 @@ function timerChip(n) {
 
 /* ================= Result overlay ================= */
 const resultEl = document.getElementById('result');
+function paintResultHero(image) {
+  if (!image.naturalWidth || !image.naturalHeight) return;
+  const canvas = document.getElementById('resHero'), heroCtx = canvas.getContext('2d');
+  const box = spriteInkBounds(image), margin = 10;
+  const scale = Math.min((canvas.width - margin * 2) / box.w, (canvas.height - margin * 2) / box.h);
+  const w = box.w * scale, h = box.h * scale;
+  heroCtx.clearRect(0, 0, canvas.width, canvas.height);
+  heroCtx.imageSmoothingQuality = 'high';
+  heroCtx.drawImage(image, box.x, box.y, box.w, box.h, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h);
+}
 function showResult(d) {
   document.getElementById('resName').textContent = d.name;
   const image = document.getElementById('resImg'), r = race;
+  const hero = document.getElementById('resHero');
+  hero.getContext('2d').clearRect(0, 0, hero.width, hero.height);
+  hero.setAttribute('aria-label', d.name);
   const g = r?.game || gameAssets('g1'), key = winnerAsset(r, d), src = g.base + key + '.webp';
   const fallback = g.base + (r?.game ? 'c' + d.av + '_' + g.previewPose : 'duck' + d.sp + '_swim') + '.webp';
   image.dataset.winnerSrc = src;
   image.fetchPriority = 'high';
+  image.onload = () => paintResultHero(image);
   image.onerror = () => { image.onerror = null; image.src = fallback; };
   image.src = IMGSETS[g.id]?.[key] ? src : fallback;
   loadImages(g.id, g.base, [key], 'high').then(() => {

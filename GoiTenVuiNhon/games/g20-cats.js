@@ -22,7 +22,10 @@
 
   GAME_IMPL.g20 = {
     id: 'g20', title: 'Cat in a Box', base: 'assets/g20/', titleY: 260, animals: true,
-    assets: gAssets(['idle', 'ready', 'jump', 'peek', 'puppet', 'win'], [...new Set(BOX_IMG), 'p0']),
+    assets: gAssets(['idle', 'ready', 'jump', 'peek', 'puppet', 'win'], [...new Set(BOX_IMG), 'p0'])
+      .filter(name => name !== 'c8_win'),
+    // c8_win cuts off the cat's face; c8_jump shows the whole character.
+    winPose: av => av === 8 ? 'jump' : 'win',
     startBanner: '🐱 The cats are zooming around!', mote: '#fff1d6', rayColor: '#fff2a8',
 
     setup(r) {
@@ -89,7 +92,7 @@
       drawImg('p0', BOSS[0] - 40 + Math.sin(rt * 1.5) * 65, BOSS[1] + Math.cos(rt * 1.8) * 85 - Math.abs(Math.sin(rt * 6)) * 14, 170, { anchor: 'bottom', flip: Math.cos(rt * 1.5) > 0 });
       if (done) {
         const k = clamp((rt - r.doneAt) / .4);
-        charImg(Wn.av, 'win', Wn.bx, Wn.by - 20, 200 * (.6 + .4 * ease(k)));
+        charImg(Wn.av, this.winPose(Wn.av), Wn.bx, Wn.by - 20, 200 * (.6 + .4 * ease(k)));
       }
     },
 

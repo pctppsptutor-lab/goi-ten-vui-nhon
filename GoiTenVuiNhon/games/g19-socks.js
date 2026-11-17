@@ -14,7 +14,8 @@
 
   GAME_IMPL.g19 = {
     id: 'g19', title: 'The Sock Monster', base: 'assets/g19/', titleY: 250,
-    assets: gAssets(['observe', 'load', 'mixing', 'search', 'mismatch', 'lost', 'win'], [...SOCKS, 'p1', 'p2', 'p3', 'p4', 'p5', 'p51', 'p28']),
+    assets: gAssets(['observe', 'load', 'mixing', 'search', 'mismatch', 'lost', 'win'], [...SOCKS, 'p1', 'p2', 'p3', 'p4', 'p5', 'p51', 'p28'])
+      .filter(name => !['c6_load', 'c6_mixing', 'c6_search'].includes(name)),
     startBanner: '🧦 Remember your socks!', mote: '#dff6ff', rayColor: '#e6f6ff',
 
     setup(r) {
@@ -62,6 +63,8 @@
         if (f && f.p === p && te < 0) pose = 'search';
         if (p === D && te > 0) pose = !r.plain && te > .7 ? 'mismatch' : 'search';
         if (p === Wn && te > (r.plain ? 1.2 : 1.5)) pose = 'lost';
+        // These three source sprites for avatar 6 are cut off at the right edge.
+        if (p.av === 6 && (pose === 'load' || pose === 'mixing' || pose === 'search')) pose = 'lost';
         charImg(p.av, pose, p.sx, p.sy, 150);
         // sock flies into the washer during the load phase; small badge on mat otherwise
         if (rt >= r.show && rt < r.show + .85) {

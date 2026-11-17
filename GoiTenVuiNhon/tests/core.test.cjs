@@ -26,6 +26,18 @@ const clone=o=>JSON.parse(JSON.stringify(o));
   time=1000+T*1000;clock.tickRace(.05);
   assert.equal(r.phase,'done');assert.equal(r.now,T);assert.equal(clock.roundRemaining(r),0);
  }
+ const geometry=context({spriteInkBounds:im=>im.ink});
+ run(geometry,cut('function characterGeometry(','function charImg('));
+ const full=geometry.characterGeometry({width:100,height:200,ink:{x:0,y:0,w:100,h:200,heightRatio:1}},120);
+ assert.equal(full.drawH,120);assert.equal(full.drawW,60);
+ const padded=geometry.characterGeometry({width:100,height:200,ink:{x:10,y:10,w:80,h:160,heightRatio:.8}},120);
+ assert.ok(Math.abs(padded.drawH-115.2)<1e-9);assert.ok(Math.abs(padded.drawW-57.6)<1e-9);assert.equal(padded.y,10);
+ const wide=geometry.characterGeometry({width:300,height:100,ink:{x:0,y:0,w:300,h:100,heightRatio:1}},120);
+ assert.equal(wide.drawW,138);assert.equal(wide.drawH,46);
+ const winner=context({});run(winner,cut('function winnerAsset(','function preloadWinner('));
+ assert.equal(winner.winnerAsset({game:{winPose:av=>av===8?'jump':'win'}},{av:8}),'c8_jump');
+ assert.equal(winner.winnerAsset({game:{}},{av:2}),'c2_win');
+ assert.equal(winner.winnerAsset(null,{sp:4}),'duck4_win');
  const handlers={};let editor=true,drawer=false,closedEditor=0,closedDrawer=0;
  const keyboard=context({document:{addEventListener:(e,fn)=>handlers[e]=fn},stageView:{classList:{contains:()=>false}},importDialog:{open:false},drawerModal:{classList:{contains:()=>!drawer}},page:{classList:{contains:()=>!editor}},closeClasses:()=>closedEditor++,closeDrawer:()=>closedDrawer++});
  run(keyboard,cut("document.addEventListener('keydown', e => {",'/* ================= Boot'));

@@ -145,6 +145,7 @@ const FX = (() => {
     },
     // deep background parallax layer (depth 0.72): soft diagonal light beams & drifting bokeh orbs
     ambientBack(t, color = '#fff6c8') {
+      if (store.settings.calm) t = 0;
       const c = race && race.cam, img = glow(color);
       ctx.save();
       if (c) ctx.translate(-(c.x - 800) * -.28 * .6, -(c.y - 450) * -.28 * .6);
@@ -167,6 +168,8 @@ const FX = (() => {
     },
     // near-camera foreground parallax layer (depth 1.36): swaying framing foliage & foreground fireflies
     ambientFront(t, color = '#ffd84a') {
+      if (store.settings.calm) t = 0;
+      const playing = race && race.phase === 'run';
       const c = race && race.cam, img = glow(color);
       ctx.save();
       if (c) ctx.translate(-(c.x - 800) * .36 * .6, -(c.y - 450) * .36 * .6);
@@ -175,7 +178,7 @@ const FX = (() => {
         for (let i = 0; i < 4; i++) {
           const ang = (dir > 0 ? -.22 - i * .24 : -2.92 + i * .24) + Math.sin(t * 1.5 + i + side) * .05;
           const len = 145 + (i % 2) * 28;
-          ctx.save(); ctx.translate(bx, by); ctx.rotate(ang);
+          ctx.save(); ctx.translate(bx, by); ctx.rotate(ang); ctx.globalAlpha = playing ? .55 : 1;
           ctx.fillStyle = i % 2 ? 'rgba(18,38,58,.42)' : 'rgba(28,58,78,.34)';
           ctx.beginPath(); ctx.moveTo(0, 0); ctx.quadraticCurveTo(len * .5, -len * .24, len, 0); ctx.quadraticCurveTo(len * .5, len * .24, 0, 0); ctx.fill();
           ctx.restore();
@@ -187,7 +190,7 @@ const FX = (() => {
         const x = 90 + ((i * 251 + Math.sin(t * .5 + i) * 60) % 1420);
         const y = 720 + ((i * 53) % 150) + Math.cos(t * 1.1 + i * 2) * 16;
         const pulse = .3 + .3 * Math.sin(t * 2.8 + i * 1.9);
-        ctx.globalAlpha = pulse;
+        ctx.globalAlpha = pulse * (playing ? .35 : 1);
         ctx.drawImage(img, x - 16, y - 16, 32, 32);
         ctx.fillStyle = '#ffffff'; ctx.save(); ctx.translate(x, y); star(ctx, 4.5); ctx.restore();
       }
